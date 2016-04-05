@@ -1,0 +1,7 @@
+# Intellij Shit
+*.iml
+.idea/
+
+# Python
+*.pyc
+
