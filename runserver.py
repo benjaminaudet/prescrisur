@@ -1,12 +1,11 @@
-from flask import Flask
+from optparse import OptionParser
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def hello_world():
-	return 'Hello World!'
+from prescrisur import app
 
 
 if __name__ == '__main__':
-	app.run()
+	parser = OptionParser()
+	parser.add_option("-d", "--debug", dest="debug", default=False, action="store_true", help="Use debug option")
+	options, args = parser.parse_args()
+
+	app.run(debug=options.debug)
