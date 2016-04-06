@@ -1,8 +1,7 @@
 # coding=utf-8
 import pytest
 
-from prescrisur.models import Speciality
-from prescrisur.update import SpecialityUpdater
+from prescrisur.update import Speciality, SpecialityUpdater
 
 
 @pytest.fixture(autouse=True)
