@@ -8,7 +8,7 @@ SUBSTANCE_URI = 'http://base-donnees-publique.medicaments.gouv.fr/telechargement
 
 class SubstanceUpdater(object):
 
-	def update(self):
+	def execute(self):
 		substances = {}
 		req = urllib2.urlopen(SUBSTANCE_URI)
 		for line in req.readlines():
@@ -16,12 +16,12 @@ class SubstanceUpdater(object):
 			subst_id = line[2]
 			if subst_id not in substances:
 				substances[subst_id] = self.create_substance(line)
-			substances[subst_id].add_speciality(line[0])
+			substances[subst_id].add_speciality_from_cis(line[0])
 		map(lambda x: substances[x].save(), substances)
 
 	@staticmethod
 	def create_substance(line):
 		return Substance(
-			subst_id=line[2],
+			_id=line[2],
 			name=line[3]
 		)

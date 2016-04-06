@@ -24,7 +24,7 @@ class SpecialityUpdater(object):
 		name, dosage = self.parse_name(line[1])
 		spec_type = self.get_spec_type(line[2])
 		return Speciality(
-			cis=line[0],
+			_id=line[0],
 			name=name,
 			dosage=dosage,
 			spec_type=spec_type,
