@@ -1,0 +1,17 @@
+body {
+    padding-top: 50px;
+}
+
+.disclaimer {
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.messages {
+    padding: 20px 15px 0px 15px;
+    text-align: center;
+}
+    .messages .alert {
+        margin-bottom: 0px;
+    }
+
