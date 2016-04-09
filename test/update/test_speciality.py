@@ -31,6 +31,14 @@ class TestGetSpecType:
 		assert speciality_updater.get_spec_type('full et string') == 'full'
 
 
+class TestGetTreatmentType:
+	def test_simple_string(self, speciality_updater):
+		assert speciality_updater.get_treatment_type('orale') == ['orale']
+
+	def test_simple_string(self, speciality_updater):
+		assert speciality_updater.get_treatment_type('orale;sublinguale;cutanée') == ['orale', 'sublinguale', 'cutanée']
+
+
 class TestParseName:
 	def test_common_name(self, speciality_updater):
 		assert speciality_updater.parse_name('ABILIFY 10 mg, comprimé') == ('ABILIFY', '10 mg')
@@ -48,7 +56,7 @@ def test_valid_line(speciality_updater):
 		assert s.name == 'ACICLOVIR RPG'
 		assert s.dosage == '5 %'
 		assert s.spec_type == 'crème'
-		assert s.treatment_type == 'cutanée'
+		assert s.treatment_type == ['cutanée']
 		assert not s.status
 
 	Speciality.save = check_save

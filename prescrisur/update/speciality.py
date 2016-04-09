@@ -23,12 +23,13 @@ class SpecialityUpdater(object):
 	def update_one(self, line):
 		name, dosage = self.parse_name(line[1])
 		spec_type = self.get_spec_type(line[2])
+		treatment_type = self.get_treatment_type(line[3])
 		return Speciality(
 			_id=line[0],
 			name=name,
 			dosage=dosage,
 			spec_type=spec_type,
-			treatment_type=line[3],
+			treatment_type=treatment_type,
 			status=None
 		).save()
 
@@ -50,3 +51,7 @@ class SpecialityUpdater(object):
 	def get_spec_type(spec_type):
 		parsed_spec_type = re.split(REG_TYPE, spec_type)
 		return parsed_spec_type[0]
+
+	@staticmethod
+	def get_treatment_type(treatment_type):
+		return treatment_type.split(';')
