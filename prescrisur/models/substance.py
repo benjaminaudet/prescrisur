@@ -1,13 +1,9 @@
 # coding=utf-8
-import jsonpickle
-
-from prescrisur.db import DB
-from prescrisur.models import Speciality
-
-collection = DB('Substance').collection
+from base_model import BaseModel
+from speciality import Speciality
 
 
-class Substance(object):
+class Substance(BaseModel):
 	def __init__(self, _id, name, specialities=None):
 		self._id = _id
 		self.name = name
@@ -15,23 +11,6 @@ class Substance(object):
 		if specialities:
 			self.add_specialities(specialities)
 
-	def serialize(self):
-		to_string = jsonpickle.encode(self, unpicklable=False)
-		return jsonpickle.decode(to_string)
-
 	def add_specialities(self, specs):
 		for s in specs:
 			self.specialities.append(Speciality(**s))
-
-	def add_speciality_from_cis(self, cis):
-		spec = Speciality.get(cis)
-		if spec:
-			return self.specialities.append(spec)
-
-	def save(self):
-		collection.save(self.serialize())
-
-	@staticmethod
-	def get(subst_id):
-		raw_subst = collection.find_one({'_id': subst_id})
-		return Substance(**raw_subst)
