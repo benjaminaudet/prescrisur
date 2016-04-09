@@ -49,6 +49,11 @@ class TestParseName:
 	def test_complex_name(self, speciality_updater):
 		assert speciality_updater.parse_name('ACT-HIB 10 microgrammes/0,5 ml') == ('ACT-HIB', '10 microgrammes/0,5 ml')
 
+	def test_slashes_in_name(self, speciality_updater):
+		name = 'DOLI ETAT GRIPPAL PARACETAMOL/VITAMINE C/PHENIRAMINE'
+		dosage = '500 mg/200 mg/25 mg'
+		assert speciality_updater.parse_name(' '.join([name, dosage])) == (name, dosage)
+
 
 def test_valid_line(speciality_updater):
 	def check_save(s):
