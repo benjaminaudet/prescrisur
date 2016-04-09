@@ -16,11 +16,11 @@ class Speciality(object):
 		self.treatment_type = treatment_type
 		self.status = status
 
-	def _serialize(self):
+	def serialize(self):
 		return vars(self)
 
 	def save(self):
-		collection.save(self._serialize())
+		collection.save(self.serialize())
 
 	@staticmethod
 	def get(spec_id):
@@ -28,3 +28,11 @@ class Speciality(object):
 		if not spec:
 			return None
 		return Speciality(**spec)
+
+	@staticmethod
+	def search(query):
+		regx = re.compile('^' +query, re.IGNORECASE)
+		specs = collection.find({'name': regx})
+		if not specs:
+			return []
+		return map(lambda s: Speciality(**s), specs)

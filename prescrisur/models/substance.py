@@ -15,7 +15,7 @@ class Substance(object):
 		if specialities:
 			self.add_specialities(specialities)
 
-	def _serialize(self):
+	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)
 		return jsonpickle.decode(to_string)
 
@@ -29,7 +29,7 @@ class Substance(object):
 			return self.specialities.append(spec)
 
 	def save(self):
-		collection.save(self._serialize())
+		collection.save(self.serialize())
 
 	@staticmethod
 	def get(subst_id):
