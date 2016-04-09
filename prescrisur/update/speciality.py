@@ -24,8 +24,10 @@ class SpecialityUpdater(object):
 		name, dosage = self.parse_name(line[1])
 		spec_type = self.get_spec_type(line[2])
 		treatment_type = self.get_treatment_type(line[3])
+		full_name = self.get_full_name(name, dosage, spec_type)
 		return Speciality(
 			_id=line[0],
+			full_name=full_name,
 			name=name,
 			dosage=dosage,
 			spec_type=spec_type,
@@ -55,3 +57,11 @@ class SpecialityUpdater(object):
 	@staticmethod
 	def get_treatment_type(treatment_type):
 		return treatment_type.split(';')
+
+	@staticmethod
+	def get_full_name(name, dosage, spec_type):
+		if dosage:
+			name += ', ' + dosage
+		if spec_type:
+			name += ' (' + spec_type + ')'
+		return name

@@ -20,6 +20,20 @@ class TestIsValid:
 		assert speciality_updater.is_valid('Autorisation active', 'Commercialisée')
 
 
+class TestGetFullName:
+	def test_full_name(self, speciality_updater):
+		assert speciality_updater.get_full_name('A', 'B', 'C') == 'A, B (C)'
+
+	def test_no_spec_type(self, speciality_updater):
+		assert speciality_updater.get_full_name('A', 'B', None) == 'A, B'
+
+	def test_no_dosage(self, speciality_updater):
+		assert speciality_updater.get_full_name('A', None, 'C') == 'A (C)'
+
+	def test_only_name(self, speciality_updater):
+		assert speciality_updater.get_full_name('A', None, None) == 'A'
+
+
 class TestGetSpecType:
 	def test_simple_string(self, speciality_updater):
 		assert speciality_updater.get_spec_type('simple string') == 'simple string'
