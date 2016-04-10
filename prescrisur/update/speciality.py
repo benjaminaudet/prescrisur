@@ -52,7 +52,8 @@ class SpecialityUpdater(object):
 	@staticmethod
 	def get_spec_type(spec_type):
 		parsed_spec_type = re.split(REG_TYPE, spec_type)
-		return parsed_spec_type[0]
+		stripped_types = map(lambda x: x.strip(), parsed_spec_type)
+		return list(set(filter(None, stripped_types)))
 
 	@staticmethod
 	def get_treatment_type(treatment_type):
@@ -63,5 +64,6 @@ class SpecialityUpdater(object):
 		if dosage:
 			name += ', ' + dosage
 		if spec_type:
-			name += ' (' + spec_type + ')'
+			spec_types = '/'.join(spec_type)
+			name += ' (' + spec_types + ')'
 		return name
