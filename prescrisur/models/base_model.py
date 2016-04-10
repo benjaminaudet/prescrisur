@@ -3,6 +3,10 @@ import jsonpickle
 from pymongo import MongoClient
 
 
+client = MongoClient()
+db = client.Prescrisur
+
+
 class classproperty(object):
 	def __init__(self, fget):
 		self.fget = fget
@@ -11,18 +15,10 @@ class classproperty(object):
 		return self.fget(owner_cls)
 
 
-class DB(MongoClient):
-	def __init__(self, collection=None):
-		MongoClient.__init__(self)
-		self.db = self.Prescrisur
-		self.collection = self.db[collection]
-
-
 class BaseModel(object):
 	@classproperty
 	def collection(cls):
-		db = DB(cls.__name__)
-		return db.collection
+		return db[cls.__name__]
 
 	@classmethod
 	def get(cls, obj_id):
