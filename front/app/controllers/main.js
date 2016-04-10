@@ -1,6 +1,6 @@
-var controllers = angular.module('prescrisurControllers', []);
+angular.module('prescrisurApp.controllers')
 
-controllers.controller("MainController", [
+.controller("MainController", [
 	'$scope',
 
 	function($scope) {
