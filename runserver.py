@@ -1,6 +1,6 @@
 from optparse import OptionParser
 
-from prescrisur import app
+from api import app
 
 
 if __name__ == '__main__':

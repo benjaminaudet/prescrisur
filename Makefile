@@ -1,7 +1,7 @@
 .PHONY: install test
 
 install:
-	pip install -r requirements.txt
+	(pip install -r requirements.txt && bower install)
 
 test:
 	py.test -v test

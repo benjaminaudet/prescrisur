@@ -1,0 +1,16 @@
+{
+  "name": "prescrisur-front",
+  "description": "AngularJS Front for Prescrisur app",
+  "version": "1.0.0",
+  "homepage": "",
+  "license": "Pierrick Boutruche",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.x",
+    "bootstrap": "~3.3.x",
+    "angular": "1.5.x",
+    "angular-route": "~1.5.x",
+    "angular-resource": "~1.5.x",
+    "components-font-awesome": "4.5.x"
+  }
+}
