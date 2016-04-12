@@ -1,8 +1,9 @@
 # coding=utf-8
 from flask import *
+from flask.ext.login import login_required, login_user, current_user
 
-from api import app
-from api.models import Speciality, Substance
+from api import app, login_manager
+from api.models import Speciality, Substance, User
 
 
 @app.route('/')
@@ -22,3 +23,35 @@ def substance(subst_id):
 	if not subst:
 		abort(404)
 	return jsonify(data=subst)
+
+
+###############
+# Login
+@login_manager.user_loader
+def user_loader(email):
+	return User.get(email)
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+	return 'Unauthorized'
+
+
+@app.route('/api/login', methods=['POST'])
+def login():
+	data = json.loads(request.data)
+	user = User.get(data['email'])
+	if not user:
+		abort(401)
+	if data['passwd'] == user.password_hash:
+		login_user(user)
+		return jsonify(data=user)
+	return jsonify({'error': 'error'})
+
+
+@app.route('/api/me')
+@login_required
+def get_user_status():
+	if not current_user:
+		abort(401)
+	return jsonify(user=current_user)

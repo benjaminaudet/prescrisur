@@ -2,20 +2,13 @@ angular.module('prescrisurApp.controllers')
 
 .controller("MainController", [
 	'$scope',
-	'Search',
+	'$rootScope',
 
-	function($scope, Search) {
-		$scope.q = null;
-		$scope.results = [];
+	function($scope, $rootScope) {
+		$scope.currentUser = null;
 
-		$scope.search = function() {
-			if($scope.q.length > 0) {
-				Search.get({q: $scope.q}, function(data) {
-					$scope.results = data.data;
-				});
-			} else {
-				$scope.results = [];
-			}
-		};
+		$rootScope.setCurrentUser = function(user) {
+			$scope.currentUser = user;
+		}
 	}
 ]);
