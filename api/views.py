@@ -5,6 +5,11 @@ from api import app
 from api.models import Speciality, Substance
 
 
+@app.route('/')
+def index():
+	return app.send_static_file('index.html')
+
+
 @app.route('/api/speciality/search')
 def search_speciality():
 	q = request.args.get('q')

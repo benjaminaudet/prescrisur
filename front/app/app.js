@@ -12,15 +12,15 @@ app.config(function($routeProvider, $locationProvider) {
 		// route for the home page
 		.when('/', {
 			controller : 'MainController',
-			templateUrl: 'app/templates/welcome.html'
+			templateUrl: 'front/app/templates/welcome.html'
 		})
 		.when('/specialities/:id', {
 			controller: 'SpecialityController',
-			templateUrl: 'app/templates/welcome.html'
+			templateUrl: 'front/app/templates/welcome.html'
 		})
 		.when('/substances/:id', {
 			controller: 'SubstanceController',
-			templateUrl: 'app/templates/substance.html'
+			templateUrl: 'front/app/templates/substance.html'
 		})
 		.otherwise({redirectTo: '/'});
 
