@@ -33,7 +33,8 @@ class BaseModel(object):
 		objs = cls.collection.find({'name': regx})
 		if not objs:
 			return []
-		return map(lambda o: cls(**o), objs)
+		# return map(lambda o: cls(**o), objs)
+		return list(objs)
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)

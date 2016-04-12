@@ -13,7 +13,7 @@ app.config(function($routeProvider, $locationProvider) {
 		// route for the home page
 		.when('/', {
 			controller : 'HomeController',
-			templateUrl: 'front/app/templates/welcome.html',
+			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
 		.when('/login', {

@@ -17,6 +17,6 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 
 .factory('SearchService', ['$resource',
 	function($resource){
-		return $resource('/api/speciality/search');
+		return $resource('/api/:searchType/search');
 	}
 ]);
