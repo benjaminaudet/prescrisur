@@ -1,8 +1,5 @@
 var app = angular.module('prescrisurApp', [
-	'ui.router',
-	'ui.select',
-	'ui.bootstrap',
-	'ngSanitize',
+	'ngRoute',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
 	'prescrisurApp.controllers'
@@ -11,69 +8,57 @@ var app = angular.module('prescrisurApp', [
 angular.module('prescrisurApp.controllers', []);
 
 
-app.config(function($stateProvider, $urlRouterProvider) {
-
-	$urlRouterProvider.otherwise('/');
-
-	$stateProvider
-		.state('home', {
-			url: '/',
+app.config(function($routeProvider, $locationProvider) {
+	$routeProvider
+		// route for the home page
+		.when('/', {
 			controller : 'HomeController',
 			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
-		.state('test', {
-			url: '/test',
+		.when('/test', {
 			controller: 'HomeController',
 			templateUrl: 'front/app/templates/test.html',
 			access: {restricted: false}
 		})
-		.state('login', {
-			url: '/login',
+		.when('/login', {
 			controller : 'LoginController',
 			templateUrl: 'front/app/templates/login.html',
 			access: {restricted: false}
 		})
-		.state('logout', {
-			url: '/logout',
+		.when('/logout', {
 			resolve: {controller : 'LogoutService'},
 			access: {restricted: true}
 		})
-		.state('specialities', {
-			url: '/specialities/:id',
-			templateUrl: 'front/app/templates/speciality.html',
-			access: {restricted: false},
-			external: 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='
+		.when('/specialities/:id', {
+			resolve: {controller : 'SpecialityService'},
+			access: {restricted: true}
 		})
-		.state('substances', {
-			url: '/substances/:id',
+		.when('/substances/:id', {
 			controller: 'SubstanceController',
 			templateUrl: 'front/app/templates/substance.html',
 			access: {restricted: true}
 		})
+		.otherwise({redirectTo: '/'});
+
+		// enable HTML5mode to disable hashbang urls
+		//$locationProvider.html5Mode(true);
 });
 
-app.run(function ($rootScope, $state, $window, AuthService) {
-	var postLoginState, postLoginParams;
-	$rootScope.$on('$stateChangeStart',
-		function (event, toState, toParams) {
+app.run(function ($rootScope, $location, $route, AuthService) {
+	var postLogInRoute;
+	$rootScope.$on('$routeChangeStart',
+		function (event, next, current) {
 			AuthService.getUser().then(function(user){
-				if(toState.access.restricted && !AuthService.isLoggedIn()) {
-					postLoginState = $state.current.name;
-					postLoginParams = $state.params;
-					return $state.go('login');
-				} else if(postLoginState && AuthService.isLoggedIn()) {
-					$state.go(postLoginState, postLoginParams);
-					postLoginState = null;
-					postLoginParams = null;
+				if(next.access.restricted && !AuthService.isLoggedIn()) {
+					postLogInRoute = $location.path();
+					$location.path('/login');
+					return $route.reload();
+				} else if(postLogInRoute && AuthService.isLoggedIn()) {
+					$location.path(postLogInRoute);
+					postLogInRoute = null;
 				}
 				$rootScope.setCurrentUser(user);
-
-				// Redirect to external URL
-				if (toState.external) {
-					event.preventDefault();
-					$window.open(toState.external+$state.params.id, '_self');
-				}
 			});
 		});
 });
