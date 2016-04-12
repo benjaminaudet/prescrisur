@@ -20,6 +20,10 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'front/app/templates/login.html',
 			access: {restricted: false}
 		})
+		.when('/logout', {
+			resolve: {controller: 'LogoutController'},
+			access: {restricted: true}
+		})
 		.when('/specialities/:id', {
 			controller: 'SpecialityController',
 			templateUrl: 'front/app/templates/welcome.html',

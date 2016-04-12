@@ -1,6 +1,6 @@
 # coding=utf-8
 from flask import *
-from flask.ext.login import login_required, login_user, current_user
+from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from api import app, login_manager
 from api.models import Speciality, Substance, User
@@ -47,6 +47,13 @@ def login():
 		login_user(user)
 		return jsonify(data=user)
 	return jsonify({'error': 'error'})
+
+
+@app.route('/api/logout')
+@login_required
+def logout():
+	logout_user()
+	return jsonify({'success': True})
 
 
 @app.route('/api/me')

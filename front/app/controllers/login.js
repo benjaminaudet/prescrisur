@@ -6,7 +6,6 @@ angular.module('prescrisurApp.controllers')
 	'Auth',
 
 	function($scope, $location, Auth) {
-		$scope.user = null;
 
 		$scope.login = function () {
 			// initial values
@@ -20,7 +19,6 @@ angular.module('prescrisurApp.controllers')
 					$location.path('/');
 					$scope.disabled = false;
 					$scope.loginForm = {};
-					$scope.setCurrentUser(user);
 				})
 				// handle error
 				.catch(function () {
@@ -31,6 +29,16 @@ angular.module('prescrisurApp.controllers')
 				});
 		};
 	}
+])
+
+.controller("LogoutController", [
+	'$scope',
+	'$location',
+	'Auth',
+
+	function($scope, $location, Auth) {
+		Auth.logout().then(function () {
+			$location.path('/');
+		});
+	}
 ]);
-
-
