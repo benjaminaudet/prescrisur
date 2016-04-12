@@ -1,7 +1,8 @@
 var app = angular.module('prescrisurApp', [
 	'ngRoute',
-	'prescrisurApp.controllers',
-	'prescrisurApp.services'
+	'prescrisurApp.modelServices',
+	'prescrisurApp.loginServices',
+	'prescrisurApp.controllers'
 ]);
 
 angular.module('prescrisurApp.controllers', []);
@@ -21,12 +22,11 @@ app.config(function($routeProvider, $locationProvider) {
 			access: {restricted: false}
 		})
 		.when('/logout', {
-			resolve: {controller: 'LogoutController'},
+			resolve: {controller : 'LogoutService'},
 			access: {restricted: true}
 		})
 		.when('/specialities/:id', {
-			controller: 'SpecialityController',
-			templateUrl: 'front/app/templates/welcome.html',
+			resolve: {controller : 'SpecialityService'},
 			access: {restricted: true}
 		})
 		.when('/substances/:id', {
@@ -40,16 +40,16 @@ app.config(function($routeProvider, $locationProvider) {
 		//$locationProvider.html5Mode(true);
 });
 
-app.run(function ($rootScope, $location, $route, Auth) {
+app.run(function ($rootScope, $location, $route, AuthService) {
 	var postLogInRoute;
 	$rootScope.$on('$routeChangeStart',
 		function (event, next, current) {
-			Auth.getUser().then(function(user){
-				if(next.access.restricted && !Auth.isLoggedIn()) {
+			AuthService.getUser().then(function(user){
+				if(next.access.restricted && !AuthService.isLoggedIn()) {
 					postLogInRoute = $location.path();
 					$location.path('/login');
-					$route.reload();
-				} else if(postLogInRoute && Auth.isLoggedIn()) {
+					return $route.reload();
+				} else if(postLogInRoute && AuthService.isLoggedIn()) {
 					$location.path(postLogInRoute);
 					postLogInRoute = null;
 				}

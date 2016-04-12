@@ -2,15 +2,15 @@ angular.module('prescrisurApp.controllers')
 
 .controller("HomeController", [
 	'$scope',
-	'Search',
+	'SearchService',
 
-	function($scope, Search) {
+	function($scope, SearchService) {
 		$scope.q = null;
 		$scope.results = [];
 
 		$scope.search = function() {
 			if($scope.q.length > 0) {
-				Search.get({q: $scope.q}, function(data) {
+				SearchService.get({q: $scope.q}, function(data) {
 					$scope.results = data.data;
 				});
 			} else {

@@ -3,12 +3,12 @@ angular.module('prescrisurApp.controllers')
 .controller("SubstanceController", [
 	'$scope',
 	'$routeParams',
-	'Substance',
+	'SubstanceService',
 
-	function($scope, $routeParams, Substance) {
+	function($scope, $routeParams, SubstanceService) {
 		$scope.substance = null;
 
-		Substance.get({ id: $routeParams.id }, function(data) {
+		SubstanceService.get({ id: $routeParams.id }, function(data) {
 			$scope.substance = data.data;
 		});
 	}

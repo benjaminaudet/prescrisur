@@ -2,10 +2,10 @@ from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, password_hash=None, username=None, role=None):
+	def __init__(self, _id=None, password_hash=None, name=None, role=None):
 		self._id = _id
 		self.password_hash = password_hash
-		self.username = username
+		self.name = name
 		self.role = role
 
 	@property

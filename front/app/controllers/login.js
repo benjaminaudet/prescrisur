@@ -3,9 +3,9 @@ angular.module('prescrisurApp.controllers')
 .controller("LoginController", [
 	'$scope',
 	'$location',
-	'Auth',
+	'AuthService',
 
-	function($scope, $location, Auth) {
+	function($scope, $location, AuthService) {
 
 		$scope.login = function () {
 			// initial values
@@ -13,7 +13,7 @@ angular.module('prescrisurApp.controllers')
 			$scope.disabled = true;
 
 			// call login from service
-			Auth.login($scope.loginForm.email, $scope.loginForm.passwd)
+			AuthService.login($scope.loginForm.email, $scope.loginForm.passwd)
 				// handle success
 				.then(function (user) {
 					$location.path('/');
@@ -28,17 +28,5 @@ angular.module('prescrisurApp.controllers')
 					$scope.loginForm = {};
 				});
 		};
-	}
-])
-
-.controller("LogoutController", [
-	'$scope',
-	'$location',
-	'Auth',
-
-	function($scope, $location, Auth) {
-		Auth.logout().then(function () {
-			$location.path('/');
-		});
 	}
 ]);
