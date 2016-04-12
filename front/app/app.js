@@ -16,6 +16,11 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
+		.when('/test', {
+			controller: 'HomeController',
+			templateUrl: 'front/app/templates/test.html',
+			access: {restricted: false}
+		})
 		.when('/login', {
 			controller : 'LoginController',
 			templateUrl: 'front/app/templates/login.html',
