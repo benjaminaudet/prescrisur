@@ -1,10 +1,10 @@
 angular.module('prescrisurApp.controllers')
 
 .controller("SpecialityController", [
-	'$scope',
+	'$window',
 	'$routeParams',
 
-	function($scope, $routeParams) {
-		window.location.href = 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='+$routeParams.id;
+	function($window, $routeParams) {
+		$window.location.href = 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='+$routeParams.id;
 	}
 ]);
