@@ -1,3 +1,12 @@
 <div class="disclaimer">
 	<h1>Prescrisur</h1>
+
+	<a href="/#/substances/02064">Subst</a>
+	<a href="/#/specialities/32238">Spec</a>
+
+	<input type="text" ng-model="q" ng-change="search()" />
+
+	<div ng-repeat="r in results">
+		<div>{{ r.full_name }}</div>
+	</div>
 </div>
