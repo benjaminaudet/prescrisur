@@ -1,35 +1,53 @@
-<div class="disclaimer">
-	<h1>Prescrisur</h1>
-
-	<a href="/#/substances/02064">Subst</a>
-	<a href="/#/specialities/32238">Spec</a>
-
-	<div class="form-group">
-		<div class="btn-group btn-group-justified" role="group" aria-label="...">
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-default" ng-class="{active:searchType == 'pathologies'}" ng-click="searchType = 'pathologies'">Pathologies</button>
-			</div>
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-default" ng-class="{active:searchType == 'substances'}" ng-click="searchType = 'substances'">Substances</button>
-			</div>
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-default" ng-class="{active:searchType == 'specialities'}" ng-click="searchType = 'specialities'">Médicaments (ANSM)</button>
-			</div>
+<div class="middle">
+	<div class="container logo-container">
+		<div class="col-md-12 logo">
+			<div id="logo"></div>
 		</div>
-		<input type="text" ng-model="q" ng-change="search()" class="form-control" />
 	</div>
 
-	<div ng-repeat="r in results">
-		<div ng-if="searchType == 'specialities'"><a href="#/specialities/{{ r._id }}">
-			{{ r.full_name }}
-			<span ng-if="r.status" class="status">[{{ r.status }}]</span>
-		</a></div>
-		<div ng-if="searchType == 'substances'"><a href="#/substances/{{ r._id }}">
-			{{ r.name }}
-			<span ng-if="r.status" class="status">[{{ r.status }}]</span>
-		</a></div>
-		<div ng-if="searchType == 'pathologies'"><a href="#/pathologies/{{ r._id }}">
-			{{ r.name }}
-		</a></div>
+	<div class="container content-container">
+		<div class="col-md-12 content">
+
+			<div class="form-group visible-md visible-lg visible-sm">
+				<div class="btn-group btn-group-justified" data-toggle="buttons">
+					<label class="btn btn-default btn-xs-text active">
+						<input type="radio" ng-model="searchType" value="pathologies"> Pathologies
+					</label>
+					<label class="btn btn-default btn-xm-text">
+						<input type="radio" ng-model="searchType" value="specialities"> Médicaments <small>(source ANSM)</small>
+					</label>
+					<label class="btn btn-default btn-xl-text">
+						<input type="radio" ng-model="searchType" value="classes"> Classes Pharmaco-Thérapeutiques
+					</label>
+					<label class="btn btn-default btn-xs-text">
+						<input type="radio" ng-model="searchType" value="substances"> Substances
+					</label>
+				</div>
+				<input type="text" ng-model="q" ng-change="search()" class="form-control" />
+			</div>
+
+			<div class="form-group visible-xs">
+				<div class="btn-group btn-group-vertical" data-toggle="buttons">
+					<label class="btn btn-default active">
+						<input type="radio" ng-model="searchType" value="pathologies"> Pathologies
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" ng-model="searchType" value="specialities"> Médicaments <small>(source ANSM)</small>
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" ng-model="searchType" value="classes"> Classes Pharmaco-Thérapeutiques
+					</label>
+					<label class="btn btn-default">
+						<input type="radio" ng-model="searchType" value="substances"> Substances
+					</label>
+				</div>
+				<input type="text" ng-model="q" ng-change="search()" class="form-control" />
+			</div>
+
+			<div ng-repeat="r in results">
+				<div ng-if="searchType == 'specialities'"><a href="#/specialities/{{ r._id }}">{{ r.full_name }}</a></div>
+				<div ng-if="searchType == 'substances'"><a href="#/substances/{{ r._id }}">{{ r.name }}</a></div>
+			</div>
+		</div>
 	</div>
 </div>

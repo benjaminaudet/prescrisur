@@ -49,8 +49,10 @@ html {
 }
 .middle .container {
     background-color: #FFF;
-    min-height: 300px;
     padding-bottom: 20px;
+}
+.middle .content-container {
+    min-height: 300px;
 }
 .navbar-nav li a,
 .navbar-nav li .btn-group,
@@ -105,6 +107,67 @@ html {
 .menu-link {
     margin-left: 5px;
 }
+
+#logo {
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    height: 200px;
+}
+
+.btn-xs-text {
+    width: 17% !important;
+}
+
+.btn-xm-text {
+    width: 28% !important;
+}
+
+.btn-xl-text {
+    width: 38% !important;
+}
+
+.btn-group-vertical {
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .middle .logo-container {
+        min-height: 100px;
+        padding: 5px 20px;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 500px) {
+    .middle .logo-container {
+        min-height: 100px;
+        padding: 15px 120px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 920px) {
+    .middle .logo-container {
+        min-height: 150px;
+        padding: 20px 130px;
+    }
+}
+
+@media (min-width: 921px) and (max-width: 1200px){
+    .middle .logo-container {
+        min-height: 150px;
+        padding: 20px 200px
+    }
+}
+
+@media (min-width: 1201px){
+    .middle .logo-container {
+        min-height: 150px;
+        padding: 20px 300px
+    }
+}
+
 
 /*Other CSS*/
 /*body {
