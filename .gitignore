@@ -3,6 +3,7 @@
 .idea/
 .cache/
 test/.cache/
+.coverage
 
 # Python
 *.pyc

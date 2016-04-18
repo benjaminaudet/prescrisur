@@ -1,7 +1,7 @@
 # coding=utf-8
 import pytest
 
-from prescrisur.update import Substance, SubstanceUpdater
+from api.update import Substance, SubstanceUpdater
 
 
 @pytest.fixture(autouse=True)
