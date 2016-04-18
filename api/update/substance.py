@@ -17,7 +17,12 @@ class SubstanceUpdater(object):
 			if subst_id not in substances:
 				substances[subst_id] = self.create_substance(line)
 			substances[subst_id].add_speciality_from_cis(line[0])
-		map(lambda x: substances[x].save(), substances)
+		map(lambda x: self.sort_and_save(substances[x]), substances)
+
+	@staticmethod
+	def sort_and_save(substance):
+		substance.specialities.sort(key=lambda s: s.name)
+		return substance.save()
 
 	@staticmethod
 	def create_substance(line):
