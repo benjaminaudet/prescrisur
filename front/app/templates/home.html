@@ -17,7 +17,10 @@
 	</div>
 
 	<div ng-repeat="r in results">
-		<div ng-if="searchType == 'specialities'"><a href="#/specialities/{{ r._id }}">{{ r.full_name }}</a></div>
+		<div ng-if="searchType == 'specialities'"><a href="#/specialities/{{ r._id }}">
+			{{ r.full_name }}
+			<span ng-if="r.status" class="status">[{{ r.status }}]</span>
+		</a></div>
 		<div ng-if="searchType == 'substances'"><a href="#/substances/{{ r._id }}">{{ r.name }}</a></div>
 	</div>
 </div>
