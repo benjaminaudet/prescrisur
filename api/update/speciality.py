@@ -5,6 +5,7 @@ import urllib2
 from api.models import Speciality
 
 SPECIALITIES_URI = 'http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_bdpm.txt'
+SPEC_STATUS_URI = 'http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_GENER_bdpm.txt'
 REG_NAME = r"([a-zA-Z0-9.()'\"\-\/ ]+)(\s([0-9,.\/-]+(\s[0-9])?\s?(bar|G|M|m|µ|n|g|I|%|U|u|POUR|pour|microgramme|gramme).*))"
 REG_TYPE = r" et\s?"
 
@@ -18,7 +19,17 @@ class SpecialityUpdater(object):
 			if not self.is_valid(line[4], line[6]):
 				continue
 			self.update_one(line)
-		return
+		return self.update_spec_status()
+
+	def update_spec_status(self):
+		req = urllib2.urlopen(SPEC_STATUS_URI)
+		bulk = Speciality.collection.initialize_ordered_bulk_op()
+		for line in req.readlines():
+			line = line.decode('ISO-8859-1').encode('UTF8').split('\t')
+			spec_status = self.get_spec_status(line[3])
+			if spec_status:
+				bulk.find({'_id': line[2]}).update({'$set': {'status': spec_status}})
+		return bulk.execute()
 
 	def update_one(self, line):
 		name, dosage = self.parse_name(line[1])
@@ -67,3 +78,11 @@ class SpecialityUpdater(object):
 			spec_types = '/'.join(spec_type)
 			name += ' (' + spec_types + ')'
 		return name
+
+	@staticmethod
+	def get_spec_status(status):
+		if status == '0':
+			return 'R'
+		elif status in ['1', '2', '4']:
+			return 'G'
+		return None

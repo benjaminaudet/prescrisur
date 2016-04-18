@@ -81,6 +81,14 @@ class TestParseName:
 		assert speciality_updater.parse_name(' '.join([name, dosage])) == (name, dosage)
 
 
+def test_get_spec_status(speciality_updater):
+	assert speciality_updater.get_spec_status('0') == 'R'
+	assert speciality_updater.get_spec_status('1') == 'G'
+	assert speciality_updater.get_spec_status('2') == 'G'
+	assert not speciality_updater.get_spec_status('3')
+	assert speciality_updater.get_spec_status('4') == 'G'
+
+
 def test_valid_line(speciality_updater):
 	def check_save(s):
 		assert s._id == '64743867'
