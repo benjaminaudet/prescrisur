@@ -1,19 +1,19 @@
 <script type="text/ng-template"  id="tree_item_renderer.html">
 	<div class="form-group">
-		<span class="level-name">{{ data.levelName }}</span>
+		<span class="level-name">{{ data.parentLevelName }}{{ $index + 1 }}.</span>
 		<span>
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" />
 		</span>
 	</div>
-	<div class="btn" ng-click="delete($event)" ng-show="data.levels.length > 0">
+	<div class="btn" ng-click="delete(data, $index)" ng-show="pathology.levels.length > 1">
 		<i class="fa fa-remove"></i>
 		<span class="button-action">Niveau</span>
 	</div>
-	<div class="btn" ng-click="addRoot(data)" ng-show="data.depth == 1 && $index == 0">
+	<div class="btn" ng-click="addRoot()" ng-show="data.depth == 1 && $index == 0">
 		<i class="fa fa-plus"></i>
 		<span class="button-action">Niveau</span>
 	</div>
-	<div class="btn" ng-click="add(data)" ng-show="data.depth < 4">
+	<div class="btn" ng-click="add(data, $index)" ng-show="data.depth < 4">
 		<i class="fa fa-plus"></i>
 		<span class="button-action">Sous-Niveau</span>
 	</div>
@@ -29,4 +29,6 @@
 	<ul class="pathology-tree">
 		<li ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'"></li>
 	</ul>
+
+	<button class="btn btn-primary" ng-click="submit()">Envoyer</button>
 </form>
