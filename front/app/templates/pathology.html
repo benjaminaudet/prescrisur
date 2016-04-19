@@ -1,0 +1,32 @@
+<script type="text/ng-template"  id="tree_item_renderer.html">
+	<div class="form-group">
+		<span class="level-name">{{ data.levelName }}</span>
+		<span>
+			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" />
+		</span>
+	</div>
+	<div class="btn" ng-click="delete($event)" ng-show="data.levels.length > 0">
+		<i class="fa fa-remove"></i>
+		<span class="button-action">Niveau</span>
+	</div>
+	<div class="btn" ng-click="addRoot(data)" ng-show="data.depth == 1 && $index == 0">
+		<i class="fa fa-plus"></i>
+		<span class="button-action">Niveau</span>
+	</div>
+	<div class="btn" ng-click="add(data)" ng-show="data.depth < 4">
+		<i class="fa fa-plus"></i>
+		<span class="button-action">Sous-Niveau</span>
+	</div>
+	<ul>
+		<li ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'"></li>
+	</ul>
+</script>
+
+<form>
+	<div class="form-group">
+		<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie"/>
+	</div>
+	<ul class="pathology-tree">
+		<li ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'"></li>
+	</ul>
+</form>

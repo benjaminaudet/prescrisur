@@ -34,6 +34,11 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'front/app/templates/substance.html',
 			access: {restricted: true}
 		})
+		.when('/pathologies/new', {
+			controller: 'PathologyController',
+			templateUrl: 'front/app/templates/pathology.html',
+			access: {restricted: true}
+		})
 		.otherwise({redirectTo: '/'});
 
 		// enable HTML5mode to disable hashbang urls

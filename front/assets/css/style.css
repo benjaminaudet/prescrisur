@@ -19,3 +19,7 @@ body {
         margin-bottom: 0px;
     }
 
+ul.pathology-tree li,
+ul.pathology-tree > li > * {
+    list-style: none;
+}
