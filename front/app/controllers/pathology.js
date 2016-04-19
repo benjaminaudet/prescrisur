@@ -2,15 +2,29 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyController", [
 	'$scope',
+	'$routeParams',
+	'PathologyService',
+
+	function($scope, $routeParams, PathologyService) {
+		$scope.pathology = null;
+
+		PathologyService.get({ id: $routeParams.id }, function(data) {
+			$scope.pathology = data.data;
+		});
+	}
+])
+
+.controller("PathologyEditController", [
+	'$scope',
 	'PathologyService',
 
 	function($scope, PathologyService) {
-		var getLevelName = function(parentLevelName, $index) {
-			return parentLevelName + ($index + 1) + '.';
+		var getRank = function(parentRank, $index) {
+			return parentRank + ($index + 1) + '.';
 		};
 
 		$scope.delete = function(data, $index) {
-			var levelName = getLevelName(data.parentLevelName, $index);
+			var levelName = getRank(data.rank, $index);
 			var splitLevel = levelName.split('.');
 			splitLevel = splitLevel.slice(0, -1);
 			var toDel = splitLevel.pop() - 1;
@@ -22,25 +36,26 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.add = function(data, $index) {
-			var levelName = getLevelName(data.parentLevelName, $index);
+			var rank = getRank(data.rank, $index);
 			var depth = data.depth + 1;
-			data.levels.push({parentLevelName: levelName, depth: depth, levels: []});
+			data.levels.push({rank: rank, depth: depth, levels: []});
 		};
 
 		$scope.addRoot = function() {
-			$scope.pathology.levels.push({parentLevelName: '', depth: 1, levels:[]});
+			$scope.pathology.levels.push({rank: '', depth: 1, levels:[]});
 		};
 
 		$scope.submit = function() {
-			PathologyService.save($scope.pathology, function(data){
-				console.log(data)
-			});
+			console.log($scope.pathology)
+			//PathologyService.save($scope.pathology, function(data){
+			//	console.log(data)
+			//});
 		};
 
 		$scope.pathology = {
 			name: null,
 			levels: [
-				{parentLevelName: '', depth: 1, levels: []}
+				{rank: '', depth: 1, levels: []}
 			]
 		};
 	}

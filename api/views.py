@@ -37,8 +37,20 @@ def create_pathology():
 	Pathology(**data).create()
 	return jsonify({'success': True})
 
+
+@app.route('/api/pathologies/<patho_id>')
+def pathology(patho_id):
+	patho = Pathology.get(patho_id)
+	if not patho:
+		abort(404)
+	return jsonify(data=patho)
+
+
 ###############
 # Login
+###############
+
+
 @login_manager.user_loader
 def user_loader(email):
 	return User.get(email)
