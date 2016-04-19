@@ -2,8 +2,9 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyController", [
 	'$scope',
+	'PathologyService',
 
-	function($scope) {
+	function($scope, PathologyService) {
 		var getLevelName = function(parentLevelName, $index) {
 			return parentLevelName + ($index + 1) + '.';
 		};
@@ -31,7 +32,9 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.submit = function() {
-			console.log($scope.pathology);
+			PathologyService.save($scope.pathology, function(data){
+				console.log(data)
+			});
 		};
 
 		$scope.pathology = {

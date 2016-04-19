@@ -16,6 +16,7 @@ class classproperty(object):
 
 
 class BaseModel(object):
+
 	@classproperty
 	def collection(cls):
 		return db[cls.__name__]
@@ -40,5 +41,8 @@ class BaseModel(object):
 		to_string = jsonpickle.encode(self, unpicklable=False)
 		return jsonpickle.decode(to_string)
 
-	def save(self):
-		self.collection.save(self.serialize())
+	def create(self):
+		self.collection.insert_one(self.serialize())
+
+	def save(self, upsert=True):
+		self.collection.update_one({'_id': self._id}, self.serialize(), upsert=upsert)

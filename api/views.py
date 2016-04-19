@@ -3,7 +3,7 @@ from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from api import app, login_manager
-from api.models import Speciality, Substance, User
+from api.models import Pathology, Speciality, Substance, User
 
 
 @app.route('/')
@@ -30,6 +30,12 @@ def search_substance():
 	q = request.args.get('q')
 	return jsonify(data=Substance.search(q))
 
+
+@app.route('/api/pathologies', methods=['POST'])
+def create_pathology():
+	data = json.loads(request.data)
+	Pathology(**data).create()
+	return jsonify({'success': True})
 
 ###############
 # Login

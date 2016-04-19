@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<span class="level-name">{{ data.parentLevelName }}{{ $index + 1 }}.</span>
 		<span>
-			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" />
+			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</span>
 	</div>
 	<div class="btn" ng-click="delete(data, $index)" ng-show="pathology.levels.length > 1">
@@ -22,13 +22,13 @@
 	</ul>
 </script>
 
-<form>
+<form ng-submit="submit()">
 	<div class="form-group">
-		<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie"/>
+		<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie" required/>
 	</div>
 	<ul class="pathology-tree">
 		<li ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'"></li>
 	</ul>
 
-	<button class="btn btn-primary" ng-click="submit()">Envoyer</button>
+	<button type="submit" class="btn btn-primary">Envoyer</button>
 </form>
