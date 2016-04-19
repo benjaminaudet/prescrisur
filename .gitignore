@@ -4,6 +4,7 @@
 .cache/
 test/.cache/
 .coverage
+front/assets/bower_components/
 
 # Python
 *.pyc
