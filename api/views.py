@@ -32,10 +32,15 @@ def search_substance():
 
 
 @app.route('/api/pathologies', methods=['POST'])
-def create_pathology():
+@app.route('/api/pathologies/<patho_id>', methods=['PUT'])
+def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
-	Pathology(**data).create()
-	return jsonify({'success': True})
+	patho = Pathology(**data)
+	if patho_id:
+		patho.save()
+	else:
+		patho.create()
+	return jsonify(data=patho)
 
 
 @app.route('/api/pathologies/<patho_id>')

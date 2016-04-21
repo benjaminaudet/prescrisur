@@ -16,12 +16,11 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyEditController", [
 	'$scope',
+	'$location',
+	'$routeParams',
 	'PathologyService',
 
-	function($scope, PathologyService) {
-		var getRank = function(parentRank, $index) {
-			return parentRank + ($index + 1) + '.';
-		};
+	function($scope, $location, $routeParams, PathologyService) {
 
 		$scope.delete = function(data, $index) {
 			var levelName = getRank(data.rank, $index);
@@ -46,17 +45,38 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.submit = function() {
-			console.log($scope.pathology)
-			//PathologyService.save($scope.pathology, function(data){
-			//	console.log(data)
-			//});
+			var afterSave = function(data) {
+				var savedPatho = data.data;
+				$location.path('/pathologies/'+savedPatho._id);
+			};
+
+			if($routeParams.id) {
+				PathologyService.update({ id: $routeParams.id }, $scope.pathology, afterSave);
+			} else {
+				PathologyService.save($scope.pathology, afterSave);
+			}
 		};
 
-		$scope.pathology = {
-			name: null,
-			levels: [
-				{rank: '', depth: 1, levels: []}
-			]
+		var getPathology = function() {
+			if($routeParams.id) {
+				PathologyService.get({ id: $routeParams.id }, function(data) {
+					$scope.pathology = data.data;
+				});
+			}
+			else {
+				$scope.pathology = {
+					name: null,
+					levels: [
+						{rank: '', depth: 1, levels: []}
+					]
+				};
+			}
 		};
+
+		var getRank = function(parentRank, $index) {
+			return parentRank + ($index + 1) + '.';
+		};
+
+		getPathology();
 	}
 ]);

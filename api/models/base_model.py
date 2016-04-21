@@ -34,8 +34,8 @@ class BaseModel(object):
 		objs = cls.collection.find({'name': regx})
 		if not objs:
 			return []
-		# return map(lambda o: cls(**o), objs)
-		return list(objs)
+		return map(lambda o: cls(**o), objs)
+		# return list(objs)
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)
@@ -45,4 +45,4 @@ class BaseModel(object):
 		self.collection.insert_one(self.serialize())
 
 	def save(self, upsert=True):
-		self.collection.update_one({'_id': self._id}, self.serialize(), upsert=upsert)
+		self.collection.update_one({'_id': self._id}, {'$set': self.serialize()}, upsert=upsert)

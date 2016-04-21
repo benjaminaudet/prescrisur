@@ -39,6 +39,11 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'front/app/templates/pathology-edit.html',
 			access: {restricted: true}
 		})
+		.when('/pathologies/edit/:id', {
+			controller: 'PathologyEditController',
+			templateUrl: 'front/app/templates/pathology-edit.html',
+			access: {restricted: true}
+		})
 		.when('/pathologies/:id', {
 			controller: 'PathologyController',
 			templateUrl: 'front/app/templates/pathology.html',
