@@ -7,6 +7,9 @@
 	<div class="form-group">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
 			<div class="btn-group" role="group">
+				<button type="button" class="btn btn-default" ng-class="{active:searchType == 'pathologies'}" ng-click="searchType = 'pathologies'">Pathologies</button>
+			</div>
+			<div class="btn-group" role="group">
 				<button type="button" class="btn btn-default" ng-class="{active:searchType == 'substances'}" ng-click="searchType = 'substances'">Substances</button>
 			</div>
 			<div class="btn-group" role="group">
@@ -24,6 +27,9 @@
 		<div ng-if="searchType == 'substances'"><a href="#/substances/{{ r._id }}">
 			{{ r.name }}
 			<span ng-if="r.status" class="status">[{{ r.status }}]</span>
+		</a></div>
+		<div ng-if="searchType == 'pathologies'"><a href="#/pathologies/{{ r._id }}">
+			{{ r.name }}
 		</a></div>
 	</div>
 </div>

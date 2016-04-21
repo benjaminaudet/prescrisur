@@ -51,6 +51,12 @@ def pathology(patho_id):
 	return jsonify(data=patho)
 
 
+@app.route('/api/pathologies/search')
+def search_pathology():
+	q = request.args.get('q')
+	return jsonify(data=Pathology.search(q))
+
+
 ###############
 # Login
 ###############
