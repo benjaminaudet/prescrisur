@@ -37,11 +37,14 @@ angular.module('prescrisurApp.controllers')
 		$scope.add = function(data, $index) {
 			var rank = getRank(data.rank, $index);
 			var depth = data.depth + 1;
-			data.levels.push({rank: rank, depth: depth, levels: []});
+			if(!data.levels) {
+				data.levels = [];
+			}
+			data.levels.push({rank: rank, depth: depth});
 		};
 
 		$scope.addRoot = function() {
-			$scope.pathology.levels.push({rank: '', depth: 1, levels:[]});
+			$scope.pathology.levels.push({rank: '', depth: 1});
 		};
 
 		$scope.submit = function() {
@@ -50,11 +53,12 @@ angular.module('prescrisurApp.controllers')
 				$location.path('/pathologies/'+savedPatho._id);
 			};
 
-			if($stateParams.id) {
-				PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
-			} else {
-				PathologyService.save($scope.pathology, afterSave);
-			}
+			//if($stateParams.id) {
+			//	PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
+			//} else {
+			//	PathologyService.save($scope.pathology, afterSave);
+			//}
+			console.log($scope.pathology)
 		};
 
 		var getPathology = function() {
@@ -67,7 +71,7 @@ angular.module('prescrisurApp.controllers')
 				$scope.pathology = {
 					name: null,
 					levels: [
-						{rank: '', depth: 1, levels: []}
+						{rank: '', depth: 1}
 					]
 				};
 			}

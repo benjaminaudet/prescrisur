@@ -1,34 +1,44 @@
-<script type="text/ng-template"  id="tree_item_renderer.html">
+<div class="row" id="page-header">
+	<h1>Nouvelle Pathologie</h1>
+</div>
+
+<div id="content" class="row">
+	<form ng-submit="submit()" id="pathology-form" class="form-horizontal">
+		<div class="form-group">
+			<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie" required/>
+		</div>
+
+		<ul class="pathology-tree">
+			<li ng-repeat="data in pathology.levels" ng-include="'tree_level_renderer.html'"></li>
+		</ul>
+
+		<button type="submit" class="btn btn-primary">Envoyer</button>
+	</form>
+</div>
+
+<!-- Template for levels -->
+<script type="text/ng-template"  id="tree_level_renderer.html">
 	<div class="form-group">
-		<span class="level-name">{{ data.rank }}{{ $index + 1 }}.</span>
-		<span>
+		<label class="level-name col-xs-1 control-label">{{ data.rank }}{{ $index + 1 }}.</label>
+		<div class="col-xs-10">
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
-		</span>
+		</div>
+		<div class="btn-group-vertical level-actions col-xs-1" role="group">
+			<div class="btn btn-xs" ng-click="delete(data, $index)" ng-show="pathology.levels.length > 1">
+				<i class="fa fa-remove"></i>
+				Niveau
+			</div>
+			<div class="btn btn-xs" ng-click="addRoot()" ng-show="data.depth == 1 && $index == 0">
+				<i class="fa fa-plus"></i>
+				Niveau
+			</div>
+			<div class="btn btn-xs" ng-click="add(data, $index)" ng-show="data.depth < 4">
+				<i class="fa fa-plus"></i>
+				Sous-Niveau
+			</div>
+		</div>
 	</div>
-	<div class="btn" ng-click="delete(data, $index)" ng-show="pathology.levels.length > 1">
-		<i class="fa fa-remove"></i>
-		<span class="button-action">Niveau</span>
-	</div>
-	<div class="btn" ng-click="addRoot()" ng-show="data.depth == 1 && $index == 0">
-		<i class="fa fa-plus"></i>
-		<span class="button-action">Niveau</span>
-	</div>
-	<div class="btn" ng-click="add(data, $index)" ng-show="data.depth < 4">
-		<i class="fa fa-plus"></i>
-		<span class="button-action">Sous-Niveau</span>
-	</div>
-	<ul>
-		<li ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'"></li>
+	<ul ng-if="data.levels && data.levels.length > 0">
+		<li ng-repeat="data in data.levels" ng-include="'tree_level_renderer.html'"></li>
 	</ul>
 </script>
-
-<form ng-submit="submit()">
-	<div class="form-group">
-		<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie" required/>
-	</div>
-	<ul class="pathology-tree">
-		<li ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'"></li>
-	</ul>
-
-	<button type="submit" class="btn btn-primary">Envoyer</button>
-</form>

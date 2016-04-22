@@ -63,6 +63,7 @@
 #navbar {
     background-color: #B60027;
     text-align: center;
+    border-color: #B60027;
 }
 
 #navbar .nav {
@@ -102,6 +103,20 @@
     border: none;
 }
 
+/****************************/
+/*         PAGE HEADER      */
+#page-header {
+    margin: -17px 0 40px 0 !important;
+    padding: 0 10px;
+    font-family: ErasLight;
+    color: white;
+    min-height: 50px;
+    background-color: #B60027;
+}
+
+#content {
+    margin: 0 20px !important;
+}
 
 /****************************/
 /*           HOME           */
@@ -175,8 +190,24 @@
 /****************************/
 /*        PATHOLOGY         */
 /****************************/
-/*         LISTS            */
+/*         LEVEL            */
 .pathology-tree li,
 .pathology-tree li > * {
     list-style: none;
+}
+
+.pathology-tree,
+.pathology-tree ul > * {
+    padding-left: 0px;
+}
+
+
+/*         EDIT            */
+#pathology-form .form-group {
+    margin: 0 10px 20px 10px !important;
+}
+
+
+.level-actions .btn {
+    text-align: left;
 }
