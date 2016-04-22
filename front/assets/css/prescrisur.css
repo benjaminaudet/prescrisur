@@ -25,6 +25,11 @@
     font-family: MankSans; src: url('../fonts/MankSans.ttf');
 }
 
+/****************************/
+/*     CLASSES USUELLES     */
+.center {
+    text-align: center;
+}
 
 /****************************/
 /*           LOGO           */
@@ -111,7 +116,7 @@
     font-family: ErasMedium;
 }
 
-.jumbotron .btn {
+.jumbotron .btn-group .btn {
     font-family: ErasLight;
     font-size: 1.2em;
     padding-top: 10px;
@@ -154,4 +159,14 @@
 
 #search-buttons {
     margin-bottom: 2px;
+}
+
+.ui-select-choices-row.active>a {
+    background-color: white !important;
+    color: black !important;
+}
+
+.ui-select-choices-row > a:hover {
+    background-color: #428bca !important;
+    color: white !important;
 }

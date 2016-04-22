@@ -2,21 +2,43 @@ angular.module('prescrisurApp.controllers')
 
 .controller("HomeController", [
 	'$scope',
+	'$state',
 	'SearchService',
 
-	function($scope, SearchService) {
+	function($scope, $state, SearchService) {
 		$scope.q = null;
 		$scope.searchType = 'specialities';
 		$scope.results = [];
 
-		$scope.search = function() {
-			if($scope.q.length > 1) {
-				SearchService.get({q: $scope.q, searchType: $scope.searchType}, function(data) {
-					$scope.results = data.data;
-				});
-			} else {
-				$scope.results = [];
+		$scope.goTo = function($select) {
+			$state.go($scope.searchType, {id: $select.selected._id})
+		};
+
+		$scope.search = function($select) {
+			var search = '';
+			if($select) {
+				search = $select.search;
 			}
+			$scope.results = searchMessage('Recherche en cours...');
+			SearchService.get({q: search, searchType: $scope.searchType}, function(data) {
+				$scope.results = data.data;
+				if ($scope.results.length == 0) {
+					$scope.results = searchMessage('Aucun résultat');
+				}
+			});
+		};
+
+		$scope.$watch('searchType', function(newValue, oldValue) {
+			if(newValue == oldValue) { return; }
+			$scope.results = [];
+			$scope.search();
+		});
+
+		var searchMessage = function(msg) {
+			return [{
+				_id: null,
+				name: msg
+			}];
 		};
 	}
 ]);

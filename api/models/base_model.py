@@ -1,6 +1,6 @@
 import re
 import jsonpickle
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 
 
 client = MongoClient()
@@ -31,7 +31,7 @@ class BaseModel(object):
 	@classmethod
 	def search(cls, query):
 		regx = re.compile('^' +query, re.IGNORECASE)
-		objs = cls.collection.find({'name': regx})
+		objs = cls.collection.find({'name': regx}).sort('name', ASCENDING)
 		if not objs:
 			return []
 		return map(lambda o: cls(**o), objs)
