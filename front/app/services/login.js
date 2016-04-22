@@ -1,12 +1,12 @@
 angular.module('prescrisurApp.loginServices', [])
 
 .factory("LogoutService", [
-	'$location',
+	'$state',
 	'AuthService',
 
-	function($location, AuthService) {
+	function($state, AuthService) {
 		return AuthService.logout().then(function () {
-			$location.path('/');
+			$state.go('home');
 		});
 	}
 ])

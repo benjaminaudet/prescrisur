@@ -2,10 +2,10 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 
 .factory("SpecialityService", [
 	'$window',
-	'$routeParams',
+	'$stateParams',
 
-	function($window, $routeParams) {
-		return $window.location.href = 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='+$routeParams.id;
+	function($window, $stateParams) {
+		return $window.location.href = 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='+$stateParams.id;
 	}
 ])
 

@@ -2,10 +2,10 @@ angular.module('prescrisurApp.controllers')
 
 .controller("LoginController", [
 	'$scope',
-	'$location',
+	'$state',
 	'AuthService',
 
-	function($scope, $location, AuthService) {
+	function($scope, $state, AuthService) {
 
 		$scope.login = function () {
 			// initial values
@@ -16,7 +16,7 @@ angular.module('prescrisurApp.controllers')
 			AuthService.login($scope.loginForm.email, $scope.loginForm.passwd)
 				// handle success
 				.then(function (user) {
-					$location.path('/');
+					$state.go('home');
 					$scope.disabled = false;
 					$scope.loginForm = {};
 				})

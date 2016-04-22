@@ -4,9 +4,10 @@ from speciality import Speciality
 
 
 class Substance(BaseModel):
-	def __init__(self, _id, name, specialities=None):
+	def __init__(self, _id, name, status=None, specialities=None):
 		self._id = _id
 		self.name = name
+		self.status = None
 		self.specialities = []
 		if specialities:
 			self.add_specialities(specialities)
