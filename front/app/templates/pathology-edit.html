@@ -48,7 +48,7 @@
 	<ul><table class="table" ng-if="data.entries && data.entries.length > 0">
 		<tr>
 			<th>Reco</th>
-			<th>Produit</th>
+			<th colspan="2">Produit</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="entry in data.entries">
@@ -62,12 +62,22 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td class="col-md-10">
+			<td class="col-md-3">
+				<ui-select ng-model="entry.type" on-select="search('', entry.type)">
+					<ui-select-match>
+						<span ng-bind="$select.selected.name"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="productType._id as productType in productTypes">
+						{{ productType.name }}
+					</ui-select-choices>
+				</ui-select>
+			</td>
+			<td class="col-md-7">
 				<ui-select ng-model="entry.product">
 					<ui-select-match placeholder="Nom du Produit">
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
-					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
+					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select, entry.type)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
 						{{ r.name }}
 					</ui-select-choices>
 				</ui-select>

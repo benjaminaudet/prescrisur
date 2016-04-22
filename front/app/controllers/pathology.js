@@ -24,18 +24,22 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $location, $stateParams, SearchService, PathologyService) {
 		$scope.results = [];
 		$scope.recommandations = ['none', 'alert', 'middle', 'ok'];
+		$scope.productTypes = [
+			{_id: 'specialities', 'name': 'Specialité'},
+			{_id: 'substances', 'name': 'Substance'}
+		];
 
 		$scope.filterResults = function(r) {
 			return {name: r.name, _id: r._id};
 		};
 
-		$scope.search = function($select) {
+		$scope.search = function($select, searchType) {
 			var search = '';
 			if($select) {
 				search = $select.search;
 			}
 			$scope.results = searchMessage('Recherche en cours...');
-			SearchService.get({q: search, searchType: 'specialities'}, function(data) {
+			SearchService.get({q: search, searchType: searchType}, function(data) {
 				$scope.results = data.data;
 				if ($scope.results.length == 0) {
 					$scope.results = searchMessage('Aucun résultat');
@@ -75,7 +79,7 @@ angular.module('prescrisurApp.controllers')
 			if(!data.entries) {
 				data.entries = [];
 			}
-			data.entries.push({reco: {_id: 'none'}});
+			data.entries.push({reco: {_id: 'none'}, type: 'specialities'});
 		};
 
 		$scope.addRootLevel = function() {
