@@ -15,3 +15,8 @@ class Substance(BaseModel):
 	def add_specialities(self, specs):
 		for s in specs:
 			self.specialities.append(Speciality(**s))
+
+	def add_speciality_from_cis(self, cis):
+		spec = Speciality.get(cis)
+		if spec:
+			self.specialities.append(spec)

@@ -1,5 +1,8 @@
 var app = angular.module('prescrisurApp', [
 	'ui.router',
+	'ui.select',
+	'ui.bootstrap',
+	'ngSanitize',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
 	'prescrisurApp.controllers'
@@ -38,6 +41,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('specialities', {
 			url: '/specialities/:id',
+			templateUrl: 'front/app/templates/speciality.html',
 			access: {restricted: false},
 			external: 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='
 		})

@@ -10,9 +10,9 @@ run:
 	python runserver.py --debug
 
 update-spec:
-	python -c 'from prescrisur.update import SpecialityUpdater; SpecialityUpdater().execute()'
+	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'
 
 update-subst:
-	python -c 'from prescrisur.update import SubstanceUpdater; SubstanceUpdater().execute()'
+	python -c 'from api.update import SubstanceUpdater; SubstanceUpdater().execute()'
 
 update: update-spec update-subst

@@ -27,8 +27,8 @@ class SpecialityUpdater(object):
 		full_name = self.get_full_name(name, dosage, spec_type)
 		return Speciality(
 			_id=line[0],
-			full_name=full_name,
-			name=name,
+			short_name=name,
+			name=full_name,
 			dosage=dosage,
 			spec_type=spec_type,
 			treatment_type=treatment_type,
