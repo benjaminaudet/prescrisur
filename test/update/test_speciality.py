@@ -92,8 +92,8 @@ def test_get_spec_status(speciality_updater):
 def test_valid_line(speciality_updater):
 	def check_save(s):
 		assert s._id == '64743867'
-		assert s.full_name == 'ACICLOVIR RPG, 5 % (poudre/crème)'
-		assert s.name == 'ACICLOVIR RPG'
+		assert s.name == 'ACICLOVIR RPG, 5 % (poudre/crème)'
+		assert s.short_name == 'ACICLOVIR RPG'
 		assert s.dosage == '5 %'
 		assert s.spec_type == ['poudre', 'crème']
 		assert s.treatment_type == ['cutanée']
