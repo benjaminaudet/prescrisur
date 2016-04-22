@@ -211,3 +211,12 @@
 .level-actions .btn {
     text-align: left;
 }
+
+.btn.remove-entry {
+    background-color: white;
+}
+
+.pathology-tree .table {
+    margin-left: 65px;
+    width: 90%;
+}

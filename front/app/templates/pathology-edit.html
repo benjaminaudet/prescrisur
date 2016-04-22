@@ -20,25 +20,50 @@
 <script type="text/ng-template"  id="tree_level_renderer.html">
 	<div class="form-group">
 		<label class="level-name col-xs-1 control-label">{{ data.rank }}{{ $index + 1 }}.</label>
-		<div class="col-xs-10">
+		<div class="col-xs-9">
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</div>
-		<div class="btn-group-vertical level-actions col-xs-1" role="group">
-			<div class="btn btn-xs" ng-click="delete(data, $index)" ng-show="pathology.levels.length > 1">
+		<div class="btn-group-vertical level-actions col-xs-2" role="group">
+			<div class="btn btn-xs" ng-click="deleteLevel(data, $index)" ng-show="pathology.levels.length > 1">
 				<i class="fa fa-remove"></i>
 				Niveau
 			</div>
-			<div class="btn btn-xs" ng-click="addRoot()" ng-show="data.depth == 1 && $index == 0">
+			<div class="btn btn-xs" ng-click="addRootLevel()" ng-show="data.depth == 1 && $index == 0">
 				<i class="fa fa-plus"></i>
 				Niveau
 			</div>
-			<div class="btn btn-xs" ng-click="add(data, $index)" ng-show="data.depth < 4">
+			<div class="btn btn-xs" ng-click="addSubLevel(data, $index)" ng-show="data.depth < 4">
 				<i class="fa fa-plus"></i>
 				Sous-Niveau
+			</div>
+			<div class="btn btn-xs" ng-click="addEntry(data)" ng-show="!data.levels || data.levels.length == 0">
+				<i class="fa fa-plus"></i>
+				Entrée
 			</div>
 		</div>
 	</div>
 	<ul ng-if="data.levels && data.levels.length > 0">
 		<li ng-repeat="data in data.levels" ng-include="'tree_level_renderer.html'"></li>
 	</ul>
+	<ul><table class="table" ng-if="data.entries && data.entries.length > 0">
+		<tr>
+			<th>Produit</th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="entry in data.entries">
+			<td>
+				<ui-select ng-model="entry.product", on-select="saveEntry($select, entry.product)">
+					<ui-select-match placeholder="Nom du Produit">
+						<span ng-bind="$select.selected.name"></span>
+					</ui-select-match>
+					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
+						{{ r.name }}
+					</ui-select-choices>
+				</ui-select>
+			</td>
+			<td>
+				<button class="btn remove-entry" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></button>
+			</td>
+		</tr>
+	</table></ul>
 </script>
