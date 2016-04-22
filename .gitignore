@@ -8,6 +8,3 @@
 .cache/
 test/.cache/
 .coverage
-
-# Angular
-front/assets/bower_components/

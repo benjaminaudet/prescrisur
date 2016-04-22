@@ -25,11 +25,6 @@
     font-family: MankSans; src: url('../fonts/MankSans.ttf');
 }
 
-/****************************/
-/*     CLASSES USUELLES     */
-.center {
-    text-align: center;
-}
 
 /****************************/
 /*           LOGO           */
@@ -44,7 +39,6 @@
     width: 300px;
     background: url('../img/logo-header.png') no-repeat;
     margin-bottom: 10px;
-    cursor: pointer;
 }
 
 
@@ -116,7 +110,7 @@
     font-family: ErasMedium;
 }
 
-.jumbotron .btn-group .btn {
+.jumbotron .btn {
     font-family: ErasLight;
     font-size: 1.2em;
     padding-top: 10px;
@@ -159,14 +153,4 @@
 
 #search-buttons {
     margin-bottom: 2px;
-}
-
-.ui-select-choices-row.active>a {
-    background-color: white !important;
-    color: black !important;
-}
-
-.ui-select-choices-row > a:hover {
-    background-color: #428bca !important;
-    color: white !important;
 }
