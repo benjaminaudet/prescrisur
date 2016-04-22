@@ -23,6 +23,7 @@ angular.module('prescrisurApp.controllers')
 
 	function($scope, $location, $stateParams, SearchService, PathologyService) {
 		$scope.results = [];
+		$scope.recommandations = ['none', 'alert', 'middle', 'ok'];
 
 		$scope.filterResults = function(r) {
 			return {name: r.name, _id: r._id};
@@ -74,7 +75,7 @@ angular.module('prescrisurApp.controllers')
 			if(!data.entries) {
 				data.entries = [];
 			}
-			data.entries.push({});
+			data.entries.push({reco: {_id: 'none'}});
 		};
 
 		$scope.addRootLevel = function() {

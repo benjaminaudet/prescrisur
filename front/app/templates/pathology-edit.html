@@ -47,12 +47,23 @@
 	</ul>
 	<ul><table class="table" ng-if="data.entries && data.entries.length > 0">
 		<tr>
+			<th>Reco</th>
 			<th>Produit</th>
 			<th></th>
 		</tr>
 		<tr ng-repeat="entry in data.entries">
-			<td>
-				<ui-select ng-model="entry.product", on-select="saveEntry($select, entry.product)">
+			<td class="col-md-1">
+				<ui-select ng-model="entry.reco._id" class="select-reco">
+					<ui-select-match>
+						<img ng-src="front/assets/img/gelule_{{ $select.selected }}_mini.png" alt="{{ $select.selected }}"/>
+					</ui-select-match>
+					<ui-select-choices repeat="reco in recommandations">
+						<img ng-src="front/assets/img/gelule_{{ reco }}.png" alt="{{ reco }}"/>
+					</ui-select-choices>
+				</ui-select>
+			</td>
+			<td class="col-md-10">
+				<ui-select ng-model="entry.product">
 					<ui-select-match placeholder="Nom du Produit">
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
@@ -61,7 +72,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td>
+			<td class="col-md-1">
 				<button class="btn remove-entry" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></button>
 			</td>
 		</tr>
