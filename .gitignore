@@ -1,10 +1,10 @@
 # Intellij Shit
 *.iml
 .idea/
-.cache/
-test/.cache/
-.coverage
-front/assets/bower_components/
+
 
 # Python
 *.pyc
+.cache/
+test/.cache/
+.coverage
