@@ -1,5 +1,5 @@
 var app = angular.module('prescrisurApp', [
-	'ngRoute',
+	'ui.router',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
 	'prescrisurApp.controllers'
@@ -8,72 +8,68 @@ var app = angular.module('prescrisurApp', [
 angular.module('prescrisurApp.controllers', []);
 
 
-app.config(function($routeProvider, $locationProvider) {
-	$routeProvider
-		// route for the home page
-		.when('/', {
+app.config(function($stateProvider, $urlRouterProvider) {
+
+	$urlRouterProvider.otherwise('/');
+
+	$stateProvider
+		.state('home', {
+			url: '/',
 			controller : 'HomeController',
 			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
-		.when('/test', {
+		.state('test', {
+			url: '/test',
 			controller: 'HomeController',
 			templateUrl: 'front/app/templates/test.html',
 			access: {restricted: false}
 		})
-		.when('/login', {
+		.state('login', {
+			url: '/login',
 			controller : 'LoginController',
 			templateUrl: 'front/app/templates/login.html',
 			access: {restricted: false}
 		})
-		.when('/logout', {
+		.state('logout', {
+			url: '/logout',
 			resolve: {controller : 'LogoutService'},
 			access: {restricted: true}
 		})
-		.when('/specialities/:id', {
-			resolve: {controller : 'SpecialityService'},
-			access: {restricted: true}
+		.state('specialities', {
+			url: '/specialities/:id',
+			access: {restricted: false},
+			external: 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='
 		})
-		.when('/substances/:id', {
+		.state('substances', {
+			url: '/substances/:id',
 			controller: 'SubstanceController',
 			templateUrl: 'front/app/templates/substance.html',
 			access: {restricted: true}
 		})
-		.when('/pathologies/new', {
-			controller: 'PathologyEditController',
-			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true}
-		})
-		.when('/pathologies/edit/:id', {
-			controller: 'PathologyEditController',
-			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true}
-		})
-		.when('/pathologies/:id', {
-			controller: 'PathologyController',
-			templateUrl: 'front/app/templates/pathology.html',
-			access: {restricted: true}
-		})
-		.otherwise({redirectTo: '/'});
-
-		// enable HTML5mode to disable hashbang urls
-		//$locationProvider.html5Mode(true);
 });
 
-app.run(function ($rootScope, $location, $route, AuthService) {
-	var postLogInRoute;
-	$rootScope.$on('$routeChangeStart',
-		function (event, next, current) {
+app.run(function ($rootScope, $state, $window, AuthService) {
+	var postLoginState, postLoginParams;
+	$rootScope.$on('$stateChangeStart',
+		function (event, toState, toParams) {
 			AuthService.getUser().then(function(user){
-				if(next.access.restricted && !AuthService.isLoggedIn()) {
-					postLogInRoute = $location.path();
-					$location.path('/login');
-					return $route.reload();
-				} else if(postLogInRoute && AuthService.isLoggedIn()) {
-					$location.path(postLogInRoute);
-					postLogInRoute = null;
+				if(toState.access.restricted && !AuthService.isLoggedIn()) {
+					postLoginState = $state.current.name;
+					postLoginParams = $state.params;
+					return $state.go('login');
+				} else if(postLoginState && AuthService.isLoggedIn()) {
+					$state.go(postLoginState, postLoginParams);
+					postLoginState = null;
+					postLoginParams = null;
 				}
 				$rootScope.setCurrentUser(user);
+
+				// Redirect to external URL
+				if (toState.external) {
+					event.preventDefault();
+					$window.open(toState.external+$state.params.id, '_self');
+				}
 			});
 		});
 });

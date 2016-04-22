@@ -9,7 +9,7 @@
     "jquery": "~1.11.x",
     "bootstrap": "~3.3.x",
     "angular": "1.5.x",
-    "angular-route": "~1.5.x",
+    "angular-ui-router": "~0.2.x",
     "angular-resource": "~1.5.x",
     "components-font-awesome": "4.5.x"
   }

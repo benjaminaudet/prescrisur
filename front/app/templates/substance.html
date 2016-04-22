@@ -2,10 +2,7 @@
 	<h1>{{ substance.name }}</h1>
 	<div class="specialities">
 		<div class="speciality" ng-repeat="spec in substance.specialities">
-			<a href="#/specialities/{{ spec._id }}" target="_blank">
-				{{ spec.full_name }}
-				<span ng-if="spec.status" class="status"> [{{ spec.status }}]</span>
-			</a>
+			<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.full_name }}</a>
 		</div>
 	</div>
 </div>

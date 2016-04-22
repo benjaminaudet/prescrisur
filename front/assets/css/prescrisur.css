@@ -39,6 +39,7 @@
     width: 300px;
     background: url('../img/logo-header.png') no-repeat;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 
