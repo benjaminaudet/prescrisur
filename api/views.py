@@ -11,12 +11,6 @@ def index():
 	return app.send_static_file('index.html')
 
 
-# TODO: virer ce truc
-@app.route('/lol')
-def index2():
-	return app.send_static_file('index_old.html')
-
-
 @app.route('/api/specialities/search')
 def search_speciality():
 	q = request.args.get('q')
