@@ -1,8 +1,10 @@
 # Intellij Shit
 *.iml
 .idea/
-.cache/
-test/.cache/
+
 
 # Python
 *.pyc
+.cache/
+test/.cache/
+.coverage
