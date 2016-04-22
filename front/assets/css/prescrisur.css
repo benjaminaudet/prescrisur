@@ -170,3 +170,13 @@
     background-color: #428bca !important;
     color: white !important;
 }
+
+
+/****************************/
+/*        PATHOLOGY         */
+/****************************/
+/*         LISTS            */
+.pathology-tree li,
+.pathology-tree li > * {
+    list-style: none;
+}

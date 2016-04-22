@@ -2,13 +2,13 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyController", [
 	'$scope',
-	'$routeParams',
+	'$stateParams',
 	'PathologyService',
 
-	function($scope, $routeParams, PathologyService) {
+	function($scope, $stateParams, PathologyService) {
 		$scope.pathology = null;
 
-		PathologyService.get({ id: $routeParams.id }, function(data) {
+		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
 		});
 	}
@@ -17,10 +17,10 @@ angular.module('prescrisurApp.controllers')
 .controller("PathologyEditController", [
 	'$scope',
 	'$location',
-	'$routeParams',
+	'$stateParams',
 	'PathologyService',
 
-	function($scope, $location, $routeParams, PathologyService) {
+	function($scope, $location, $stateParams, PathologyService) {
 
 		$scope.delete = function(data, $index) {
 			var levelName = getRank(data.rank, $index);
@@ -50,16 +50,16 @@ angular.module('prescrisurApp.controllers')
 				$location.path('/pathologies/'+savedPatho._id);
 			};
 
-			if($routeParams.id) {
-				PathologyService.update({ id: $routeParams.id }, $scope.pathology, afterSave);
+			if($stateParams.id) {
+				PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
 			} else {
 				PathologyService.save($scope.pathology, afterSave);
 			}
 		};
 
 		var getPathology = function() {
-			if($routeParams.id) {
-				PathologyService.get({ id: $routeParams.id }, function(data) {
+			if($stateParams.id) {
+				PathologyService.get({ id: $stateParams.id }, function(data) {
 					$scope.pathology = data.data;
 				});
 			}

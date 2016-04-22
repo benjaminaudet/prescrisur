@@ -39,6 +39,24 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			resolve: {controller : 'LogoutService'},
 			access: {restricted: true}
 		})
+		.state('pathologies-edit', {
+			url: '/pathologies/edit/:id',
+			controller: 'PathologyEditController',
+			templateUrl: 'front/app/templates/pathology-edit.html',
+			access: {restricted: true}
+		})
+		.state('pathologies-new', {
+			url: '/pathologies/new',
+			controller: 'PathologyEditController',
+			templateUrl: 'front/app/templates/pathology-edit.html',
+			access: {restricted: true}
+		})
+		.state('pathologies', {
+			url: '/pathologies/:id',
+			controller: 'PathologyController',
+			templateUrl: 'front/app/templates/pathology.html',
+			access: {restricted: true}
+		})
 		.state('specialities', {
 			url: '/specialities/:id',
 			templateUrl: 'front/app/templates/speciality.html',
