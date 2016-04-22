@@ -26,3 +26,4 @@ class Substance(BaseModel):
 	def sort_specialities(self):
 		self.specialities.sort(key=lambda s: s.name)
 		return self
+

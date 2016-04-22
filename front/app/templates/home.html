@@ -6,24 +6,31 @@
 	</p>
 	<div id="search-buttons" class="form-group">
 		<div class="btn-group btn-group-justified" data-toggle="buttons">
-			<label class="btn btn-primary btn-xs-text active">
-				<input type="radio" ng-model="searchType" value="pathologies"> Pathologies
+			<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'pathologies'">
+				Pathologies
 			</label>
-			<label class="btn btn-primary btn-xm-text">
-				<input type="radio" ng-model="searchType" value="specialities"> Médicaments <small>(source ANSM)</small>
+			<label class="btn btn-primary btn-xm-text" ng-model="searchType" uib-btn-radio="'specialities'">
+				Médicaments <small>(source ANSM)</small>
 			</label>
-			<label class="btn btn-primary btn-xl-text">
-				<input type="radio" ng-model="searchType" value="classes"> Classes Pharmaco-Thérapeutiques
+			<label class="btn btn-primary btn-xl-text" ng-model="searchType" uib-btn-radio="'classes'">
+				Classes Pharmaco-Thérapeutiques
 			</label>
-			<label class="btn btn-primary btn-xs-text">
-				<input type="radio" ng-model="searchType" value="substances"> Substances
+			<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'substances'">
+				Substances
 			</label>
 		</div>
 	</div>
 	<div class="form-group">
-		<input id="search-bar" type="text" ng-model="q" ng-change="search()" class="form-control" />
+		<ui-select ng-model="selected.value" on-select="goTo($select)">
+			<ui-select-match placeholder="Rechercher...">
+				<span ng-bind="$select.selected.name"></span>
+			</ui-select-match>
+			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 100">
+					{{ r.name }}
+			</ui-select-choices>
+		</ui-select>
 	</div>
-	<!--<p><a class="btn btn-lg btn-primary" href="#" role="button">Rechercher</a></p>-->
+	<!--<button class="btn btn-lg btn-primary" ng-click="" role="button">Rechercher</button>-->
 </div>
 
 <!-- Example row of columns -->

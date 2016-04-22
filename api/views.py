@@ -10,6 +10,7 @@ from api.models import Pathology, Speciality, Substance, User
 def index():
 	return app.send_static_file('index.html')
 
+
 # TODO: virer ce truc
 @app.route('/lol')
 def index2():
