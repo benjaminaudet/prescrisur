@@ -25,7 +25,7 @@
 			<ui-select-match placeholder="Rechercher...">
 				<span ng-bind="$select.selected.name"></span>
 			</ui-select-match>
-			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 100">
+			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
 					{{ r.name }}
 			</ui-select-choices>
 		</ui-select>

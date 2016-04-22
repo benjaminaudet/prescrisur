@@ -31,11 +31,11 @@ class BaseModel(object):
 	@classmethod
 	def search(cls, query):
 		regx = re.compile('^' +query, re.IGNORECASE)
-		objs = cls.collection.find({'name': regx}).sort('name', ASCENDING)
+		objs = cls.collection.find({'name': regx}, limit=200).sort('name', ASCENDING)
 		if not objs:
 			return []
-		# return map(lambda o: cls(**o), objs)
-		return list(objs)
+		return map(lambda o: cls(**o), objs)
+		# return list(objs)
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)
