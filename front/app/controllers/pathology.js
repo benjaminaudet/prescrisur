@@ -8,6 +8,13 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $stateParams, PathologyService) {
 		$scope.pathology = null;
 
+		$scope.entryColspan = function(entry) {
+			if(entry.info) {
+				return 1;
+			}
+			return 2;
+		};
+
 		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
 		});
@@ -92,6 +99,10 @@ angular.module('prescrisurApp.controllers')
 			data.entries.push({reco: {_id: 'none'}, type: 'specialities'});
 		};
 
+		$scope.addInfo = function(entry) {
+			entry.info = 'Info';
+		};
+
 		$scope.addRootLevel = function() {
 			$scope.pathology.levels.push({rank: '', depth: 1});
 		};
@@ -101,7 +112,7 @@ angular.module('prescrisurApp.controllers')
 				var savedPatho = data.data;
 				$location.path('/pathologies/'+savedPatho._id);
 			};
-			
+
 			if($stateParams.id) {
 				PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
 			} else {
@@ -157,7 +168,7 @@ angular.module('prescrisurApp.controllers')
 			if(data.depth == 1) {
 				return $scope.pathology.levels.length > 1;
 			}
-			return !data.levels && !data.entries;
+			return !data.levels;
 		};
 	}
 ]);

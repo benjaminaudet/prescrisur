@@ -67,9 +67,10 @@
 		<tr>
 			<th>Reco</th>
 			<th colspan="2">Produit</th>
+			<th>Info</th>
 			<th></th>
 		</tr>
-		<tr ng-repeat="entry in data.entries">
+		<tr ng-repeat-start="entry in data.entries">
 			<td class="col-md-1">
 				<ui-select ng-model="entry.reco._id" class="select-reco">
 					<ui-select-match>
@@ -90,7 +91,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td class="col-md-7">
+			<td class="col-md-6">
 				<ui-select ng-model="entry.product">
 					<ui-select-match placeholder="Nom du Produit">
 						<span ng-bind="$select.selected.name"></span>
@@ -101,7 +102,15 @@
 				</ui-select>
 			</td>
 			<td class="col-md-1">
+				<div class="btn btn-default" ng-click="addInfo(entry)">Info</div>
+			</td>
+			<td class="col-md-1">
 				<button class="btn remove-entry" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></button>
+			</td>
+		</tr>
+		<tr ng-if="entry.info" ng-repeat-end>
+			<td colspan="5">
+				<text-angular ng-model="entry.info" class="pathology-editor"></text-angular>
 			</td>
 		</tr>
 	</table>

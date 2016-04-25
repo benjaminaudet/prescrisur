@@ -339,6 +339,16 @@
 
 #pathology .entries .reco {
     cursor: pointer;
+    text-align: center;
+}
+
+#pathology .info-button {
+    font-weight: bold;
+    color: #6E0018;
+}
+
+#pathology .info-button.active td  {
+    background-color: #CCC;
 }
 
 /****************************/
