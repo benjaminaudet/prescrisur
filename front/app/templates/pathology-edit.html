@@ -36,7 +36,7 @@
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</div>
 		<div class="btn-group-vertical level-actions col-xs-2" role="group">
-			<div class="btn btn-xs" ng-click="deleteLevel(data, $index)" ng-show="canDeleteLevel(data)">
+			<div class="btn btn-xs" ng-click="removeLevel(data, $index)" ng-show="canRemoveLevel(data)">
 				<i class="fa fa-remove"></i>
 				Niveau
 			</div>

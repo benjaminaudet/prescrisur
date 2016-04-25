@@ -9,11 +9,11 @@
 	</div>
 
 	<div id="pathology" class="col-md-9 col-md-pull-3">
-		<div id="intro" class="text" ng-bind-html="pathology.intro"></div>
+		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro"></div>
 		<div class="pathology-tree">
 			<div ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'" class="level" depth="1"></div>
 		</div>
-		<div id="conclu" class="text" ng-bind-html="pathology.conclu"></div>
+		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html="pathology.conclu"></div>
 	</div>
 </div>
 
@@ -22,7 +22,7 @@
 	<div class="level-header">
 		<level-title title="{{ data.name }}" rank="{{ data.rank }}{{ $index + 1 }}." depth="{{ data.depth }}"></level-title>
 	</div>
-	<div class="text level-text" ng-bind-html="data.text"></div>
+	<div class="text level-text" ng-if="data.text" ng-bind-html="data.text"></div>
 
 	<div ng-if="data.levels && data.levels.length > 0">
 		<div ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'" class="level" depth="{{ data.depth }}"></div>

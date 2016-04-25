@@ -47,19 +47,29 @@ angular.module('prescrisurApp.controllers')
 			});
 		};
 
-		$scope.deleteLevel = function(data, $index) {
+		$scope.removeLevel= function(data, $index) {
 			var levelName = getRank(data.rank, $index);
 			var splitLevel = levelName.split('.');
 			splitLevel = splitLevel.slice(0, -1);
 			var toDel = splitLevel.pop() - 1;
 			var levelToGo = $scope.pathology.levels;
+			var supLevelToGo = $scope.pathology;
 			splitLevel.forEach(function(i) {
-				levelToGo = levelToGo[i-1].levels;
+				supLevelToGo = levelToGo[i-1];
+				levelToGo = supLevelToGo.levels;
 			});
+			if(levelToGo.length == 1) {
+				delete supLevelToGo.levels;
+				return;
+			}
 			levelToGo.splice(toDel, 1);
 		};
 
 		$scope.removeEntry = function(level, $index) {
+			if(level.entries.length == 1) {
+				delete level.entries;
+				return;
+			}
 			level.entries.splice($index, 1);
 		};
 
@@ -91,7 +101,7 @@ angular.module('prescrisurApp.controllers')
 				var savedPatho = data.data;
 				$location.path('/pathologies/'+savedPatho._id);
 			};
-
+			
 			if($stateParams.id) {
 				PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
 			} else {
@@ -143,7 +153,7 @@ angular.module('prescrisurApp.controllers')
 			return !data.levels || data.levels.length == 0;
 		};
 
-		$scope.canDeleteLevel = function(data) {
+		$scope.canRemoveLevel = function(data) {
 			if(data.depth == 1) {
 				return $scope.pathology.levels.length > 1;
 			}
