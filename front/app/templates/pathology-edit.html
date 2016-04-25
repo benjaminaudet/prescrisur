@@ -4,48 +4,66 @@
 
 <div id="content" class="row">
 	<form ng-submit="submit()" id="pathology-form" class="form-horizontal">
+		<!-- Pathology Name -->
 		<div class="form-group">
 			<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie" required/>
 		</div>
+		<!-- Introduction text -->
+		<div class="form-group">
+			<label>Présentation</label>
+			<text-angular ng-model="pathology.intro" class="pathology-editor"></text-angular>
+		</div>
+		<!-- Pathology Tree -->
+		<div class="pathology-tree">
+			<div ng-repeat="data in pathology.levels" ng-include="'tree_level_renderer.html'" class="level" depth="1"></div>
+		</div>
 
-		<ul class="pathology-tree">
-			<li ng-repeat="data in pathology.levels" ng-include="'tree_level_renderer.html'"></li>
-		</ul>
-
-		<button type="submit" class="btn btn-primary">Envoyer</button>
+		<!-- Conclusion text -->
+		<div class="form-group">
+			<label>Conclusion</label>
+			<text-angular ng-model="pathology.conclu" class="pathology-editor"></text-angular>
+		</div>
+		<button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
 	</form>
 </div>
 
 <!-- Template for levels -->
 <script type="text/ng-template"  id="tree_level_renderer.html">
+	<!-- Level Name -->
 	<div class="form-group">
 		<label class="level-name col-xs-1 control-label">{{ data.rank }}{{ $index + 1 }}.</label>
 		<div class="col-xs-9">
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</div>
 		<div class="btn-group-vertical level-actions col-xs-2" role="group">
-			<div class="btn btn-xs" ng-click="deleteLevel(data, $index)" ng-show="pathology.levels.length > 1">
+			<div class="btn btn-xs" ng-click="deleteLevel(data, $index)" ng-show="canDeleteLevel(data)">
 				<i class="fa fa-remove"></i>
 				Niveau
 			</div>
-			<div class="btn btn-xs" ng-click="addRootLevel()" ng-show="data.depth == 1 && $index == 0">
+			<div class="btn btn-xs" ng-click="addRootLevel()" ng-show="canAddRootLevel(data, $index)">
 				<i class="fa fa-plus"></i>
 				Niveau
 			</div>
-			<div class="btn btn-xs" ng-click="addSubLevel(data, $index)" ng-show="data.depth < 4">
+			<div class="btn btn-xs" ng-click="addSubLevel(data, $index)" ng-show="canAddSubLevel(data)">
 				<i class="fa fa-plus"></i>
 				Sous-Niveau
 			</div>
-			<div class="btn btn-xs" ng-click="addEntry(data)" ng-show="!data.levels || data.levels.length == 0">
+			<div class="btn btn-xs" ng-click="addEntry(data)" ng-show="canAddEntry(data)">
 				<i class="fa fa-plus"></i>
 				Entrée
 			</div>
 		</div>
 	</div>
-	<ul ng-if="data.levels && data.levels.length > 0">
-		<li ng-repeat="data in data.levels" ng-include="'tree_level_renderer.html'"></li>
-	</ul>
-	<ul><table class="table" ng-if="data.entries && data.entries.length > 0">
+	<!-- Level Text -->
+	<div class="form-group">
+		<text-angular ng-model="data.text" class="pathology-editor"></text-angular>
+	</div>
+	<!-- Level subTree -->
+	<div ng-if="data.levels && data.levels.length > 0">
+		<div ng-repeat="data in data.levels" ng-include="'tree_level_renderer.html'" class="level" depth="{{ data.depth }}"></div>
+	</div>
+	<!-- Level entries -->
+	<table class="table" ng-if="data.entries && data.entries.length > 0">
 		<tr>
 			<th>Reco</th>
 			<th colspan="2">Produit</th>
@@ -86,5 +104,5 @@
 				<button class="btn remove-entry" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></button>
 			</td>
 		</tr>
-	</table></ul>
+	</table>
 </script>

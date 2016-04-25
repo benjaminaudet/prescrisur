@@ -119,6 +119,20 @@
 }
 
 /****************************/
+/*       TEXT ANGULAR       */
+.pathology-editor .ta-editor {
+    min-height: 200px;
+    height: 200px;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.pathology-editor .ta-scroll-window > .ta-bind {
+    min-height: 199px;
+}
+
+/****************************/
 /*           HOME           */
 /****************************/
 /*         JUMBOTRON        */
@@ -191,14 +205,16 @@
 /*        PATHOLOGY         */
 /****************************/
 /*         LEVEL            */
-.pathology-tree li,
-.pathology-tree li > * {
-    list-style: none;
+.pathology-tree .level[depth="2"] {
+    padding-left: 20px;
 }
 
-.pathology-tree,
-.pathology-tree ul > * {
-    padding-left: 0px;
+.pathology-tree .level[depth="3"] {
+    padding-left: 40px;
+}
+
+.pathology-tree .level[depth="4"] {
+    padding-left: 60px;
 }
 
 

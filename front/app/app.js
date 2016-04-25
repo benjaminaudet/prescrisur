@@ -2,6 +2,8 @@ var app = angular.module('prescrisurApp', [
 	'ui.router',
 	'ui.select',
 	'ui.bootstrap',
+	'colorpicker.module',
+	'textAngular',
 	'ngSanitize',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
@@ -10,7 +12,7 @@ var app = angular.module('prescrisurApp', [
 
 angular.module('prescrisurApp.controllers', []);
 
-
+// Routing
 app.config(function($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise('/');
@@ -71,6 +73,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 });
 
+// On route change
 app.run(function ($rootScope, $state, $window, AuthService) {
 	var postLoginState, postLoginParams;
 	$rootScope.$on('$stateChangeStart',
@@ -95,3 +98,61 @@ app.run(function ($rootScope, $state, $window, AuthService) {
 			});
 		});
 });
+
+// textAngular Setup
+app.config(['$provide', function($provide){
+	// this demonstrates how to register a new tool and add it to the default toolbar
+	$provide.decorator('taOptions', ['$delegate', function(taOptions){
+		// $delegate is the taOptions we are decorating
+		// here we override the default toolbars and classes specified in taOptions.
+		taOptions.forceTextAngularSanitize = true; // set false to allow the textAngular-sanitize provider to be replaced
+		taOptions.keyMappings = []; // allow customizable keyMappings for specialized key boards or languages
+		taOptions.toolbar = [
+			['h1', 'h2', 'h3'],
+			['bold', 'italics', 'underline', 'fontColor', 'clear'],
+			['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
+			['ul', 'indent', 'outdent'],
+			['insertImage', 'insertLink']
+		];
+		taOptions.classes = {
+			focussed: 'focussed',
+			toolbar: 'btn-toolbar',
+			toolbarGroup: 'btn-group',
+			toolbarButton: 'btn btn-default',
+			toolbarButtonActive: 'active',
+			disabled: 'disabled',
+			textEditor: 'form-control',
+			htmlEditor: 'form-control'
+		};
+		return taOptions; // whatever you return will be the taOptions
+	}]);
+
+	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
+		// $delegate is the taOptions we are decorating
+		// register the tool with textAngular
+		taRegisterTool('fontColor', {
+			display: "<button colorpicker type='button' class='btn btn-default ng-scope'  title='Font Color'  colorpicker-close-on-select colorpicker-position='bottom' ng-model='fontColor' style='color: {{fontColor}}'><i class='fa fa-font '></i></button>",
+			action: function (deferred) {
+				var self = this;
+				if (typeof self.listener == 'undefined') {
+					self.listener = self.$watch('fontColor', function (newValue) {
+						self.$editor().wrapSelection('foreColor', newValue);
+					});
+				}
+				self.$on('colorpicker-selected', function () {
+					deferred.resolve();
+				});
+				self.$on('colorpicker-closed', function () {
+					deferred.resolve();
+				});
+				return false;
+			}
+		});
+		//taOptions.toolbar[1].push('fontColor');
+
+		taOptions.setup.textEditorSetup=function($element) {
+			$element.attr('ui-codemirror', '');
+		};
+		return taOptions;
+	}]);
+}]);

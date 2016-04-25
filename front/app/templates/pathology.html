@@ -1,16 +1,20 @@
+<div id="pathology">
+	<div class="name">{{ pathology.name }}</div>
+	<div class="intro" ng-bind-html="pathology.intro"></div>
+	<div class="pathology-tree">
+		<div ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'" class="level" depth="1"></div>
+	</div>
+	<div class="conclu" ng-bind-html="pathology.conclu"></div>
+</div>
+
+
 <script type="text/ng-template"  id="tree_item_renderer.html">
 	<div class="level-header">
 		<span class="rank">{{ data.rank }}{{ $index + 1 }}.</span>
 		<span class="name">{{ data.name }}</span>
 	</div>
-	<ul>
-		<li ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'"></li>
-	</ul>
+	<div class="level-text" ng-bind-html="data.text"></div>
+	<div>
+		<div ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'" class="level" depth="{{ data.depth }}"></div>
+	</div>
 </script>
-
-<div id="pathology">
-	<div class="name">{{ pathology.name }}</div>
-	<ul class="pathology-tree">
-		<li ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'"></li>
-	</ul>
-</div>

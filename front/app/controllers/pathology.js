@@ -128,5 +128,26 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		getPathology();
+
+
+		// Function to display or not action buttons
+		$scope.canAddRootLevel = function(data, $index) {
+			return data.depth == 1 && $index == 0;
+		};
+
+		$scope.canAddSubLevel = function(data) {
+			return data.depth < 4;
+		};
+
+		$scope.canAddEntry = function(data) {
+			return !data.levels || data.levels.length == 0;
+		};
+
+		$scope.canDeleteLevel = function(data) {
+			if(data.depth == 1) {
+				return $scope.pathology.levels.length > 1;
+			}
+			return !data.levels && !data.entries;
+		};
 	}
 ]);
