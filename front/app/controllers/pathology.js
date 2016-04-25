@@ -4,9 +4,26 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$stateParams',
 	'PathologyService',
+	'SubstanceService',
 
-	function($scope, $stateParams, PathologyService) {
+	function($scope, $stateParams, PathologyService, SubstanceService) {
 		$scope.pathology = null;
+
+		PathologyService.get({ id: $stateParams.id }, function(data) {
+			$scope.pathology = data.data;
+		});
+
+		$scope.showSpecialities = function(entry) {
+			if(entry.product.specialities) {
+				entry.displaySpecialities = !entry.displaySpecialities;
+				return;
+			}
+
+			SubstanceService.get({ id: entry.product._id}, function(data) {
+				entry.product.specialities = data.data.specialities;
+				entry.displaySpecialities = true;
+			});
+		};
 
 		$scope.entryColspan = function(entry) {
 			if(entry.info) {
@@ -15,9 +32,7 @@ angular.module('prescrisurApp.controllers')
 			return 2;
 		};
 
-		PathologyService.get({ id: $stateParams.id }, function(data) {
-			$scope.pathology = data.data;
-		});
+
 	}
 ])
 

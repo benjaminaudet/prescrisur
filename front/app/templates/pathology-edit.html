@@ -82,7 +82,7 @@
 				</ui-select>
 			</td>
 			<td class="col-md-3">
-				<ui-select ng-model="entry.type" on-select="search('', entry.type)">
+				<ui-select ng-model="entry.type">
 					<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
@@ -93,7 +93,7 @@
 			</td>
 			<td class="col-md-6">
 				<ui-select ng-model="entry.product">
-					<ui-select-match placeholder="Nom du Produit">
+					<ui-select-match placeholder="Nom du Produit" ng-click="search($select, entry.type)">
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
 					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select, entry.type)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
