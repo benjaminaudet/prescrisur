@@ -97,7 +97,7 @@
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
 					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select, entry.type)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
-						{{ r.name }}
+						{{ r.name }}  <span class="spec-status" ng-if="r.status">{{ r.status }}</span>
 					</ui-select-choices>
 				</ui-select>
 			</td>

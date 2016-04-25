@@ -52,7 +52,7 @@ angular.module('prescrisurApp.controllers')
 		];
 
 		$scope.filterResults = function(r) {
-			return {name: r.name, _id: r._id};
+			return {name: r.name, _id: r._id, status: r.status};
 		};
 
 		$scope.search = function($select, searchType) {

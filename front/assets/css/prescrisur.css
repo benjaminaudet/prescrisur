@@ -27,7 +27,11 @@
 
 /****************************/
 /*     GLOBAL LAYOUT        */
-
+.spec-status {
+    font-family: MarkSans, Arial, sans-serif;
+    color: #2FAB29;
+    text-transform: uppercase;
+}
 
 /****************************/
 /*     CLASSES USUELLES     */
@@ -349,6 +353,16 @@
 
 #pathology .info-button.active td  {
     background-color: #CCC;
+}
+
+#pathology .speciality,
+#pathology .product {
+    text-transform: lowercase;
+}
+
+#pathology .speciality:first-letter,
+#pathology .product:first-letter {
+    text-transform: uppercase;
 }
 
 /****************************/
