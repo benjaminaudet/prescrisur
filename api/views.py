@@ -36,6 +36,7 @@ def search_substance():
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
 	patho = Pathology(**data)
+	patho.refresh_update_date()
 	if patho_id:
 		patho.save()
 	else:

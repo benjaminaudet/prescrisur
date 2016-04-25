@@ -1,3 +1,4 @@
+slugify
 Flask==0.10.1
 pymongo==3.2.2
 jsonpickle==0.9.3

@@ -3,6 +3,7 @@ var app = angular.module('prescrisurApp', [
 	'ui.select',
 	'ui.bootstrap',
 	'colorpicker.module',
+	'yaru22.angular-timeago',
 	'textAngular',
 	'ngSanitize',
 	'prescrisurApp.modelServices',
