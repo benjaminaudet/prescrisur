@@ -26,9 +26,41 @@
 }
 
 /****************************/
+/*     GLOBAL LAYOUT        */
+
+
+/****************************/
 /*     CLASSES USUELLES     */
 .center {
     text-align: center;
+}
+
+.table-curved {
+    border-collapse: separate;
+    border: solid #ddd 1px;
+    border-radius: 6px;
+    border-left: 0px;
+    border-top: 0px;
+}
+.table-curved > thead:first-child > tr:first-child > th {
+    border-bottom: 0px;
+    border-top: solid #ddd 1px;
+}
+.table-curved td, .table-curved th {
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+.table-curved > :first-child > :first-child > :first-child {
+    border-top-left-radius: 6px;
+}
+.table-curved > :first-child > :first-child > :last-child {
+    border-top-right-radius: 6px;
+}
+.table-curved > :last-child > :last-child > :first-child {
+    border-bottom-left-radius: 6px;
+}
+.table-curved > :last-child > :last-child > :last-child {
+    border-bottom-right-radius: 6px;
 }
 
 /****************************/
@@ -205,19 +237,19 @@
 /*        PATHOLOGY         */
 /****************************/
 /*         LEVEL            */
-.pathology-tree .level[depth="2"] {
+.pathology-tree .level[depth="2"] .level-header {
     padding-left: 20px;
 }
 
-.pathology-tree .level[depth="3"] {
+.pathology-tree .level[depth="3"] .level-header {
     padding-left: 40px;
 }
 
-.pathology-tree .level[depth="4"] {
+.pathology-tree .level[depth="4"] .level-header {
     padding-left: 60px;
 }
 
-
+/****************************/
 /*         EDIT            */
 #pathology-form .form-group {
     margin: 0 10px 20px 10px !important;
@@ -232,11 +264,86 @@
     background-color: white;
 }
 
-.pathology-tree .table {
+.pathology-tree .entries-edit {
     margin-left: 65px;
     width: 90%;
 }
 
 .select-reco .ui-select-choices {
     min-width: 65px;
+}
+
+/****************************/
+/*       DISPLAY            */
+/****************************/
+/*       PATHOLOGY          */
+#pathology h2 {
+    font-size: 16pt;
+    line-height: 1.2;
+}
+
+#pathology h3 {
+    font-size: 14pt;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+#pathology h4 {
+    font-size: 13pt;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+#pathology h5 {
+    font-size: 12pt;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+#pathology .text {
+    background-color: rgba(245,245,245,0.3);
+    border: 1px solid rgba(230,103,135,0.2);
+    border-radius: 4px;
+    padding: 15px 10px 5px 10px;
+    margin-botton: 2px;
+}
+
+#pathology .text p {
+    color: #333 !important;
+}
+
+#intro {
+    margin-bottom: 30px;
+}
+
+#conclu {
+    margin-top: 30px;
+}
+
+#pathology .entries {
+    margin-top: 5px;
+}
+
+#pathology .entries .more-info {
+    font-weight: bold;
+}
+
+#pathology .entries .more-info a {
+    color: #333;
+}
+
+#pathology .entries .more-info a:hover {
+    color: #333;
+    /*text-decoration: none;*/
+}
+
+#pathology .entries .reco {
+    cursor: pointer;
+}
+
+/****************************/
+/*       SIDEBAR            */
+#sidebar h2 {
+    font-family: ErasMedium;
+    font-size: 18pt;
 }

@@ -7,6 +7,7 @@ var app = angular.module('prescrisurApp', [
 	'ngSanitize',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
+	'prescrisurApp.directives',
 	'prescrisurApp.controllers'
 ]);
 
