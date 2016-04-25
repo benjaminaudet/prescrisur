@@ -7,7 +7,7 @@ angular.module('prescrisurApp.controllers')
 
 	function($scope, $state, SearchService) {
 		$scope.q = null;
-		$scope.searchType = 'specialities';
+		$scope.searchType = 'pathologies';
 		$scope.results = [];
 
 		$scope.goTo = function($select) {
