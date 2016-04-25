@@ -43,11 +43,11 @@
     border-collapse: separate;
     border: solid #ddd 1px;
     border-radius: 6px;
-    border-left: 0px;
-    border-top: 0px;
+    border-left: 0;
+    border-top: 0;
 }
 .table-curved > thead:first-child > tr:first-child > th {
-    border-bottom: 0px;
+    border-bottom: 0;
     border-top: solid #ddd 1px;
 }
 .table-curved td, .table-curved th {
@@ -110,7 +110,7 @@
 
 #navbar li a {
     color: white;
-    font-family: ErasLight;
+    font-family: ErasLight, Arial, sans-serif;
     font-size: 1.1em;
     /*text-transform: uppercase;*/
     padding: 15px 30px;
@@ -144,7 +144,7 @@
 #page-header {
     margin: -17px 0 40px 0 !important;
     padding: 0 10px;
-    font-family: ErasLight;
+    font-family: ErasLight, Arial, sans-serif;
     color: white;
     min-height: 50px;
     background-color: #B60027;
@@ -178,11 +178,11 @@
 }
 
 .jumbotron h1 {
-    font-family: ErasMedium;
+    font-family: ErasMedium, Arial, sans-serif;
 }
 
 .jumbotron .btn-group .btn {
-    font-family: ErasLight;
+    font-family: ErasLight, Arial, sans-serif;
     font-size: 1.2em;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -368,6 +368,6 @@
 /****************************/
 /*       SIDEBAR            */
 #sidebar h2 {
-    font-family: ErasMedium;
+    font-family: ErasMedium, Arial, sans-serif;
     font-size: 18pt;
 }
