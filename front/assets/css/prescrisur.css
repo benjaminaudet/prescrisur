@@ -27,10 +27,18 @@
 
 /****************************/
 /*     GLOBAL LAYOUT        */
+#content {
+    padding: 0 20px;
+}
+
 .spec-status {
     font-family: MarkSans, Arial, sans-serif;
     color: #2FAB29;
     text-transform: uppercase;
+}
+
+.caduceus {
+    background: url('../img/caduceus.png') no-repeat right 16px top 10px;
 }
 
 /****************************/
@@ -154,9 +162,6 @@
     background-color: #B60027;
 }
 
-#content {
-    margin: 0 20px !important;
-}
 
 /****************************/
 /*       TEXT ANGULAR       */
