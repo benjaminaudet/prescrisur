@@ -52,11 +52,21 @@
 			</button>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a ui-sref="home">Aide à la Prescription</a></li>
-					<li><a ui-sref="home">En Bref</a></li>
-					<li><a ui-sref="home">Actualités</a></li>
-					<li><a ui-sref="home">Sources</a></li>
-					<li><a ui-sref="home">Contact</a></li>
+					<li ui-sref-active="active"><a ui-sref="home">Aide à la Prescription</a></li>
+					<li class="hover-dropdown" ng-class="{'active-parent':checkPageInfoState()}">
+						<a class="dropdown-toggle parent-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">En Bref</a>
+						<ul class="dropdown-menu subnav">
+							<li role="menuitem" ui-sref-active="active">
+								<a ui-sref="pages({id: 'presentation'})">Présentation</a>
+							</li>
+							<li role="menuitem" ui-sref-active="active">
+								<a ui-sref="pages({id: 'pourquoi-prescrisur'})">Pourquoi Prescrisur ?</a>
+							</li>
+						</ul>
+					</li>
+					<li ui-sref-active="active"><a ui-sref="null">Actualités</a></li>
+					<li ui-sref-active="active"><a ui-sref="pages({id: 'sources-d-informations'})">Sources</a></li>
+					<li ui-sref-active="active"><a ui-sref="null">Contact</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -68,7 +78,7 @@
 
 	<!-- Site footer -->
 	<footer class="footer">
-		<p>Prescrisur© 2016, site indépendant. Tous droits réservés | Mentions Légales | Contact</p>
+		<p>Prescrisur© 2016, site indépendant. Tous droits réservés | <a ui-sref="pages({id: 'mentions-legales'})">Mentions Légales</a> | Contact</p>
 	</footer>
 
 </div> <!-- /container -->

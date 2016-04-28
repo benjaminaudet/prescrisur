@@ -122,7 +122,7 @@ app.config(['$provide', function($provide){
 		taOptions.forceTextAngularSanitize = true; // set false to allow the textAngular-sanitize provider to be replaced
 		taOptions.keyMappings = []; // allow customizable keyMappings for specialized key boards or languages
 		taOptions.toolbar = [
-			['h1', 'h2', 'h3'],
+			['h2', 'h3', 'h4'],
 			['bold', 'italics', 'underline', 'fontColor', 'clear'],
 			['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
 			['ul', 'indent', 'outdent'],
