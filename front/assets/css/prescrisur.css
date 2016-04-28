@@ -235,6 +235,12 @@
     margin-bottom: 2px;
 }
 
+@media (max-width: 991px) and (min-width: 769px) {
+    #search-buttons {
+        font-size: smaller;
+    }
+}
+
 .ui-select-choices-row.active>a {
     background-color: white !important;
     color: black !important;
