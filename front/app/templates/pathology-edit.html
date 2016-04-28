@@ -1,5 +1,6 @@
 <div class="row" id="page-header">
-	<h1>Nouvelle Pathologie</h1>
+	<h1 ng-if="!pathology">Nouvelle Pathologie</h1>
+	<h1 ng-if="pathology">{{ pathology.name }}</h1>
 </div>
 
 <div id="content" class="row">
