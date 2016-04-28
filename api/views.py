@@ -3,7 +3,7 @@ from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from api import app, login_manager
-from api.models import Pathology, Speciality, Substance, User
+from api.models import Pathology, Speciality, Substance, User, Page
 
 
 @app.route('/')
@@ -61,6 +61,27 @@ def pathology(patho_id):
 def search_pathology():
 	q = request.args.get('q')
 	return jsonify(data=Pathology.search_by_name(q))
+
+
+@app.route('/api/pages', methods=['POST'])
+@app.route('/api/pages/<page_id>', methods=['PUT'])
+def edit_page(page_id=None):
+	data = json.loads(request.data)
+	page = Page(**data)
+	if page_id:
+		page.save()
+	else:
+		page.create()
+	return jsonify(data=page)
+
+
+@app.route('/api/pages/<page_id>')
+def page(page_id):
+	p = Page.get(page_id)
+	if not p:
+		abort(404)
+	return jsonify(data=p)
+
 
 
 ###############

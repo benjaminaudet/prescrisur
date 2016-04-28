@@ -177,6 +177,18 @@
     min-height: 199px;
 }
 
+.page-editor .ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.page-editor .ta-scroll-window > .ta-bind {
+    min-height: 300px;
+}
+
 /****************************/
 /*           HOME           */
 /****************************/
@@ -411,4 +423,15 @@
     .summary-collapse {
         display: block;
     }
+}
+
+
+/****************************/
+/*       PAGES              */
+#page {
+    padding: 0 8%;
+}
+
+#page > * {
+    background: none !important;
 }

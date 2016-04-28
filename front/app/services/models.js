@@ -24,4 +24,12 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	function($resource){
 		return $resource('/api/:searchType/search');
 	}
+])
+
+.factory('PageService', ['$resource',
+	function($resource){
+		return $resource('/api/pages/:id', null, {
+			update: { method:'PUT' }
+		});
+	}
 ]);

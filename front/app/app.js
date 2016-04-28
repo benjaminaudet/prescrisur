@@ -26,12 +26,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
-		.state('test', {
-			url: '/test',
-			controller: 'HomeController',
-			templateUrl: 'front/app/templates/test.html',
-			access: {restricted: false}
-		})
 		.state('login', {
 			url: '/login',
 			controller : 'LoginController',
@@ -41,6 +35,24 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('logout', {
 			url: '/logout',
 			resolve: {controller : 'LogoutService'},
+			access: {restricted: true}
+		})
+		.state('pages-edit', {
+			url: '/pages/edit/:id',
+			controller: 'PageEditController',
+			templateUrl: 'front/app/templates/page-edit.html',
+			access: {restricted: true}
+		})
+		.state('pages-new', {
+			url: '/pages/new',
+			controller: 'PageEditController',
+			templateUrl: 'front/app/templates/page-edit.html',
+			access: {restricted: true}
+		})
+		.state('pages', {
+			url: '/pages/:id',
+			controller: 'PageController',
+			templateUrl: 'front/app/templates/page.html',
 			access: {restricted: true}
 		})
 		.state('pathologies-edit', {

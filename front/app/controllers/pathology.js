@@ -37,8 +37,6 @@ angular.module('prescrisurApp.controllers')
 			}
 			return 2;
 		};
-
-
 	}
 ])
 
