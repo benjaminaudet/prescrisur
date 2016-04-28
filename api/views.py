@@ -14,7 +14,7 @@ def index():
 @app.route('/api/specialities/search')
 def search_speciality():
 	q = request.args.get('q')
-	return jsonify(data=Speciality.search(q))
+	return jsonify(data=Speciality.search_by_name(q))
 
 
 @app.route('/api/substances/<subst_id>')
@@ -28,7 +28,12 @@ def substance(subst_id):
 @app.route('/api/substances/search')
 def search_substance():
 	q = request.args.get('q')
-	return jsonify(data=Substance.search(q))
+	return jsonify(data=Substance.search_by_name(q))
+
+
+@app.route('/api/substances/pathologies/<subst_id>')
+def search_pathologies_from_substance(subst_id):
+	return jsonify(data=Pathology.search_by_substance(subst_id))
 
 
 @app.route('/api/pathologies', methods=['POST'])
@@ -55,7 +60,7 @@ def pathology(patho_id):
 @app.route('/api/pathologies/search')
 def search_pathology():
 	q = request.args.get('q')
-	return jsonify(data=Pathology.search(q))
+	return jsonify(data=Pathology.search_by_name(q))
 
 
 ###############

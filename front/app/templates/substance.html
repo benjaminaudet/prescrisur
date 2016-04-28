@@ -1,9 +1,31 @@
-<div class="substances">
+<div class="row" id="page-header">
 	<h1>{{ substance.name }}</h1>
-	<div class="specialities">
-		<div class="speciality" ng-repeat="spec in substance.specialities">
-			<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.name }}</a>
-			<span class="spec-status">{{ spec.status }}</span>
+</div>
+
+<div id="content" class="row">
+	<div id="sidebar" class="col-md-4 col-md-push-8">
+		<h2>Pathologies Associées</h2>
+		<div class="pathologies">
+			<div ng-if="pathologies.length == 0">
+				Aucune pathologie n'est associée à cette substance.
+			</div>
+			<div class="pathology" ng-repeat="patho in pathologies">
+				<a ui-sref="pathologies({id: patho._id})">{{ patho.name }}</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="specialities" class="col-md-8 col-md-pull-4">
+		<h2>Spécialités contenant cette substance</h2>
+		<div class="panel panel-default">
+			<table class="table table-condensed table-striped table-bordered">
+				<tr class="speciality" ng-repeat="spec in substance.specialities">
+					<td>
+						<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.name }}</a>
+						<span class="spec-status">{{ spec.status }}</span>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>

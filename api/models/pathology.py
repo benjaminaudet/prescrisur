@@ -20,3 +20,12 @@ class Pathology(BaseModel):
 			upd = datetime.now().isoformat()
 		self.updated_at = upd
 		return self
+
+	@classmethod
+	def search_by_substance(cls, subst_id):
+		return cls._search({'$or': [
+			{'levels.entries.product._id': subst_id},
+			{'levels.levels.entries.product._id': subst_id},
+			{'levels.levels.levels.entries.product._id': subst_id},
+			{'levels.levels.levels.levels.entries.product._id': subst_id}
+		]}, {'name': 1, 'status': 1})

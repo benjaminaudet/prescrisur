@@ -367,7 +367,8 @@
 
 /****************************/
 /*       SIDEBAR            */
-#sidebar h2 {
+#sidebar h2,
+#specialities h2 {
     font-family: ErasMedium, Arial, sans-serif;
     font-size: 18pt;
 }
