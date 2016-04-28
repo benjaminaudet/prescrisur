@@ -4,10 +4,15 @@
 
 <div id="content" class="row">
 	<div id="sidebar" class="col-md-3 col-md-push-9">
-		<h2>Dernière Mise à Jour</h2>
-		<div class="updated">{{ pathology.updated_at | timeAgo }}</div>
-		<h2>Sommaire</h2>
-		<ul id="pathology-summary">
+		<h2 id="updated-title">Dernière Mise à Jour</h2>
+		<span class="updated">{{ pathology.updated_at | timeAgo }}</span>
+		<h2>
+			Sommaire
+			<button class="summary-toggle visible-xs-inline" data-toggle="collapse" data-target=".summary-collapse">
+				<i class="fa fa-caret-down"></i>
+			</button>
+		</h2>
+		<ul id="pathology-summary" class="summary-collapse collapse">
 			<li ng-repeat="data in pathology.levels" ng-include="'patho-summary-tree.html'" depth="1"></li>
 		</ul>
 	</div>

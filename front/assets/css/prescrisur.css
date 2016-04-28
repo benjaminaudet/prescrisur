@@ -388,3 +388,16 @@
     font-family: ErasMedium, Arial, sans-serif;
     font-size: 18pt;
 }
+
+@media (max-width: 768px) {
+    #updated-title {
+        display: inline-block;
+        margin-right: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .summary-collapse {
+        display: block;
+    }
+}
