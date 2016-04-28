@@ -18,4 +18,4 @@ update-subst:
 update: update-spec update-subst
 
 mongo-setup:
-	mongo mongo-setup.js
+	mongo localhost:27017/Prescrisur mongo-setup.js
