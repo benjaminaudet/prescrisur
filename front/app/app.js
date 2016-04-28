@@ -75,9 +75,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('specialities', {
 			url: '/specialities/:id',
+			controller: 'SpecialityController',
 			templateUrl: 'front/app/templates/speciality.html',
-			access: {restricted: false},
-			external: 'http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid='
+			access: {restricted: false}
 		})
 		.state('substances', {
 			url: '/substances/:id',
@@ -103,12 +103,6 @@ app.run(function ($rootScope, $state, $window, AuthService) {
 					postLoginParams = null;
 				}
 				$rootScope.setCurrentUser(user);
-
-				// Redirect to external URL
-				if (toState.external) {
-					event.preventDefault();
-					$window.open(toState.external+$state.params.id, '_self');
-				}
 			});
 		});
 });
