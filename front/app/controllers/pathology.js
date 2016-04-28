@@ -59,18 +59,20 @@ angular.module('prescrisurApp.controllers')
 			return {name: r.name, _id: r._id, status: r.status};
 		};
 
-		$scope.search = function($select, searchType) {
+		$scope.search = function($select, searchType, force) {
 			var search = '';
 			if($select) {
 				search = $select.search;
 			}
 			$scope.results = searchMessage('Recherche en cours...');
-			SearchService.get({q: search, searchType: searchType}, function(data) {
-				$scope.results = data.data;
-				if ($scope.results.length == 0) {
-					$scope.results = searchMessage('Aucun résultat');
-				}
-			});
+			if(force || search.length > 0) {
+				SearchService.get({q: search, searchType: searchType}, function(data) {
+					$scope.results = data.data;
+					if ($scope.results.length == 0) {
+						$scope.results = searchMessage('Aucun résultat');
+					}
+				});
+			}
 		};
 
 		$scope.removeLevel= function(data, $index) {
