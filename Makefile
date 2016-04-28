@@ -16,3 +16,6 @@ update-subst:
 	python -c 'from api.update import SubstanceUpdater; SubstanceUpdater().execute()'
 
 update: update-spec update-subst
+
+mongo-setup:
+	mongo mongo-setup.js
