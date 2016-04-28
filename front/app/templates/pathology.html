@@ -7,26 +7,29 @@
 		<h2>Dernière Mise à Jour</h2>
 		<div class="updated">{{ pathology.updated_at | timeAgo }}</div>
 		<h2>Sommaire</h2>
+		<ul id="pathology-summary">
+			<li ng-repeat="data in pathology.levels" ng-include="'patho-summary-tree.html'" depth="1"></li>
+		</ul>
 	</div>
 
 	<div id="pathology" class="col-md-9 col-md-pull-3">
 		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro"></div>
 		<div class="pathology-tree">
-			<div ng-repeat="data in pathology.levels" ng-include="'tree_item_renderer.html'" class="level" depth="1"></div>
+			<div ng-repeat="data in pathology.levels" ng-include="'patho-tree.html'" class="level" depth="1"></div>
 		</div>
 		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html="pathology.conclu"></div>
 	</div>
 </div>
 
-
-<script type="text/ng-template"  id="tree_item_renderer.html">
-	<div class="level-header">
+<!-- Pathology Tree Template -->
+<script type="text/ng-template"  id="patho-tree.html">
+	<div class="level-header" id="{{ data.rank }}{{ $index + 1 }}.">
 		<level-title title="{{ data.name }}" rank="{{ data.rank }}{{ $index + 1 }}." depth="{{ data.depth }}"></level-title>
 	</div>
 	<div class="text level-text" ng-if="data.text" ng-bind-html="data.text"></div>
 
 	<div ng-if="data.levels && data.levels.length > 0">
-		<div ng-repeat="data in data.levels" ng-include="'tree_item_renderer.html'" class="level" depth="{{ data.depth }}"></div>
+		<div ng-repeat="data in data.levels" ng-include="'patho-tree.html'" class="level" depth="{{ data.depth }}"></div>
 	</div>
 
 	<table class="entries table table-curved" ng-if="data.entries && data.entries.length > 0">
@@ -66,4 +69,13 @@
 			</td>
 		</tr>
 	</table>
+</script>
+
+<!-- Pathology Summary Tree Template -->
+<script type="text/ng-template"  id="patho-summary-tree.html">
+	<a class="pointer" ng-click="scrollTo(data.rank, $index)">{{ data.rank }}{{ $index + 1 }}. {{ data.name }}</a>
+
+	<ul ng-if="data.levels && data.levels.length > 0">
+		<li ng-repeat="data in data.levels" ng-include="'patho-summary-tree.html'" depth="{{ data.depth }}"></li>
+	</ul>
 </script>

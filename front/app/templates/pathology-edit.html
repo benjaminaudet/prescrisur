@@ -15,7 +15,7 @@
 		</div>
 		<!-- Pathology Tree -->
 		<div class="pathology-tree">
-			<div ng-repeat="data in pathology.levels" ng-include="'tree_level_renderer.html'" class="level" depth="1"></div>
+			<div ng-repeat="data in pathology.levels" ng-include="'patho-edit-tree.html'" class="level" depth="1"></div>
 		</div>
 
 		<!-- Conclusion text -->
@@ -28,7 +28,7 @@
 </div>
 
 <!-- Template for levels -->
-<script type="text/ng-template"  id="tree_level_renderer.html">
+<script type="text/ng-template"  id="patho-edit-tree.html">
 	<!-- Level Name -->
 	<div class="form-group level-header">
 		<label class="level-name col-xs-1 control-label">{{ data.rank }}{{ $index + 1 }}.</label>
@@ -60,7 +60,7 @@
 	</div>
 	<!-- Level subTree -->
 	<div ng-if="data.levels && data.levels.length > 0">
-		<div ng-repeat="data in data.levels" ng-include="'tree_level_renderer.html'" class="level" depth="{{ data.depth }}"></div>
+		<div ng-repeat="data in data.levels" ng-include="'patho-edit-tree.html'" class="level" depth="{{ data.depth }}"></div>
 	</div>
 	<!-- Level entries -->
 	<table class="table entries-edit" ng-if="data.entries && data.entries.length > 0">

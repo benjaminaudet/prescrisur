@@ -39,6 +39,10 @@
     text-align: center;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .table-curved {
     border-collapse: separate;
     border: solid #ddd 1px;
@@ -363,6 +367,18 @@
 #pathology .speciality:first-letter,
 #pathology .product:first-letter {
     text-transform: uppercase;
+}
+
+#pathology-summary {
+    padding-left: 0px;
+}
+
+#pathology-summary li {
+    list-style: none;
+}
+
+#pathology-summary ul {
+    padding-left: 10px;
 }
 
 /****************************/
