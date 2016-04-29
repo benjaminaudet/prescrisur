@@ -1,10 +1,20 @@
+# coding=utf-8
+import bleach
+import datetime
 from slugify import slugify
-from datetime import datetime
 
 from base_model import BaseModel
 
 
 class Pathology(BaseModel):
+	AUTHORIZED_TYPES = ['specialities', 'substances']
+	RECO_LABELS = {
+		'none': None,
+		'alert': 'Molécule sous surveillance particulière',
+		'middle': 'Molécule recommandée sous surveillance particulière',
+		'ok': 'Molécule Recommandée (voir RCP)'
+	}
+
 	def __init__(self, name, _id=None, levels=None, intro=None, conclu=None, updated_at=None):
 		self._id = _id if _id else slugify(name)
 		self.name = name
@@ -12,14 +22,6 @@ class Pathology(BaseModel):
 		self.intro = intro
 		self.conclu = conclu
 		self.updated_at = updated_at
-
-	def refresh_update_date(self, update_date=None):
-		if update_date:
-			upd = update_date
-		else:
-			upd = datetime.now().isoformat()
-		self.updated_at = upd
-		return self
 
 	@classmethod
 	def search_by_substance(cls, subst_id):
@@ -29,3 +31,40 @@ class Pathology(BaseModel):
 			{'levels.levels.levels.entries.product._id': subst_id},
 			{'levels.levels.levels.levels.entries.product._id': subst_id}
 		]}, {'name': 1, 'status': 1})
+
+	def check(self):
+		self.name = bleach.clean(self.name)
+		self.intro = bleach.clean(self.intro)
+		self.conclu = bleach.clean(self.conclu)
+		self.levels = map(lambda l: self._check_level(l), self.levels)
+		return self
+
+	def _check_level(self, level):
+		level['name'] = bleach.clean(level['name'])
+		if 'levels' in level:
+			if len(level['levels']) == 0:
+				del level['levels']
+			else:
+				level['levels'] = map(lambda l: self._check_level(l), level['levels'])
+		if 'entries' in level:
+			if len(level['entries']) == 0:
+				del level['entries']
+			else:
+				level['entries'] = map(lambda e: self._check_entry(e), level['entries'])
+		return level
+
+	def _check_entry(self, entry):
+		assert entry['type'] in self.AUTHORIZED_TYPES
+		assert 'product' in entry
+		assert all(key in entry['product'] for key in ['_id', 'name'])
+		assert 'reco' in entry
+		assert '_id' in entry['reco']
+		assert entry['reco']['_id'] in self.RECO_LABELS.keys()
+		entry['reco']['name'] = self.RECO_LABELS[entry['reco']['_id']]
+		return entry
+
+	def refresh_update_date(self):
+		self.updated_at = datetime.datetime.now().isoformat()
+		return self
+
+

@@ -40,8 +40,7 @@ def search_pathologies_from_substance(subst_id):
 @app.route('/api/pathologies/<patho_id>', methods=['PUT'])
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
-	patho = Pathology(**data)
-	patho.refresh_update_date()
+	patho = Pathology(**data).check().refresh_update_date()
 	if patho_id:
 		patho.save()
 	else:

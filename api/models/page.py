@@ -1,4 +1,5 @@
 # coding=utf-8
+import bleach
 from slugify import slugify
 
 from base_model import BaseModel
