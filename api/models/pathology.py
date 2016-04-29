@@ -1,9 +1,13 @@
 # coding=utf-8
+import re
 import bleach
 import datetime
 from slugify import slugify
 
 from base_model import BaseModel
+
+bleach.ALLOWED_TAGS.append('p')
+bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 
 class Pathology(BaseModel):
@@ -34,13 +38,15 @@ class Pathology(BaseModel):
 
 	def check(self):
 		self.name = bleach.clean(self.name)
-		self.intro = bleach.clean(self.intro)
-		self.conclu = bleach.clean(self.conclu)
+		self.intro = self._linkify_grade(bleach.clean(self.intro))
+		self.conclu = self._linkify_grade(bleach.clean(self.conclu))
 		self.levels = map(lambda l: self._check_level(l), self.levels)
 		return self
 
 	def _check_level(self, level):
 		level['name'] = bleach.clean(level['name'])
+		if 'text' in level:
+			level['text'] = self._linkify_grade(bleach.clean(level['text']))
 		if 'levels' in level:
 			if len(level['levels']) == 0:
 				del level['levels']
@@ -61,7 +67,14 @@ class Pathology(BaseModel):
 		assert '_id' in entry['reco']
 		assert entry['reco']['_id'] in self.RECO_LABELS.keys()
 		entry['reco']['name'] = self.RECO_LABELS[entry['reco']['_id']]
+		if 'info' in entry:
+			entry['info'] = self._linkify_grade(entry['info'])
 		return entry
+
+	@staticmethod
+	def _linkify_grade(text):
+		regx = re.compile('(Grade (?:A|B|C))(?!</a>)')
+		return regx.sub(r'<a href="http://localhost:5000/#/pages/presentation">\1</a>', text)
 
 	def refresh_update_date(self):
 		self.updated_at = datetime.datetime.now().isoformat()

@@ -12,6 +12,7 @@ def pathology():
 		conclu='<a href="http://www.google.com" target=_blank>juste un lien</a>',
 		levels=[
 			{
+				'text': 'Bonjour (Grade A)',
 				'name': 'coucou',
 				'levels': []
 			},

@@ -54,7 +54,7 @@
 				<ul class="nav navbar-nav">
 					<li ui-sref-active="active"><a ui-sref="home">Aide à la Prescription</a></li>
 					<li class="hover-dropdown" ng-class="{'active-parent':checkPageInfoState()}">
-						<a class="dropdown-toggle parent-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">En Bref</a>
+						<a class="dropdown-toggle parent-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">À Propos</a>
 						<ul class="dropdown-menu subnav">
 							<li role="menuitem" ui-sref-active="active">
 								<a ui-sref="pages({id: 'presentation'})">Présentation</a>
@@ -62,9 +62,15 @@
 							<li role="menuitem" ui-sref-active="active">
 								<a ui-sref="pages({id: 'pourquoi-prescrisur'})">Pourquoi Prescrisur ?</a>
 							</li>
+							<li role="menuitem" ui-sref-active="active">
+								<a>Mode d'Emploi</a>
+							</li>
+							<li role="menuitem" ui-sref-active="active">
+								<a>Références</a>
+							</li>
 						</ul>
 					</li>
-					<li ui-sref-active="active"><a ui-sref="null">Actualités</a></li>
+					<li ui-sref-active="active"><a ui-sref="null">PrescriNews</a></li>
 					<li ui-sref-active="active"><a ui-sref="pages({id: 'sources-d-informations'})">Sources</a></li>
 					<li ui-sref-active="active"><a ui-sref="null">Contact</a></li>
 				</ul>
