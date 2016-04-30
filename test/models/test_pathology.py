@@ -58,7 +58,6 @@ class TestCheckEntry:
 	def test_remove_display_options_key_on_substances(self, pathology):
 		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displayOptions': True}
 		checked_product = pathology._check_entry_product(product, 'substances')
-		assert 'displayOptions' in product
 		assert 'displayOptions' not in checked_product
 
 	def test_raise_error_on_wrong_reco(self, pathology):
