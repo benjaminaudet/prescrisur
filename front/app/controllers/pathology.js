@@ -55,8 +55,27 @@ angular.module('prescrisurApp.controllers')
 			{_id: 'substances', 'name': 'Substance'}
 		];
 
+		if($stateParams.id) {
+			PathologyService.get({ id: $stateParams.id }, function(data) {
+				$scope.pathology = data.data;
+			});
+		}
+		else {
+			$scope.pathology = {
+				name: null,
+				levels: [
+					{rank: '', depth: 1}
+				]
+			};
+		}
+
+
 		$scope.filterResults = function(r) {
-			return {name: r.name, _id: r._id, status: r.status};
+			var res = {name: r.name, _id: r._id, status: r.status};
+			if(r.specialities) {
+				res.specialities = r.specialities;
+			}
+			return res;
 		};
 
 		$scope.search = function($select, searchType, force) {
@@ -73,6 +92,19 @@ angular.module('prescrisurApp.controllers')
 					}
 				});
 			}
+		};
+
+		$scope.displaySpecialities = function(specialities) {
+			if(!specialities[0].hasOwnProperty('enabled')) {
+				$scope.checkAll(specialities);
+			}
+		};
+
+		$scope.checkAll = function(specialities, checkValue) {
+			checkValue = (checkValue != undefined) ? checkValue : true;
+			specialities.forEach(function(spec) {
+				spec.enabled = checkValue;
+			});
 		};
 
 		$scope.removeLevel= function(data, $index) {
@@ -142,22 +174,6 @@ angular.module('prescrisurApp.controllers')
 			//console.log($scope.pathology);
 		};
 
-		var getPathology = function() {
-			if($stateParams.id) {
-				PathologyService.get({ id: $stateParams.id }, function(data) {
-					$scope.pathology = data.data;
-				});
-			}
-			else {
-				$scope.pathology = {
-					name: null,
-					levels: [
-						{rank: '', depth: 1}
-					]
-				};
-			}
-		};
-
 		var getRank = function(parentRank, $index) {
 			return parentRank + ($index + 1) + '.';
 		};
@@ -168,8 +184,6 @@ angular.module('prescrisurApp.controllers')
 				name: msg
 			}];
 		};
-
-		getPathology();
 
 
 		// Function to display or not action buttons
@@ -190,6 +204,10 @@ angular.module('prescrisurApp.controllers')
 				return $scope.pathology.levels.length > 1;
 			}
 			return !data.levels;
+		};
+
+		$scope.isSubstance = function(entry) {
+			return entry.type == 'substances' && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
 		};
 	}
 ]);

@@ -67,7 +67,7 @@
 		</tr>
 		<tr ng-if="entry.displaySpecialities" ng-repeat-end>
 			<td colspan="5">
-				<div class="speciality" ng-repeat="spec in entry.product.specialities">
+				<div class="speciality" ng-repeat="spec in entry.product.specialities" ng-if="spec.enabled">
 					<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.name }}</a>
 					<span class="spec-status">{{ spec.status }}</span>
 				</div>

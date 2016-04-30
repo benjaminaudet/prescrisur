@@ -60,16 +60,33 @@ class Pathology(BaseModel):
 		return level
 
 	def _check_entry(self, entry):
+		# Check type
 		assert entry['type'] in self.AUTHORIZED_TYPES
+		# Check product
 		assert 'product' in entry
-		assert all(key in entry['product'] for key in ['_id', 'name'])
+		entry['product'] = self._check_entry_product(entry['product'], entry['type'])
+		# Check reco
 		assert 'reco' in entry
-		assert '_id' in entry['reco']
-		assert entry['reco']['_id'] in self.RECO_LABELS.keys()
-		entry['reco']['name'] = self.RECO_LABELS[entry['reco']['_id']]
+		entry['reco'] = self._check_entry_reco(entry['reco'])
+		# Check info
 		if 'info' in entry:
 			entry['info'] = self._linkify_grade(entry['info'])
 		return entry
+
+	def _check_entry_reco(self, reco):
+		assert '_id' in reco
+		assert reco['_id'] in self.RECO_LABELS.keys()
+		reco['name'] = self.RECO_LABELS[reco['_id']]
+		return reco
+
+	@staticmethod
+	def _check_entry_product(product, product_type):
+		assert all(key in product for key in ['_id', 'name'])
+		if product_type == 'substances':
+			assert 'specialities' in product
+			if 'displaySpecialities' in product:
+				del product['displaySpecialities']
+		return product
 
 	@staticmethod
 	def _linkify_grade(text):

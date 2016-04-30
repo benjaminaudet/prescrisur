@@ -27,7 +27,6 @@ def test_linkify_grade(pathology):
 	assert pathology._linkify_grade('Bonjour <b>Grade C</b>') == 'Bonjour <b><a href="http://localhost:5000/#/pages/presentation">Grade C</a></b>'
 
 
-
 class TestBleachedText:
 	def test_text_clean(self, cleaned_pathology):
 		assert cleaned_pathology.conclu == '<a href="http://www.google.com" target="_blank">juste un lien</a>'
@@ -40,17 +39,31 @@ class TestBleachedText:
 
 
 class TestCheckEntry:
-	def test_raise_error_on_wrong_type(self, wrong_type_pathology):
+	def test_raise_error_on_wrong_type(self, pathology):
 		with pytest.raises(AssertionError):
-			wrong_type_pathology.check()
+			pathology._check_entry({'type': 'lol'})
 
-	def test_raise_error_on_no_product(self, no_product_pathology):
+	def test_raise_error_on_no_product(self, pathology):
 		with pytest.raises(AssertionError):
-			no_product_pathology.check()
+			pathology._check_entry({'type': 'specialities'})
 
-	def test_raise_error_on_uncompliant_product(self, uncompliant_product_pathology):
+	def test_raise_error_on_uncompliant_product(self, pathology):
 		with pytest.raises(AssertionError):
-			uncompliant_product_pathology.check()
+			pathology._check_entry({'type': 'specialities', 'product': {'_id': 'lol'}})
 
-	def test_add_reco_label(self, cleaned_pathology):
-		assert cleaned_pathology.levels[1]['levels'][1]['entries'][0]['reco']['name'] == 'Molécule Recommandée (voir RCP)'
+	def test_raise_error_on_substances_without_specialities(self, pathology):
+		with pytest.raises(AssertionError):
+			pathology._check_entry({'type': 'substances', 'product': {'_id': 'lol', 'name': 'ok'}})
+
+	def test_remove_display_specialities_key_on_substances(self, pathology):
+		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displaySpecialities': True}
+		checked_product = pathology._check_entry_product(product, 'substances')
+		assert 'displaySpecialities' not in checked_product
+
+	def test_raise_error_on_wrong_reco(self, pathology):
+		with pytest.raises(AssertionError):
+			pathology._check_entry_reco({'_id': 'coucou'})
+
+	def test_add_reco_label(self, pathology):
+		checked_reco = pathology._check_entry_reco({'_id': 'ok'})
+		assert checked_reco['name'] == 'Molécule Recommandée (voir RCP)'

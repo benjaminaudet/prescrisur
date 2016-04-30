@@ -69,7 +69,6 @@
 			<th>Reco</th>
 			<th colspan="2">Produit</th>
 			<th>Info</th>
-			<th></th>
 		</tr>
 		<tr ng-repeat-start="entry in data.entries">
 			<td class="col-md-1">
@@ -82,7 +81,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td class="col-md-3">
+			<td class="col-md-2">
 				<ui-select ng-model="entry.type">
 					<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
@@ -102,14 +101,28 @@
 					</ui-select-choices>
 				</ui-select>
 			</td>
-			<td class="col-md-1">
-				<div class="btn btn-default" ng-click="addInfo(entry)">Info</div>
-			</td>
-			<td class="col-md-1">
-				<button class="btn remove-entry" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></button>
+			<td class="col-md-3">
+				<span class="btn btn-default" ng-show="isSubstance(entry)" ng-click="displaySpecialities(entry.product.specialities)" ng-model="entry.product.displaySpecialities" uib-btn-checkbox>
+					Plus
+				</span>
+				<span class="btn btn-default" ng-click="addInfo(entry)">Info</span>
+				<span class="btn remove-entry pull-right" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></span>
 			</td>
 		</tr>
-		<tr ng-if="entry.info" ng-repeat-end>
+		<tr ng-show="entry.product.displaySpecialities">
+			<td colspan="5">
+				<div class="check-all">
+					<a ng-click="checkAll(entry.product.specialities)">Tout Cocher</a> /
+					<a ng-click="checkAll(entry.product.specialities, false)">Décocher</a>
+				</div>
+				<div class="speciality" ng-repeat="spec in entry.product.specialities">
+					<input type="checkbox" ng-model="spec.enabled" />
+					{{ spec.name }}
+					<span class="spec-status">{{ spec.status }}</span>
+				</div>
+			</td>
+		</tr>
+		<tr ng-show="entry.info" ng-repeat-end>
 			<td colspan="5">
 				<text-angular ng-model="entry.info" class="pathology-editor"></text-angular>
 			</td>
