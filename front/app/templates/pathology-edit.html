@@ -102,14 +102,20 @@
 				</ui-select>
 			</td>
 			<td class="col-md-3">
-				<span class="btn btn-default" ng-show="isSubstance(entry)" ng-click="displaySpecialities(entry.product.specialities)" ng-model="entry.product.displaySpecialities" uib-btn-checkbox>
+				<span class="btn btn-default" ng-show="isSubstance(entry)" ng-click="displaySpecialities(entry.product.specialities)" ng-model="entry.product.displayOptions" uib-btn-checkbox>
 					Plus
 				</span>
 				<span class="btn btn-default" ng-click="addInfo(entry)">Info</span>
 				<span class="btn remove-entry pull-right" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></span>
 			</td>
 		</tr>
-		<tr ng-show="entry.product.displaySpecialities">
+		<tr ng-show="entry.product.displayOptions">
+			<td colspan="5">
+				<label>Modifier le nom</label>
+				<input type="text" ng-model="entry.product.name" class="form-control" />
+			</td>
+		</tr>
+		<tr ng-show="entry.product.displayOptions">
 			<td colspan="5">
 				<div class="check-all">
 					<a ng-click="checkAll(entry.product.specialities)">Tout Cocher</a> /

@@ -84,8 +84,8 @@ class Pathology(BaseModel):
 		assert all(key in product for key in ['_id', 'name'])
 		if product_type == 'substances':
 			assert 'specialities' in product
-			if 'displaySpecialities' in product:
-				del product['displaySpecialities']
+			if 'displayOptions' in product:
+				del product['displayOptions']
 		return product
 
 	@staticmethod

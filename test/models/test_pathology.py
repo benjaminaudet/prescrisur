@@ -55,10 +55,11 @@ class TestCheckEntry:
 		with pytest.raises(AssertionError):
 			pathology._check_entry({'type': 'substances', 'product': {'_id': 'lol', 'name': 'ok'}})
 
-	def test_remove_display_specialities_key_on_substances(self, pathology):
-		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displaySpecialities': True}
+	def test_remove_display_options_key_on_substances(self, pathology):
+		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displayOptions': True}
 		checked_product = pathology._check_entry_product(product, 'substances')
-		assert 'displaySpecialities' not in checked_product
+		assert 'displayOptions' in product
+		assert 'displayOptions' not in checked_product
 
 	def test_raise_error_on_wrong_reco(self, pathology):
 		with pytest.raises(AssertionError):
