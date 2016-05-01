@@ -3,3 +3,4 @@ from speciality import *
 from substance import *
 from user import *
 from page import *
+from news import *

@@ -3,7 +3,7 @@ from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from api import app, login_manager
-from api.models import Pathology, Speciality, Substance, User, Page
+from api.models import Pathology, Speciality, Substance, User, Page, News
 
 
 @app.route('/')
@@ -18,6 +18,7 @@ def search_speciality():
 
 
 @app.route('/api/substances/<subst_id>')
+@login_required
 def substance(subst_id):
 	subst = Substance.get(subst_id)
 	if not subst:
@@ -38,6 +39,7 @@ def search_pathologies_from_substance(subst_id):
 
 @app.route('/api/pathologies', methods=['POST'])
 @app.route('/api/pathologies/<patho_id>', methods=['PUT'])
+@login_required
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
 	patho = Pathology(**data).check().refresh_update_date()
@@ -64,14 +66,15 @@ def search_pathology():
 
 @app.route('/api/pages', methods=['POST'])
 @app.route('/api/pages/<page_id>', methods=['PUT'])
+@login_required
 def edit_page(page_id=None):
 	data = json.loads(request.data)
-	page = Page(**data)
+	p = Page(**data).check()
 	if page_id:
-		page.save()
+		p.save()
 	else:
-		page.create()
-	return jsonify(data=page)
+		p.create()
+	return jsonify(data=p)
 
 
 @app.route('/api/pages/<page_id>')
@@ -81,6 +84,27 @@ def page(page_id):
 		abort(404)
 	return jsonify(data=p)
 
+
+@app.route('/api/news', methods=['POST'])
+@app.route('/api/news/<news_id>', methods=['PUT'])
+@login_required
+def edit_news(news_id=None):
+	data = json.loads(request.data)
+	n = News(**data).check().refresh_update_date().set_author(current_user)
+	if news_id:
+		n.save()
+	else:
+		n.create()
+	return jsonify(data=n)
+
+
+@app.route('/api/news', methods=['GET'])
+@app.route('/api/news/<news_id>', methods=['GET'])
+def news(news_id=None):
+	n = News.get(news_id)
+	if not n:
+		abort(404)
+	return jsonify(data=n)
 
 
 ###############

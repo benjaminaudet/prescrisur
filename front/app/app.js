@@ -55,6 +55,30 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/page.html',
 			access: {restricted: true}
 		})
+		.state('news-edit', {
+			url: '/news/edit/:id',
+			controller: 'NewsEditController',
+			templateUrl: 'front/app/templates/news-edit.html',
+			access: {restricted: true}
+		})
+		.state('news-new', {
+			url: '/news/new',
+			controller: 'NewsEditController',
+			templateUrl: 'front/app/templates/news-edit.html',
+			access: {restricted: true}
+		})
+		.state('news', {
+			url: '/news/:id',
+			controller: 'NewsController',
+			templateUrl: 'front/app/templates/news.html',
+			access: {restricted: true}
+		})
+		.state('news-list', {
+			url: '/news',
+			controller: 'NewsController',
+			templateUrl: 'front/app/templates/news.html',
+			access: {restricted: true}
+		})
 		.state('pathologies-edit', {
 			url: '/pathologies/edit/:id',
 			controller: 'PathologyEditController',

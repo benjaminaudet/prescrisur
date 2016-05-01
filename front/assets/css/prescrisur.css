@@ -154,7 +154,7 @@
     border: none;
 }
 
-.navbar-toggle:hover,
+.navbar-toggle:hover
 {
     background-color: #6E0018 !important;
 }
@@ -305,7 +305,8 @@
 
 /****************************/
 /*         EDIT            */
-#pathology-form .form-group {
+#pathology-form .form-group,
+#text-form .form-group {
     margin: 0 10px 20px 10px !important;
 }
 
@@ -455,14 +456,60 @@
 
 /****************************/
 /*       PAGES              */
-#page {
+.page-text {
     padding: 0 8%;
 }
 
-#page > * {
+.page-text > * {
     background: none !important;
 }
 
-#page li {
+.page-text li {
     margin-bottom: 7px;
+}
+
+
+/****************************/
+/*       NEWS               */
+#page-header.news .title {
+    display: inline-block;
+}
+
+#page-header.news .info {
+    margin-top: 20px;
+}
+
+.news-list {
+    border: 1px solid rgba(230,103,135,0.2);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    margin-right: 3%;
+    margin-left: 3%;
+    padding: 0 5% 2% 5%;
+}
+
+.news-list .header {
+    margin-bottom: 10px;
+}
+
+.news-list .title {
+    width: 80%;
+    font-family: ErasLight, Arial, sans-serif;
+    font-size: 2em;
+    display: inline-block;
+}
+
+.news-list .info {
+    width: 20%;
+    font-size: 0.8em;
+    margin-top: 20px;
+}
+
+@media (max-width: 500px) {
+    .news-list .info {
+        display: block;
+        width: 100%;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
 }

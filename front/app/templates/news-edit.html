@@ -1,18 +1,18 @@
 <div class="row" id="page-header">
-	<h1 ng-if="!page">Nouvelle Page</h1>
-	<h1 ng-if="page">{{ page.name }}</h1>
+	<h1 ng-if="!news">Nouvelle News</h1>
+	<h1 ng-if="news">{{ news.name }}</h1>
 </div>
 
 <div id="content" class="row">
 	<form ng-submit="submit()" id="text-form" class="form-horizontal">
-		<!-- Page Name -->
+		<!-- News Name -->
 		<div class="form-group">
-			<input class="form-control" type="text" ng-model="page.name" placeholder="Nom de la page" required/>
+			<input class="form-control" type="text" ng-model="news.name" placeholder="Titre" required/>
 		</div>
-		<!-- Page Text -->
+		<!-- News Text -->
 		<div class="form-group">
 			<label>Contenu</label>
-			<text-angular ng-model="page.text" class="page-editor"></text-angular>
+			<text-angular ng-model="news.text" class="page-editor"></text-angular>
 		</div>
 
 		<button type="submit" class="btn btn-primary btn-lg">Envoyer</button>

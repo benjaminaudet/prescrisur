@@ -6,7 +6,7 @@ from slugify import slugify
 
 from base_model import BaseModel
 
-bleach.ALLOWED_TAGS.append('p')
+bleach.ALLOWED_TAGS += ['p', 'br']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 
