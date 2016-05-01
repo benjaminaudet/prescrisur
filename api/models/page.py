@@ -4,8 +4,11 @@ from slugify import slugify
 
 from base_model import BaseModel
 
-bleach.ALLOWED_TAGS += ['p', 'br']
-bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
+bleach.ALLOWED_TAGS += ['p', 'br', 'span', 'div', 'img']
+bleach.ALLOWED_ATTRIBUTES.update({
+	'a': ['href', 'title', 'target'],
+	'img': ['src', 'alt', 'title']
+})
 
 
 class Page(BaseModel):
