@@ -3,9 +3,9 @@ angular.module('prescrisurApp.controllers')
 .controller("PageController", [
 	'$scope',
 	'$stateParams',
-	'NewsService',
+	'PageService',
 
-	function($scope, $stateParams, NewsService) {
+	function($scope, $stateParams, PageService) {
 		$scope.page = null;
 
 		PageService.get({ id: $stateParams.id }, function(data) {
@@ -18,9 +18,9 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$location',
 	'$stateParams',
-	'NewsService',
+	'PageService',
 
-	function($scope, $location, $stateParams, NewsService) {
+	function($scope, $location, $stateParams, PageService) {
 
 		if($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {

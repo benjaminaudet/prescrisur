@@ -26,7 +26,7 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	}
 ])
 
-.factory('NewsService', ['$resource',
+.factory('PageService', ['$resource',
 	function($resource){
 		return $resource('/api/pages/:id', null, {
 			update: { method:'PUT' }
