@@ -5,9 +5,8 @@ angular.module('prescrisurApp.controllers')
 	'$location',
 	'$stateParams',
 	'PathologyService',
-	'SubstanceService',
 
-	function($scope, $location, $stateParams, PathologyService, SubstanceService) {
+	function($scope, $location, $stateParams, PathologyService) {
 		$scope.pathology = null;
 
 		PathologyService.get({ id: $stateParams.id }, function(data) {
@@ -24,11 +23,6 @@ angular.module('prescrisurApp.controllers')
 				entry.displaySpecialities = !entry.displaySpecialities;
 				return;
 			}
-
-			SubstanceService.get({ id: entry.product._id}, function(data) {
-				entry.product.specialities = data.data.specialities;
-				entry.displaySpecialities = true;
-			});
 		};
 
 		$scope.entryColspan = function(entry) {

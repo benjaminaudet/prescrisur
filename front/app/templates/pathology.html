@@ -53,19 +53,19 @@
 					<a ui-sref="specialities({id: entry.product._id})" target="_blank">RCP ANSM/EMA</a>
 				</div>
 				<div ng-switch-default="">
-					<a ng-click="showSpecialities(entry)">Liste des médicaments</a>
+					<a ng-model="entry.displaySpecialities" uib-btn-checkbox>Liste des médicaments</a>
 				</div>
 			</td>
 			<td ng-if="entry.info" class="info-button" ng-class="{'active':entry.displayInfo}">
-				<div ng-model="entry.displayInfo" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Info*</div>
+				<div ng-model="entry.displayInfo" uib-btn-checkbox>Info*</div>
 			</td>
 		</tr>
-		<tr ng-if="entry.displayInfo">
+		<tr ng-show="entry.displayInfo">
 			<td colspan="5">
 				<span ng-bind-html="entry.info"></span>
 			</td>
 		</tr>
-		<tr ng-if="entry.displaySpecialities" ng-repeat-end>
+		<tr ng-show="entry.displaySpecialities" ng-repeat-end>
 			<td colspan="5">
 				<div class="speciality" ng-repeat="spec in entry.product.specialities" ng-if="spec.enabled">
 					<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.name }}</a>
