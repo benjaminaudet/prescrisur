@@ -97,6 +97,11 @@
     background: url('../img/logo-header.png') no-repeat;
     margin-bottom: 10px;
     cursor: pointer;
+    font-family: ErasMedium, Arial, sans-serif;
+    font-size: 0.87em;
+    padding-top: 60px;
+    padding-left: 10px;
+    color: #555;
 }
 
 
