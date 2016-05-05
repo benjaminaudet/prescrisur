@@ -26,6 +26,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/home.html',
 			access: {restricted: false}
 		})
+		.state('register', {
+			url: '/register',
+			controller : 'RegisterController',
+			templateUrl: 'front/app/templates/register.html',
+			access: {restricted: false}
+		})
 		.state('login', {
 			url: '/login',
 			controller : 'LoginController',

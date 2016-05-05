@@ -122,13 +122,26 @@ def unauthorized_handler():
 	return 'Unauthorized'
 
 
+@app.route('/api/register', methods=['POST'])
+def register():
+	data = json.loads(request.data)
+	user = User(**data)
+	res = {'success': False}
+	try:
+		user.create()
+		res['success'] = True
+	except Exception as e:
+		res['error'] = repr(e)
+	return jsonify(res)
+
+
 @app.route('/api/login', methods=['POST'])
 def login():
 	data = json.loads(request.data)
 	user = User.get(data['email'])
 	if not user:
 		abort(401)
-	if data['passwd'] == user.password_hash:
+	if user.verify_password(data['passwd']):
 		login_user(user)
 		return jsonify(data=user)
 	return jsonify({'error': 'error'})
@@ -146,4 +159,5 @@ def logout():
 def get_user_status():
 	if not current_user:
 		abort(401)
+	delattr(current_user, 'password_hash')
 	return jsonify(user=current_user)
