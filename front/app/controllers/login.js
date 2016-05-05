@@ -6,6 +6,11 @@ angular.module('prescrisurApp.controllers')
 	'AuthService',
 
 	function($scope, $state, AuthService) {
+		$scope.loginForm = {};
+
+		if($scope.currentUser) {
+			setTimeout(function() { $state.go('home'); }, 1500);
+		}
 
 		$scope.login = function () {
 			// initial values
@@ -18,15 +23,60 @@ angular.module('prescrisurApp.controllers')
 				.then(function (user) {
 					$state.go('home');
 					$scope.disabled = false;
-					$scope.loginForm = {};
 				})
 				// handle error
 				.catch(function () {
 					$scope.error = true;
-					$scope.errorMessage = "Invalid username and/or password";
 					$scope.disabled = false;
-					$scope.loginForm = {};
 				});
+		};
+	}
+])
+
+.controller("RegisterController", [
+	'$scope',
+	'$state',
+	'AuthService',
+
+	function($scope, $state, AuthService) {
+		$scope.registerForm = {};
+
+		if($scope.currentUser) {
+			setTimeout(function() { $state.go('home'); }, 1500);
+		}
+
+		$scope.checkPassword = function() {
+			var password = $scope.registerForm.passwd;
+			var confirm = $scope.registerForm.confirmPasswd;
+			if (password != '' && password != confirm) {
+				$scope.badConfirmPasswd = true;
+			} else {
+				$scope.badConfirmPasswd = false;
+			}
+			return !$scope.badConfirmPasswd;
+		};
+
+		$scope.register = function () {
+			// initial values
+			$scope.error = false;
+			$scope.disabled = true;
+			
+			if($scope.checkPassword()) {
+				// call login from service
+				AuthService.register($scope.registerForm.name, $scope.registerForm.email, $scope.registerForm.passwd)
+					// handle success
+					.then(function () {
+						$scope.registered = true;
+						$scope.disabled = false;
+					})
+					// handle error
+					.catch(function () {
+						$scope.error = true;
+						$scope.disabled = false;
+					});
+			} else {
+				$scope.disabled = false;
+			}
 		};
 	}
 ]);

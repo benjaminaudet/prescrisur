@@ -20,6 +20,30 @@ function ($q, $timeout, $http) {
 		return user ? true : false;
 	}
 
+	function register(name, email, password) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.post('/api/register', {name: name, _id: email, password: password})
+			// handle success
+			.success(function (data, status) {
+				if(status === 200 && data.success){
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject();
+			});
+
+		// return promise object
+		return deferred.promise;
+
+	}
+
 	function login(email, passwd) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
@@ -90,6 +114,7 @@ function ($q, $timeout, $http) {
 		isLoggedIn: isLoggedIn,
 		login: login,
 		logout: logout,
+		register: register,
 		getUser: getUser
 	});
 }]);

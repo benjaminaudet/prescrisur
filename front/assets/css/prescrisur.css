@@ -43,6 +43,15 @@
 
 /****************************/
 /*     CLASSES USUELLES     */
+.red {
+    color: red;
+}
+
+.invalid {
+    border-color: red;
+    outline-color: red;
+}
+
 .center {
     text-align: center;
 }
@@ -291,6 +300,43 @@
     color: white !important;
 }
 
+/****************************/
+/*         LOGIN            */
+#login-form {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 40px 30px;
+    width: 70%;
+    margin: auto;
+}
+
+#login-form input {
+    margin-bottom: 10px;
+}
+
+#login-form .submit {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+/****************************/
+/*         REGISTER        */
+#register-form {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 40px 30px;
+    width: 90%;
+    margin: auto;
+}
+
+#register-form input {
+    margin-bottom: 10px;
+}
+
+#register-form .submit {
+    padding: 0 10%;
+}
 
 /****************************/
 /*        PATHOLOGY         */
