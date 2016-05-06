@@ -1,16 +1,5 @@
 angular.module('prescrisurApp.loginServices', [])
 
-.factory("LogoutService", [
-	'$state',
-	'AuthService',
-
-	function($state, AuthService) {
-		return AuthService.logout().then(function () {
-			$state.go('home', {}, {reload: true});
-		});
-	}
-])
-
 .factory('AuthService', ['$q', '$timeout', '$http',
 function ($q, $timeout, $http) {
 

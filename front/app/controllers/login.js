@@ -1,5 +1,17 @@
 angular.module('prescrisurApp.controllers')
 
+.controller("LogoutController", [
+	'$state',
+	'AuthService',
+
+	function($state, AuthService) {
+		AuthService.logout().then(function () {
+			$state.go('home', {msg: 'Déconnecté !'}, {reload: true});
+		});
+	}
+])
+
+
 .controller("LoginController", [
 	'$scope',
 	'$state',
@@ -34,6 +46,7 @@ angular.module('prescrisurApp.controllers')
 		};
 	}
 ])
+
 
 .controller("RegisterController", [
 	'$scope',

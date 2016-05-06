@@ -24,6 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/',
 			controller : 'HomeController',
 			templateUrl: 'front/app/templates/home.html',
+			params: {msg: null},
 			access: {restricted: false}
 		})
 		.state('error', {
@@ -48,7 +49,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 		.state('logout', {
 			url: '/logout',
-			resolve: {controller : 'LogoutService'},
+			controller: 'LogoutController',
+			template: '',
 			access: {restricted: true}
 		})
 		.state('pages-edit', {
