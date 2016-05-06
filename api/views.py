@@ -111,6 +111,16 @@ def edit_news(news_id=None):
 	return jsonify(data=n)
 
 
+@app.route('/api/news/<news_id>', methods=['DELETE'])
+@required_role('admin')
+def delete_news(news_id):
+	success = False
+	remove = News.delete(news_id)
+	if remove.acknowledged:
+		success = True
+	return jsonify({'success': success})
+
+
 @app.route('/api/news', methods=['GET'])
 @app.route('/api/news/<news_id>', methods=['GET'])
 def news(news_id=None):

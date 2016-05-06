@@ -60,6 +60,10 @@
     cursor: pointer;
 }
 
+.inline {
+    display: inline;
+}
+
 .hover-dropdown:hover > .dropdown-menu {
     display: block;
 }
@@ -620,9 +624,17 @@
 
 .news-list .title {
     width: 80%;
-    font-family: ErasLight, Arial, sans-serif;
-    font-size: 2em;
     display: inline-block;
+    margin-top: 20px;
+}
+
+.news-list .title h2 {
+    font-family: ErasLight, Arial, sans-serif;
+    font-size: 1.7em;
+}
+
+.news-list .title .action-buttons {
+    margin-left: 5px;
 }
 
 .news-list .info {

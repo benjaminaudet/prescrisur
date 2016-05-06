@@ -2,10 +2,11 @@ angular.module('prescrisurApp.controllers')
 
 .controller("NewsController", [
 	'$scope',
+	'$state',
 	'$stateParams',
 	'NewsService',
 
-	function($scope, $stateParams, NewsService) {
+	function($scope, $state, $stateParams, NewsService) {
 
 		if ($stateParams.id) {
 			NewsService.get({ id: $stateParams.id }, function(data) {
@@ -15,6 +16,12 @@ angular.module('prescrisurApp.controllers')
 			NewsService.get(function(data){
 				$scope.news = data.data;
 			})
+		}
+
+		$scope.delete = function(news_id) {
+			NewsService.delete({ id: news_id }, function() {
+				$state.go('news', {msg: 'News Supprimée !'});
+			});
 		}
 	}
 ])

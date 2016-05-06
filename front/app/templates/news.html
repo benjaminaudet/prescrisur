@@ -11,7 +11,19 @@
 <div id="content" class="row caduceus">
 	<div ng-if="news.length > 0" ng-repeat="n in news" class="news-list">
 		<div class="header">
-			<h2 class="title">{{ n.name }}</h2>
+			<div class="title">
+				<h2 class="inline">{{ n.name }}</h2>
+				<div ng-if="isAuthorized('admin')" class="inline action-buttons">
+					<div class="btn-group" role="group">
+						<a ui-sref="news-edit({id: n._id})" type="button" class="btn btn-sm btn-default">
+							<i class="fa fa-edit"></i>
+						</a>
+						<a ng-click="delete(n._id)" type="button" class="btn btn-sm btn-danger">
+							<i class="fa fa-trash"></i>
+						</a>
+					</div>
+				</div>
+			</div>
 			<div class="info pull-right">
 				<div class="author">Par {{ n.author.name }}</div>
 				<div class="date">{{ n.created_at | date:"'le' dd/MM/yyyy 'à' HH:mm" }}</div>
