@@ -7,7 +7,7 @@
 	<form ng-submit="submit()" id="text-form" class="form-horizontal">
 		<!-- Page Name -->
 		<div class="form-group">
-			<input class="form-control" type="text" ng-model="page.name" placeholder="Nom de la page" required/>
+			<input class="form-control" type="text" ng-model="page.name" placeholder="Nom de la page (max 50 caractères)" maxlength="50" required/>
 		</div>
 		<!-- Page Text -->
 		<div class="form-group">

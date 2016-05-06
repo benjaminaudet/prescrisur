@@ -4,13 +4,18 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'SearchService',
+	'NewsService',
 	'PathologyService',
 
-	function($scope, $state, SearchService, PathologyService) {
+	function($scope, $state, SearchService, NewsService, PathologyService) {
 		$scope.q = null;
 		$scope.searchType = 'pathologies';
 		$scope.results = [];
 
+		NewsService.get(function(data) {
+			$scope.news = data.data;
+		});
+		
 		PathologyService.get(function(data) {
 			$scope.pathologies = data.data;
 		});

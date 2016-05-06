@@ -34,19 +34,22 @@
 </div>
 
 <!-- Example row of columns -->
-<div class="row">
-	<div class="col-md-7">
+<div class="row" id="home-info">
+	<div class="col-md-7" id="home-news">
 		<h2>Dernières Actualités</h2>
-		<p class="text-danger">As of v8.0, Safari exhibits a bug in which resizing your browser horizontally causes rendering errors in the justified nav that are cleared upon refreshing.</p>
-		<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-		<p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+		<ul>
+			<li ng-repeat="n in news | limitTo: 5">
+				<a ui-sref="news({id: n._id})">{{ n.name }}</a>
+				<small class="info">par {{ n.author.name }} - {{ n.created_at | date:"dd/MM/yyyy" }}</small>
+			</li>
+		</ul>
 	</div>
-	<div class="col-md-5" id="patho-updates">
+	<div class="col-md-5">
 		<h2>Dernières Mises à Jour</h2>
 		<ul>
 			<li ng-repeat="patho in pathologies | limitTo: 5">
 				<a ui-sref="pathologies({id: patho._id})">{{ patho.name }}</a>
-				<small>- {{ patho.updated_at | date:"'le' dd/MM/yyyy 'à' HH:mm" }}</small>
+				<small>- {{ patho.updated_at | date:"dd/MM/yyyy" }}</small>
 			</li>
 		</ul>
 	</div>
