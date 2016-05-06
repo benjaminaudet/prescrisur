@@ -52,6 +52,16 @@ def edit_pathology(patho_id=None):
 	return jsonify(data=patho)
 
 
+@app.route('/api/pathologies/<patho_id>', methods=['DELETE'])
+@required_role('admin')
+def delete_pathology(patho_id):
+	success = False
+	remove = Pathology.delete(patho_id)
+	if remove.acknowledged:
+		success = True
+	return jsonify({'success': success})
+
+
 @app.route('/api/pathologies', methods=['GET'])
 @app.route('/api/pathologies/<patho_id>', methods=['GET'])
 def pathology(patho_id=None):

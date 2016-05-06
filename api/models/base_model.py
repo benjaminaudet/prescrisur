@@ -2,7 +2,6 @@ import re
 import jsonpickle
 from pymongo import MongoClient, ASCENDING, DESCENDING
 
-
 client = MongoClient()
 db = client.Prescrisur
 
@@ -29,6 +28,10 @@ class BaseModel(object):
 		if not obj:
 			return None
 		return cls(**obj)
+
+	@classmethod
+	def delete(cls, obj_id):
+		return cls.collection.delete_one({'_id': obj_id})
 
 	@classmethod
 	def all(cls):

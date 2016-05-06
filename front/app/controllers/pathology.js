@@ -2,16 +2,23 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyController", [
 	'$scope',
+	'$state',
 	'$location',
 	'$stateParams',
 	'PathologyService',
 
-	function($scope, $location, $stateParams, PathologyService) {
+	function($scope, $state, $location, $stateParams, PathologyService) {
 		$scope.pathology = null;
 
 		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
 		});
+
+		$scope.delete = function() {
+			PathologyService.delete({ id: $stateParams.id }, function(data) {
+				$state.go('home', {msg: 'Pathologie Supprimée !'});
+			});
+		};
 
 		$scope.scrollTo = function(rank, $index) {
 			var hashToGo = rank+($index+1)+'.';

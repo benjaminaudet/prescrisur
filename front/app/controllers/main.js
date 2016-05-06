@@ -12,6 +12,13 @@ angular.module('prescrisurApp.controllers')
 			$scope.currentUser = user;
 		};
 
+		$scope.isAuthorized = function(role) {
+			if($scope.currentUser && $scope.currentUser.roles.indexOf(role) > -1) {
+				return true;
+			}
+			return false;
+		};
+
 		$scope.checkPageInfoState = function() {
 			if($state.current.name == 'pages') {
 				var pagesArray = ['pourquoi-prescrisur', 'presentation'];

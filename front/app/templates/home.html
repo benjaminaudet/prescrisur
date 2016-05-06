@@ -1,4 +1,9 @@
 <!-- Jumbotron -->
+<div id="messages" ng-if="msg" class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	{{ msg }}
+</div>
+
 <div class="jumbotron">
 	<h1>Recherche en un clic!</h1>
 	<p class="lead">
