@@ -351,6 +351,19 @@
     color: white !important;
 }
 
+#patho-updates h2 {
+    font-family: ErasMedium, Arial, sans-serif;
+}
+
+#patho-updates ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+#patho-updates li {
+    margin-bottom: 3px;
+}
+
 /****************************/
 /*         LOGIN            */
 #login-form {

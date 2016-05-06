@@ -52,8 +52,9 @@ def edit_pathology(patho_id=None):
 	return jsonify(data=patho)
 
 
-@app.route('/api/pathologies/<patho_id>')
-def pathology(patho_id):
+@app.route('/api/pathologies', methods=['GET'])
+@app.route('/api/pathologies/<patho_id>', methods=['GET'])
+def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
 	if not patho:
 		abort(404)

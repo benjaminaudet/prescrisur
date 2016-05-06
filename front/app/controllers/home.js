@@ -4,12 +4,17 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'SearchService',
+	'PathologyService',
 
-	function($scope, $state, SearchService) {
+	function($scope, $state, SearchService, PathologyService) {
 		$scope.q = null;
 		$scope.searchType = 'pathologies';
 		$scope.results = [];
 
+		PathologyService.get(function(data) {
+			$scope.pathologies = data.data;
+		});
+		
 		$scope.goTo = function($select) {
 			$state.go($scope.searchType, {id: $select.selected._id})
 		};

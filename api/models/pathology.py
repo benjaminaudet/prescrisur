@@ -3,6 +3,7 @@ import re
 import bleach
 import datetime
 from slugify import slugify
+from pymongo import DESCENDING
 
 from base_model import BaseModel
 
@@ -35,6 +36,13 @@ class Pathology(BaseModel):
 			{'levels.levels.levels.entries.product._id': subst_id},
 			{'levels.levels.levels.levels.entries.product._id': subst_id}
 		]}, {'name': 1, 'status': 1})
+
+	@classmethod
+	def all(cls):
+		objs = cls.collection.find({}, {'name': 1, 'updated_at': 1}).sort('updated_at', DESCENDING)
+		if not objs:
+			return []
+		return list(objs)
 
 	def check(self):
 		self.name = bleach.clean(self.name)
