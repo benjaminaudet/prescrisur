@@ -3,10 +3,12 @@ angular.module('prescrisurApp.controllers')
 .controller("LoginController", [
 	'$scope',
 	'$state',
+	'$stateParams',
 	'AuthService',
 
-	function($scope, $state, AuthService) {
+	function($scope, $state, $stateParams, AuthService) {
 		$scope.loginForm = {};
+		$scope.needLogin = $stateParams.needLogin;
 
 		if($scope.currentUser) {
 			setTimeout(function() { $state.go('home'); }, 1500);

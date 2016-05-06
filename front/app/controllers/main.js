@@ -22,4 +22,16 @@ angular.module('prescrisurApp.controllers')
 			return false;
 		}
 	}
+])
+
+.controller("ErrorController", [
+	'$scope',
+	'$state',
+	'$stateParams',
+
+	function($scope, $state, $stateParams) {
+		$scope.code = $stateParams.code;
+
+		setTimeout(function() { $state.go('home'); }, 2000);
+	}
 ]);

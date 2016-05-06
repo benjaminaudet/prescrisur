@@ -98,12 +98,15 @@ function ($q, $timeout, $http) {
 			// handle success
 			.success(function (data) {
 				user = data.user;
+				if(!user) {
+					deferred.reject({});
+				}
 				deferred.resolve(user);
 			})
 			// handle error
-			.error(function () {
+			.error(function (e) {
 				user = null;
-				deferred.reject();
+				deferred.reject(e);
 			});
 
 		return deferred.promise;

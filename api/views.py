@@ -3,7 +3,8 @@ from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
 from api import app, login_manager
-from api.models import Pathology, Speciality, Substance, User, Page, News
+from api.models import *
+from api.decorators import required_role
 
 
 @app.route('/')
@@ -33,13 +34,14 @@ def search_substance():
 
 
 @app.route('/api/substances/pathologies/<subst_id>')
+@login_required
 def search_pathologies_from_substance(subst_id):
 	return jsonify(data=Pathology.search_by_substance(subst_id))
 
 
 @app.route('/api/pathologies', methods=['POST'])
 @app.route('/api/pathologies/<patho_id>', methods=['PUT'])
-@login_required
+@required_role('admin')
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
 	patho = Pathology(**data).check().refresh_update_date()
@@ -66,7 +68,7 @@ def search_pathology():
 
 @app.route('/api/pages', methods=['POST'])
 @app.route('/api/pages/<page_id>', methods=['PUT'])
-@login_required
+@required_role('admin')
 def edit_page(page_id=None):
 	data = json.loads(request.data)
 	p = Page(**data).check()
@@ -87,7 +89,7 @@ def page(page_id):
 
 @app.route('/api/news', methods=['POST'])
 @app.route('/api/news/<news_id>', methods=['PUT'])
-@login_required
+@required_role('admin')
 def edit_news(news_id=None):
 	data = json.loads(request.data)
 	n = News(**data).check().refresh_update_date().set_author(current_user)
@@ -119,7 +121,7 @@ def user_loader(email):
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-	return 'Unauthorized'
+	return jsonify({'need_login': True}), 401
 
 
 @app.route('/api/register', methods=['POST'])
@@ -155,9 +157,8 @@ def logout():
 
 
 @app.route('/api/me')
-@login_required
 def get_user_status():
-	if not current_user:
-		abort(401)
+	if not current_user.is_authenticated:
+		return jsonify(user=False)
 	delattr(current_user, 'password_hash')
 	return jsonify(user=current_user)

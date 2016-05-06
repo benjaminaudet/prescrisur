@@ -17,13 +17,20 @@ angular.module('prescrisurApp.controllers', []);
 // Routing
 app.config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('error');
 
 	$stateProvider
 		.state('home', {
 			url: '/',
 			controller : 'HomeController',
 			templateUrl: 'front/app/templates/home.html',
+			access: {restricted: false}
+		})
+		.state('error', {
+			url: '/error',
+			controller : 'ErrorController',
+			templateUrl: 'front/app/templates/error.html',
+			params: {code: null},
 			access: {restricted: false}
 		})
 		.state('register', {
@@ -36,6 +43,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/login',
 			controller : 'LoginController',
 			templateUrl: 'front/app/templates/login.html',
+			params: {needLogin: false},
 			access: {restricted: false}
 		})
 		.state('logout', {
@@ -47,61 +55,61 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/pages/edit/:id',
 			controller: 'PageEditController',
 			templateUrl: 'front/app/templates/page-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('pages-new', {
 			url: '/pages/new',
 			controller: 'PageEditController',
 			templateUrl: 'front/app/templates/page-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('pages', {
 			url: '/pages/:id',
 			controller: 'PageController',
 			templateUrl: 'front/app/templates/page.html',
-			access: {restricted: true}
+			access: {restricted: false}
 		})
 		.state('news-edit', {
 			url: '/news/edit/:id',
 			controller: 'NewsEditController',
 			templateUrl: 'front/app/templates/news-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('news-new', {
 			url: '/news/new',
 			controller: 'NewsEditController',
 			templateUrl: 'front/app/templates/news-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('news', {
 			url: '/news/:id',
 			controller: 'NewsController',
 			templateUrl: 'front/app/templates/news.html',
-			access: {restricted: true}
+			access: {restricted: false}
 		})
 		.state('news-list', {
 			url: '/news',
 			controller: 'NewsController',
 			templateUrl: 'front/app/templates/news.html',
-			access: {restricted: true}
+			access: {restricted: false}
 		})
 		.state('pathologies-edit', {
 			url: '/pathologies/edit/:id',
 			controller: 'PathologyEditController',
 			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('pathologies-new', {
 			url: '/pathologies/new',
 			controller: 'PathologyEditController',
 			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true}
+			access: {restricted: true, admin: true}
 		})
 		.state('pathologies', {
 			url: '/pathologies/:id',
 			controller: 'PathologyController',
 			templateUrl: 'front/app/templates/pathology.html',
-			access: {restricted: true}
+			access: {restricted: false}
 		})
 		.state('specialities', {
 			url: '/specialities/:id',
@@ -122,17 +130,26 @@ app.run(function ($rootScope, $state, $window, AuthService) {
 	var postLoginState, postLoginParams;
 	$rootScope.$on('$stateChangeStart',
 		function (event, toState, toParams) {
-			AuthService.getUser().then(function(user){
-				if(toState.access.restricted && !AuthService.isLoggedIn()) {
+			AuthService.getUser()
+				.then(function(user) {
+					if(postLoginState && AuthService.isLoggedIn()) {
+						$state.go(postLoginState, postLoginParams);
+						postLoginState = null;
+						postLoginParams = null;
+					} else if(toState.access.admin && user.roles.indexOf('admin') == -1) {
+						return $state.go('error', {code: 403});
+					}
+					$rootScope.setCurrentUser(user);
+			})
+			.catch(function(e) {
+				if(e.need_login || toState.access.restricted) {
 					postLoginState = $state.current.name;
 					postLoginParams = $state.params;
-					return $state.go('login');
-				} else if(postLoginState && AuthService.isLoggedIn()) {
-					$state.go(postLoginState, postLoginParams);
-					postLoginState = null;
-					postLoginParams = null;
+					return $state.go('login', {needLogin: true});
+				} else if(e.need_role || toState.access.admin) {
+					return $state.go('error', {code: 403});
 				}
-				$rootScope.setCurrentUser(user);
+				$rootScope.setCurrentUser(null);
 			});
 		});
 });

@@ -4,11 +4,11 @@ from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, password=None, password_hash=None, name=None, role=None):
+	def __init__(self, _id=None, password=None, password_hash=None, name=None, roles=None):
 		self._id = _id
-		self.password_hash = password_hash if password_hash else pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
+		self.password_hash = self.hash_password(password, password_hash)
 		self.name = name
-		self.role = role
+		self.roles = roles if roles else []
 
 	@property
 	def email(self):
@@ -25,6 +25,14 @@ class User(BaseModel):
 	@property
 	def is_anonymous(self):
 		return False
+
+	@staticmethod
+	def hash_password(password=None, password_hash=None):
+		if password_hash:
+			return password_hash
+		if password:
+			return pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
+		return None
 
 	def verify_password(self, password):
 		return pbkdf2_sha256.verify(password, self.password_hash)
