@@ -6,7 +6,7 @@ angular.module('prescrisurApp.loginServices', [])
 
 	function($state, AuthService) {
 		return AuthService.logout().then(function () {
-			$state.go('home');
+			$state.go('home', {}, {reload: true});
 		});
 	}
 ])

@@ -97,6 +97,13 @@
 @media (max-width: 768px) {
     #logo {
         margin: auto;
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    #logo {
+        display: inline-block;
     }
 }
 
@@ -111,6 +118,24 @@
     padding-top: 60px;
     padding-left: 10px;
     color: #555;
+}
+
+
+/****************************/
+/*       USER INFO          */
+#user-info {
+    display: inline-block;
+    margin-top: 30px;
+}
+
+
+#user-info li.btn-logout a {
+    color: white;
+    background-color: #B60027;
+}
+
+#user-info li.btn-logout a:hover {
+    background-color: #6E0018;
 }
 
 
@@ -177,15 +202,41 @@
     border: none;
 }
 
+@media (max-width: 768px) {
+    .navbar-collapse {
+        margin-top: 50px;
+    }
+
+    .navbar-nav .subnav {
+        background-color: #B60027;
+        visibility: hidden;
+    }
+
+    .navbar-nav .open .subnav {
+        background-color: #B60027;
+        visibility: visible;
+    }
+}
+
 .navbar-nav .subnav li a {
     font-weight: bold;
-    color: #333 !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav .subnav li a {
+        color: #333 !important;
+    }
 }
 
 .navbar-nav .subnav li.active a,
 .navbar-nav .subnav li a:hover
 {
     color: white !important;
+}
+
+#navbar .user-profile {
+    color: white;
+    margin: 13px;
 }
 
 /****************************/
@@ -317,6 +368,11 @@
 #login-form .submit {
     padding-left: 30px;
     padding-right: 30px;
+}
+
+#register-link {
+    margin-top: 20px;
+    margin-left: 30px;
 }
 
 
