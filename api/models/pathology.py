@@ -99,7 +99,7 @@ class Pathology(BaseModel):
 	@staticmethod
 	def _linkify_grade(text):
 		regx = re.compile('(Grade (?:A|B|C))(?!</a>)')
-		return regx.sub(r'<a href="http://localhost:5000/#/pages/presentation">\1</a>', text)
+		return regx.sub(r'<a class="grade" href="http://localhost:5000/#/pages/presentation">\1</a>', text)
 
 	def refresh_update_date(self):
 		self.updated_at = datetime.datetime.now().isoformat()

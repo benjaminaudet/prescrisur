@@ -23,8 +23,8 @@ def test_check_level(cleaned_pathology):
 
 def test_linkify_grade(pathology):
 	assert pathology._linkify_grade('Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade A</a>)') == 'Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade A</a>)'
-	assert pathology._linkify_grade('Bonjour (Grade B)') == 'Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade B</a>)'
-	assert pathology._linkify_grade('Bonjour <b>Grade C</b>') == 'Bonjour <b><a href="http://localhost:5000/#/pages/presentation">Grade C</a></b>'
+	assert pathology._linkify_grade('Bonjour (Grade B)') == 'Bonjour (<a class="grade" href="http://localhost:5000/#/pages/presentation">Grade B</a>)'
+	assert pathology._linkify_grade('Bonjour <b>Grade C</b>') == 'Bonjour <b><a class="grade" href="http://localhost:5000/#/pages/presentation">Grade C</a></b>'
 
 
 class TestBleachedText:
@@ -35,7 +35,7 @@ class TestBleachedText:
 		assert cleaned_pathology.intro == '&lt;script&gt;fumed()&lt;/script&gt;'
 
 	def test_linkify_grade(self, cleaned_pathology):
-		assert cleaned_pathology.levels[0]['text'] == 'Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade A</a>)'
+		assert cleaned_pathology.levels[0]['text'] == 'Bonjour (<a class="grade" href="http://localhost:5000/#/pages/presentation">Grade A</a>)'
 
 
 class TestCheckEntry:
