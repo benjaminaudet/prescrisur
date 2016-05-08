@@ -1,4 +1,6 @@
 # coding=utf-8
+import re
+
 from base_model import BaseModel
 from speciality import Speciality
 
@@ -27,3 +29,9 @@ class Substance(BaseModel):
 		self.specialities.sort(key=lambda s: s.name)
 		return self
 
+	@classmethod
+	def search_by_name(cls, name, with_specialities=False):
+		if not with_specialities:
+			return super(Substance, cls).search_by_name(name)
+		regx = re.compile(name, re.IGNORECASE)
+		return cls._search({'name': regx}, {'name': 1, 'status': 1, 'specialities': 1}, limit=200)

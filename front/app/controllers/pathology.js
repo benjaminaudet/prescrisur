@@ -84,9 +84,15 @@ angular.module('prescrisurApp.controllers')
 			if($select) {
 				search = $select.search;
 			}
+
+			var payload = {q: search, searchType: searchType};
+			if (searchType == 'substances') {
+				payload.specialities = true;
+			}
+
 			$scope.results = searchMessage('Recherche en cours...');
 			if(force || search.length > 0) {
-				SearchService.get({q: search, searchType: searchType}, function(data) {
+				SearchService.get(payload, function(data) {
 					$scope.results = data.data;
 					if ($scope.results.length == 0) {
 						$scope.results = searchMessage('Aucun résultat');

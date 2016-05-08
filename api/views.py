@@ -30,7 +30,12 @@ def substance(subst_id):
 @app.route('/api/substances/search')
 def search_substance():
 	q = request.args.get('q')
-	return jsonify(data=Substance.search_by_name(q))
+	with_spec = request.args.get('specialities')
+	if not with_spec or with_spec == 'false':
+		with_spec = False
+	else:
+		with_spec = True
+	return jsonify(data=Substance.search_by_name(q, with_specialities=with_spec))
 
 
 @app.route('/api/substances/pathologies/<subst_id>')

@@ -52,7 +52,7 @@ class BaseModel(object):
 	@classmethod
 	def search_by_name(cls, name):
 		regx = re.compile(name, re.IGNORECASE)
-		return cls._search({'name': regx}, {'name': 1, 'status': 1, 'specialities': 1}, limit=200)
+		return cls._search({'name': regx}, {'name': 1, 'status': 1}, limit=200)
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)
