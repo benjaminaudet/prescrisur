@@ -529,6 +529,19 @@
 #pathology .entries .reco {
     cursor: pointer;
     text-align: center;
+    width: 5%;
+}
+
+#pathology .entries .product {
+    width: 60%;
+}
+
+#pathology .entries .more-info {
+    width: 30%
+}
+
+#pathology .entries .info-button {
+    width: 5%
 }
 
 #pathology .info-button {
