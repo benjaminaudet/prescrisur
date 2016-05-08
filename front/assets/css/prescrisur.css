@@ -138,7 +138,8 @@
     background-color: #B60027;
 }
 
-#user-info li.btn-logout a:hover {
+#user-info li a:hover {
+    color: white;
     background-color: #6E0018;
 }
 

@@ -40,8 +40,8 @@
 
 <!-- Example row of columns -->
 <div class="row" id="home-info">
-	<div class="col-md-7" id="home-news">
-		<h2>Dernières Actualités</h2>
+	<div class="col-md-8" id="home-news">
+		<h2>PrescriNews</h2>
 		<ul>
 			<li ng-repeat="n in news | limitTo: 5">
 				<a ui-sref="news({id: n._id})">{{ n.name }}</a>
@@ -49,7 +49,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-md-5">
+	<div class="col-md-4">
 		<h2>Dernières Mises à Jour</h2>
 		<ul>
 			<li ng-repeat="patho in pathologies | limitTo: 5">

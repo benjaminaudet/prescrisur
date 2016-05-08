@@ -55,8 +55,9 @@
 					<i class="fa fa-chevron-down"></i>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="user-dropdown">
-					<!--<li><a href="#">Action</a></li>-->
-					<!--<li role="separator" class="divider"></li>-->
+					<li><a ui-sref="pathologies-new" ng-if="isAuthorized('admin')">Nouvelle Pathologie</a></li>
+					<li><a ui-sref="news-new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
+					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
 					<li class="btn-logout"><a ui-sref="logout">
 						<i class="fa fa-sign-out"></i>
 						Déconnexion
