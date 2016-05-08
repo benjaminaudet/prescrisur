@@ -135,6 +135,19 @@ def news(news_id=None):
 	return jsonify(data=n)
 
 
+@app.route('/api/associations', methods=['POST'])
+@app.route('/api/associations/<asso_id>', methods=['PUT'])
+@required_role('admin')
+def edit_association(asso_id=None):
+	data = json.loads(request.data)
+	asso = Association(**data)
+	if asso_id:
+		asso.save()
+	else:
+		asso.create()
+	return jsonify(data=asso)
+
+
 ###############
 # Login
 ###############

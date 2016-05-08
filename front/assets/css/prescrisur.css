@@ -665,3 +665,10 @@
         margin-bottom: 10px;
     }
 }
+
+
+/****************************/
+/*       ASSOCIATIONS       */
+#subst-list {
+    list-style: none;
+}

@@ -6,6 +6,8 @@ from slugify import slugify
 from pymongo import DESCENDING
 
 from base_model import BaseModel
+from speciality import Speciality
+from substance import Substance
 
 bleach.ALLOWED_TAGS += ['p', 'br', 'span', 'div', 'img', 'i', 'u']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
@@ -89,12 +91,12 @@ class Pathology(BaseModel):
 
 	@staticmethod
 	def _check_entry_product(product, product_type):
-		assert all(key in product for key in ['_id', 'name'])
-		if product_type == 'substances':
-			assert 'specialities' in product
-			if 'displayOptions' in product:
-				del product['displayOptions']
-		return product
+		if product_type == 'specialities':
+			return Speciality(**product)
+		elif product_type == 'substances':
+			return Substance(**product)
+		else:
+			raise ValueError()
 
 	@staticmethod
 	def _linkify_grade(text):

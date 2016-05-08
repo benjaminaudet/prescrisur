@@ -2,7 +2,7 @@
 import pytest
 from freezegun import freeze_time
 
-from api.models import Pathology
+from api.models import Pathology, Substance, Speciality
 
 
 @pytest.fixture(autouse=True)
@@ -64,6 +64,12 @@ def test_linkify_grade(pathology):
 	assert pathology._linkify_grade('Bonjour <b>Grade C</b>') == 'Bonjour <b><a class="grade" href="http://localhost:5000/#/pages/presentation">Grade C</a></b>'
 
 
+def test_serialize(cleaned_pathology):
+	serialized_cleaned_pathology = cleaned_pathology.serialize()
+	assert serialized_cleaned_pathology['_id'] == 'pathologie-testee'
+	assert serialized_cleaned_pathology['levels'][1]['levels'][1]['entries'][0]['product']['name'] == 'lol'
+
+
 class TestBleachedText:
 	def test_text_clean(self, cleaned_pathology):
 		assert cleaned_pathology.conclu == '<a href="http://www.google.com" target="_blank">juste un lien</a>'
@@ -92,10 +98,22 @@ class TestCheckEntry:
 		with pytest.raises(AssertionError):
 			pathology._check_entry({'type': 'substances', 'product': {'_id': 'lol', 'name': 'ok'}})
 
-	def test_remove_display_options_key_on_substances(self, pathology):
+	def test_substance_product(self, pathology):
 		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displayOptions': True}
 		checked_product = pathology._check_entry_product(product, 'substances')
-		assert 'displayOptions' not in checked_product
+		assert isinstance(checked_product, Substance)
+		assert checked_product._id == 'lol'
+		assert checked_product.name == 'ok'
+		assert hasattr(checked_product, 'specialities')
+		assert not hasattr(checked_product, 'displayOptions')
+
+	def test_speciality_product(self, pathology):
+		product = {'_id': 'lol', 'name': 'ok', 'displayOptions': True}
+		checked_product = pathology._check_entry_product(product, 'specialities')
+		assert isinstance(checked_product, Speciality)
+		assert checked_product._id == 'lol'
+		assert checked_product.name == 'ok'
+		assert not hasattr(checked_product, 'displayOptions')
 
 	def test_raise_error_on_wrong_reco(self, pathology):
 		with pytest.raises(AssertionError):

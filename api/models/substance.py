@@ -6,7 +6,7 @@ from speciality import Speciality
 
 
 class Substance(BaseModel):
-	def __init__(self, _id, name, status=None, specialities=None):
+	def __init__(self, _id, name, status=None, specialities=None, **kwargs):
 		self._id = _id
 		self.name = name
 		self.status = status

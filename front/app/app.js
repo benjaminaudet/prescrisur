@@ -125,6 +125,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/substance.html',
 			access: {restricted: true}
 		})
+		.state('associations', {
+			url: '/associations',
+			controller: 'AssociationController',
+			templateUrl: 'front/app/templates/association.html',
+			params: {msg: null},
+			access: {restricted: true, admin: true}
+		})
 });
 
 // On route change

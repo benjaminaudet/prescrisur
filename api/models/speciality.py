@@ -3,7 +3,7 @@ from base_model import BaseModel
 
 
 class Speciality(BaseModel):
-	def __init__(self, _id=None, short_name=None, name=None, dosage=None, spec_type=None, treatment_type=None, status=None):
+	def __init__(self, _id=None, short_name=None, name=None, dosage=None, spec_type=None, treatment_type=None, status=None, **kwargs):
 		self._id = _id
 		self.short_name = short_name
 		self.name = name

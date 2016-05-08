@@ -20,6 +20,12 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	}
 ])
 
+.factory('AssociationService', ['$resource',
+	function($resource){
+		return $resource('/api/associations/:id');
+	}
+])
+
 .factory('SearchService', ['$resource',
 	function($resource){
 		return $resource('/api/:searchType/search');
