@@ -5,6 +5,43 @@ from freezegun import freeze_time
 from api.models import Pathology
 
 
+@pytest.fixture(autouse=True)
+def pathology():
+	return Pathology(
+		name='Pathologie testée',
+		intro='<script>fumed()</script>',
+		conclu='<a href="http://www.google.com" target=_blank>juste un lien</a>',
+		levels=[
+			{
+				'text': 'Bonjour (Grade A)',
+				'name': 'coucou',
+				'levels': []
+			},
+			{
+				'name': 'super',
+				'levels': [
+					{
+						'name': 'subsuper',
+						'entries': []
+					},
+					{
+						'name': 'subsuper',
+						'entries': [{
+							'product': {'_id': 'ok', 'name': 'lol'},
+							'type': 'specialities',
+							'reco': {'_id': 'ok'}
+						}]
+					},
+				]
+			}
+		])
+
+
+@pytest.fixture(autouse=True)
+def cleaned_pathology(pathology):
+	return pathology.check()
+
+
 def test_slugified_id(pathology):
 	assert pathology._id == 'pathologie-testee'
 
