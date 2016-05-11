@@ -11,3 +11,6 @@ test/.cache/
 
 # Angular
 front/assets/bower_components/
+
+# Vagrant
+.vagrant/
