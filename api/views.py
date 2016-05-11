@@ -148,6 +148,16 @@ def edit_association(asso_id=None):
 	return jsonify(data=asso)
 
 
+@app.route('/api/associations/<asso_id>', methods=['DELETE'])
+@required_role('admin')
+def delete_association(asso_id):
+	success = False
+	remove = Association.delete(asso_id)
+	if remove.acknowledged:
+		success = True
+	return jsonify({'success': success})
+
+
 @app.route('/api/associations', methods=['GET'])
 def association():
 	asso = Association.get()

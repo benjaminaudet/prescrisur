@@ -17,6 +17,14 @@ angular.module('prescrisurApp.controllers')
 			$scope.associations = data.data;
 		});
 
+		$scope.delete = function(assoID) {
+			AssociationService.delete({id: assoID}, function(data) {
+				if (data.success) {
+					$state.go('associations', {msg: 'Association Supprimée !'}, {reload: true})
+				}
+			});
+		};
+
 		$scope.search = function($select) {
 			var search = '';
 			if($select) {
