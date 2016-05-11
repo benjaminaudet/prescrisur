@@ -148,6 +148,14 @@ def edit_association(asso_id=None):
 	return jsonify(data=asso)
 
 
+@app.route('/api/associations', methods=['GET'])
+def association():
+	asso = Association.get()
+	if not asso:
+		abort(404)
+	return jsonify(data=asso)
+
+
 ###############
 # Login
 ###############

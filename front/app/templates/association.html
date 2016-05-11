@@ -8,7 +8,7 @@
 	{{ msg }}
 </div>
 
-<div id="content" class="row">
+<div id="content" class="row caduceus">
 	<div id="asso-edit">
 		<h2>Ajouter une nouvelle Association de Substances</h2>
 		<form ng-submit="submit()" class="form-horizontal">
@@ -43,5 +43,42 @@
 			<button ng-click="cancel()" class="btn btn-default btn-lg">Annuler</button>
 		</form>
 	</div>
-	
+
+	<hr />
+
+	<div id="asso-list">
+		<h2>Liste des Associations</h2>
+		<div class="panel panel-default">
+			<table class="table table-condensed table-striped table-bordered">
+				<tr ng-repeat-start="asso in associations">
+					<td class="name col-xs-6 col-md-8">{{ asso.name }}</td>
+					<td class="actions col-xs-6 col-md-4">
+						<div class="btn-group btn-group-xs" role="group">
+							<div type="button" class="btn btn-default" ng-model="asso.showSubstances" uib-btn-checkbox>
+								<i class="fa fa-eye"></i>
+								Voir les substances
+							</div>
+							<div type="button" class="btn btn-default">
+								<i class="fa fa-edit"></i>
+								Modifier
+							</div>
+							<div ng-click="delete()" type="button" class="btn btn-danger">
+								<i class="fa fa-trash"></i>
+								Supprimer
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr ng-if="asso.showSubstances" ng-repeat-end>
+					<td colspan="2">
+						<div ng-repeat="subst in asso.substances">
+							<a ui-sref="substances({id: subst._id})">{{ subst.name }}</a>
+							<span class="spec-status" ng-if="subst.status">{{ subst.status }}</span>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
 </div>

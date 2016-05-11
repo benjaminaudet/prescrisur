@@ -669,6 +669,36 @@
 
 /****************************/
 /*       ASSOCIATIONS       */
+#asso-edit,
+#asso-list {
+    padding: 0;
+}
+
+#asso-edit h2, h3,
+#asso-list h2 {
+    font-family: ErasMedium, Arial, sans-serif;
+}
+
+#asso-edit {
+    margin-bottom: 40px;
+}
+
+#asso-edit form {
+    padding: 0 10px;
+}
+
 #subst-list {
     list-style: none;
+}
+
+#asso-list {
+    margin-top: 40px;
+}
+
+#asso-list td.name {
+    text-transform: capitalize;
+}
+
+#asso-list td.actions {
+    text-align: center;
 }

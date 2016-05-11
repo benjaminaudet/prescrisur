@@ -13,6 +13,10 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.msg = $stateParams.msg;
 
+		AssociationService.get(function(data) {
+			$scope.associations = data.data;
+		});
+
 		$scope.search = function($select) {
 			var search = '';
 			if($select) {
