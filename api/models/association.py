@@ -6,13 +6,25 @@ from substance import Substance
 
 
 class Association(BaseModel):
-	def __init__(self, name, _id=None, substances=None, **kwargs):
+	def __init__(self, name, _id=None, substances=None, specialities=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name
-		self.substances = []
-		if substances:
-			self.add_substances(substances)
+		self.substances = self.add_substances(substances) if substances else []
+		self.specialities = specialities if specialities else self.add_specialities(substances)
 
-	def add_substances(self, substances):
+	@staticmethod
+	def add_substances(substances):
+		subst = []
 		for s in substances:
-			self.substances.append(Substance(**s))
+			subst.append(Substance(**s))
+		subst.sort(key=lambda x: x.name)
+		return subst
+
+	@staticmethod
+	def add_specialities(substances):
+		specs = []
+		for s in substances:
+			subst = Substance.get(s['_id'])
+			specs += subst.specialities
+		specs.sort(key=lambda x: x.name)
+		return specs

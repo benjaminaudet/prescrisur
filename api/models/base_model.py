@@ -41,18 +41,18 @@ class BaseModel(object):
 		return list(objs)
 
 	@classmethod
-	def _search(cls, query, proj=None, limit=0):
-		if not proj:
-			proj = {}
+	def _search(cls, query, proj='default', limit=0):
+		if proj == 'default':
+			proj = {'name': 1, 'status': 1}
 		objs = cls.collection.find(query, proj, limit=limit).sort('name', ASCENDING)
 		if not objs:
 			return []
 		return list(objs)
 
 	@classmethod
-	def search_by_name(cls, name):
+	def search_by_name(cls, name, proj=None):
 		regx = re.compile(name, re.IGNORECASE)
-		return cls._search({'name': regx}, {'name': 1, 'status': 1}, limit=200)
+		return cls._search({'name': regx}, proj, limit=200)
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)

@@ -32,10 +32,9 @@ def search_substance():
 	q = request.args.get('q')
 	with_spec = request.args.get('specialities')
 	if not with_spec or with_spec == 'false':
-		with_spec = False
+		return jsonify(data=Substance.search_by_name(q))
 	else:
-		with_spec = True
-	return jsonify(data=Substance.search_by_name(q, with_specialities=with_spec))
+		return jsonify(data=Substance.search_by_name(q, {'name': 1, 'status': 1, 'specialities': 1}))
 
 
 @app.route('/api/substances/pathologies/<subst_id>')
@@ -164,6 +163,12 @@ def association():
 	if not asso:
 		abort(404)
 	return jsonify(data=asso)
+
+
+@app.route('/api/associations/search')
+def search_association():
+	q = request.args.get('q')
+	return jsonify(data=Association.search_by_name(q, proj=None))
 
 
 ###############

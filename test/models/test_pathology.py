@@ -2,7 +2,7 @@
 import pytest
 from freezegun import freeze_time
 
-from api.models import Pathology, Substance, Speciality
+from api.models import Pathology, Substance, Speciality, Association
 
 
 @pytest.fixture(autouse=True)
@@ -97,6 +97,16 @@ class TestCheckEntry:
 	def test_raise_error_on_substances_without_specialities(self, pathology):
 		with pytest.raises(AssertionError):
 			pathology._check_entry({'type': 'substances', 'product': {'_id': 'lol', 'name': 'ok'}})
+
+	def test_association_product(self, pathology):
+		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'substances': [], 'displayOptions': True}
+		checked_product = pathology._check_entry_product(product, 'associations')
+		assert isinstance(checked_product, Association)
+		assert checked_product._id == 'lol'
+		assert checked_product.name == 'ok'
+		assert hasattr(checked_product, 'specialities')
+		assert hasattr(checked_product, 'substances')
+		assert not hasattr(checked_product, 'displayOptions')
 
 	def test_substance_product(self, pathology):
 		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'displayOptions': True}

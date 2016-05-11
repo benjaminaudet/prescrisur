@@ -8,13 +8,14 @@ from pymongo import DESCENDING
 from base_model import BaseModel
 from speciality import Speciality
 from substance import Substance
+from association import Association
 
 bleach.ALLOWED_TAGS += ['p', 'br', 'span', 'div', 'img', 'i', 'u']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 
 class Pathology(BaseModel):
-	AUTHORIZED_TYPES = ['specialities', 'substances']
+	AUTHORIZED_TYPES = ['specialities', 'substances', 'associations']
 	RECO_LABELS = {
 		'none': None,
 		'alert': 'Molécule sous surveillance particulière',
@@ -37,7 +38,7 @@ class Pathology(BaseModel):
 			{'levels.levels.entries.product._id': subst_id},
 			{'levels.levels.levels.entries.product._id': subst_id},
 			{'levels.levels.levels.levels.entries.product._id': subst_id}
-		]}, {'name': 1, 'status': 1})
+		]})
 
 	@classmethod
 	def all(cls):
@@ -95,6 +96,8 @@ class Pathology(BaseModel):
 			return Speciality(**product)
 		elif product_type == 'substances':
 			return Substance(**product)
+		elif product_type == 'associations':
+			return Association(**product)
 		else:
 			raise ValueError()
 

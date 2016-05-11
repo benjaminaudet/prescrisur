@@ -52,8 +52,9 @@ angular.module('prescrisurApp.controllers')
 		$scope.results = [];
 		$scope.recommandations = ['none', 'alert', 'middle', 'ok'];
 		$scope.productTypes = [
-			{_id: 'specialities', 'name': 'Specialité'},
-			{_id: 'substances', 'name': 'Substance'}
+			{_id: 'specialities', name: 'Specialité'},
+			{_id: 'substances', name: 'Substance'},
+			{_id: 'associations', name: 'Association'}
 		];
 
 		if($stateParams.id) {
@@ -215,6 +216,10 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.isSubstance = function(entry) {
 			return entry.type == 'substances' && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
+		};
+
+		$scope.isSubstanceOrAsso = function(entry) {
+			return (entry.type == 'substances' || entry.type == 'associations') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
 		};
 	}
 ]);

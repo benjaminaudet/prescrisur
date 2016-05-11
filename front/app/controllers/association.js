@@ -28,6 +28,7 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.edit = function(asso) {
 			$scope.editMode = true;
+			delete asso.specialities;
 			$scope.association = asso;
 		};
 		
