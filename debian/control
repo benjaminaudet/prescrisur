@@ -1,0 +1,12 @@
+Source: prescrisur
+Section: python
+Priority: extra
+Maintainer: Pierrick BOUTRUCHE <pbo@octo.com>
+Build-Depends: debhelper (>= 9), python, dh-virtualenv (>= 0.6)
+Standards-Version: 3.9.5
+
+Package: prescrisur
+Architecture: any
+Pre-Depends: dpkg (>= 1.16.1), python2.7, ${misc:Pre-Depends}
+Depends: ${python:Depends}, ${misc:Depends}
+Description: Prescrisur app

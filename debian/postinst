@@ -1,0 +1,4 @@
+#! /bin/bash
+
+chown -R prescrisur /var/lib/prescrisur
+chmod -R 700 /var/lib/prescrisur

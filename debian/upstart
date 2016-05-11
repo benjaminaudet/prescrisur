@@ -1,0 +1,19 @@
+description "prescrisur"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+# never stop trying to respawn
+respawn
+respawn limit unlimited
+
+# Drop privileges
+setuid prescrisur
+setgid nogroup
+
+script
+  /usr/share/python/prescrisur/bin/python -c 'from api import app; app.run("0.0.0.0", port=5000)'
+end script
+
+# prevent re-spawning more than once every second
+post-stop exec sleep 1
