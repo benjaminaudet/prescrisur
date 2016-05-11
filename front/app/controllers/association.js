@@ -10,6 +10,7 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $state, $stateParams, AssociationService, SearchService) {
 		var emptyAssociation = {name: null, substances: []};
 		$scope.association = emptyAssociation;
+		$scope.editMode = false;
 
 		$scope.msg = $stateParams.msg;
 
@@ -25,6 +26,11 @@ angular.module('prescrisurApp.controllers')
 			});
 		};
 
+		$scope.edit = function(asso) {
+			$scope.editMode = true;
+			$scope.association = asso;
+		};
+		
 		$scope.search = function($select) {
 			var search = '';
 			if($select) {
@@ -50,15 +56,22 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.submit = function () {
-			var afterSave = function () {
-				$state.go('associations', {msg: 'Association Créée !'}, {reload: true})
+			var afterSave = function (msg) {
+				return function() {
+					$state.go('associations', {msg: msg}, {reload: true})
+				}
 			};
-			AssociationService.save($scope.association, afterSave);
+			if($scope.editMode) {
+				AssociationService.update({ id: $scope.association._id }, $scope.association, afterSave('Association Modifiée !'));
+			} else {
+				AssociationService.save($scope.association, afterSave('Association Créée !'));
+			}
 			// console.log($scope.association);
 		};
 		
 		$scope.cancel = function () {
 			$scope.association = emptyAssociation;
+			$scope.editMode = false;
 		};
 
 

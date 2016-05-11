@@ -6,7 +6,7 @@ from substance import Substance
 
 
 class Association(BaseModel):
-	def __init__(self, name, _id=None, substances=None):
+	def __init__(self, name, _id=None, substances=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name
 		self.substances = []

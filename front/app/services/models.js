@@ -22,7 +22,9 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 
 .factory('AssociationService', ['$resource',
 	function($resource){
-		return $resource('/api/associations/:id');
+		return $resource('/api/associations/:id', null, {
+			update: { method:'PUT' }
+		});
 	}
 ])
 

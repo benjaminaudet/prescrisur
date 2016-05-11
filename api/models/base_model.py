@@ -35,7 +35,7 @@ class BaseModel(object):
 
 	@classmethod
 	def all(cls):
-		objs = cls.collection.find().sort('created_at', DESCENDING)
+		objs = cls.collection.find().sort([('created_at', DESCENDING), ('_id', ASCENDING)])
 		if not objs:
 			return []
 		return list(objs)
