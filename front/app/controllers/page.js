@@ -36,7 +36,6 @@ angular.module('prescrisurApp.controllers')
 		var onPrintFinished = function(printed) {
 			showAllTexts(false);
 		}
-
 	}
 ])
 

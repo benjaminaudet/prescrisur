@@ -3,11 +3,13 @@ angular.module('prescrisurApp.controllers')
 .controller("PathologyController", [
 	'$scope',
 	'$state',
+	'$window',
+	'$timeout',
 	'$location',
 	'$stateParams',
 	'PathologyService',
 
-	function($scope, $state, $location, $stateParams, PathologyService) {
+	function($scope, $state, $window, $timeout, $location, $stateParams, PathologyService) {
 		$scope.pathology = null;
 
 		PathologyService.get({ id: $stateParams.id }, function(data) {
@@ -25,19 +27,40 @@ angular.module('prescrisurApp.controllers')
 			$location.hash(hashToGo);
 		};
 
-		$scope.showSpecialities = function(entry) {
-			if(entry.product.specialities) {
-				entry.displaySpecialities = !entry.displaySpecialities;
-				return;
-			}
-		};
-
 		$scope.entryColspan = function(entry) {
 			if(entry.info) {
 				return 1;
 			}
 			return 2;
 		};
+
+		$scope.print = function() {
+			showAll($scope.pathology, true);
+			$timeout(function() {
+				onPrintFinished($window.print())
+			}, 500);
+		};
+
+		var showAll = function(obj, value) {
+			if(obj.hasOwnProperty('levels')) {
+				obj.levels.forEach(function(l) {
+					showAll(l, value);
+				});
+			} else if(obj.hasOwnProperty('entries')) {
+				obj.entries.forEach(function(e) {
+					if(e.hasOwnProperty('info')) {
+						e.displayInfo = value;
+					}
+					if(e.product.hasOwnProperty('specialities')) {
+						e.displaySpecialities = value;
+					}
+				});
+			}
+		};
+
+		var onPrintFinished = function(printed) {
+			showAll($scope.pathology, false);
+		}
 	}
 ])
 
