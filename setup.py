@@ -9,7 +9,8 @@ setup(name='prescrisur',
       packages=[
           'api',
           'api/models',
-          'api/update'
+          'api/update',
+          'front'
       ],
       include_package_data=True,
       zip_safe=False,
