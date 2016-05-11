@@ -3,6 +3,13 @@
 </div>
 
 <div id="content" class="row">
+	<div id="pages-print">
+		<div class="btn btn-default btn-lg" ng-click="print()">
+			<i class="fa fa-print"></i>
+			Imprimer tous les textes
+		</div>
+	</div>
+
 	<div class="panel panel-default">
 		<table id="pages-list" class="table table-condensed table-striped table-bordered">
 			<tr ng-repeat-start="page in pages">

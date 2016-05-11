@@ -2,10 +2,12 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PageController", [
 	'$scope',
+	'$window',
+	'$timeout',
 	'$stateParams',
 	'PageService',
 
-	function($scope, $stateParams, PageService) {
+	function($scope, $window, $timeout, $stateParams, PageService) {
 		$scope.page = null;
 
 		if ($stateParams.id) {
@@ -17,7 +19,24 @@ angular.module('prescrisurApp.controllers')
 				$scope.pages = data.data;
 			});
 		}
-		
+
+		$scope.print = function() {
+			showAllTexts(true);
+			$timeout(function() {
+				onPrintFinished($window.print());
+			}, 100);
+		};
+
+		var showAllTexts = function(value) {
+			$scope.pages.forEach(function(p) {
+				p.showText = value;
+			});
+		};
+
+		var onPrintFinished = function(printed) {
+			showAllTexts(false);
+		}
+
 	}
 ])
 

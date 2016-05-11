@@ -632,6 +632,11 @@
     padding: 15px 40px;
 }
 
+#pages-print {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 /****************************/
 /*       NEWS               */
 #page-header.news .title {
