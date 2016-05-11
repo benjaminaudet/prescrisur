@@ -78,6 +78,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/page.html',
 			access: {restricted: false}
 		})
+		.state('pages-list', {
+			url: '/pages',
+			controller: 'PageController',
+			templateUrl: 'front/app/templates/page-list.html',
+			access: {restricted: false}
+		})
 		.state('news-edit', {
 			url: '/news/edit/:id',
 			controller: 'NewsEditController',

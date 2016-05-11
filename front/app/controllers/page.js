@@ -8,9 +8,16 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $stateParams, PageService) {
 		$scope.page = null;
 
-		PageService.get({ id: $stateParams.id }, function(data) {
-			$scope.page = data.data;
-		});
+		if ($stateParams.id) {
+			PageService.get({ id: $stateParams.id }, function(data) {
+				$scope.page = data.data;
+			});
+		} else {
+			PageService.get(function(data) {
+				$scope.pages = data.data;
+			});
+		}
+		
 	}
 ])
 

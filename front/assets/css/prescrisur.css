@@ -624,6 +624,13 @@
     margin-bottom: 7px;
 }
 
+#pages-list td.actions {
+    text-align: center;
+}
+
+#pages-list td.text {
+    padding: 15px 40px;
+}
 
 /****************************/
 /*       NEWS               */

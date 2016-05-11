@@ -95,8 +95,9 @@ def edit_page(page_id=None):
 	return jsonify(data=p)
 
 
-@app.route('/api/pages/<page_id>')
-def page(page_id):
+@app.route('/api/pages', methods=['GET'])
+@app.route('/api/pages/<page_id>', methods=['GET'])
+def page(page_id=None):
 	p = Page.get(page_id)
 	if not p:
 		abort(404)
