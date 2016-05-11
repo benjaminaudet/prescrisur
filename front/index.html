@@ -93,7 +93,7 @@
 								<a ui-sref="pages({id: 'pourquoi-prescrisur'})">Pourquoi Prescrisur ?</a>
 							</li>
 							<li role="menuitem" ui-sref-active="active">
-								<a>Mode d'Emploi</a>
+								<a ui-sref="pages({id: 'mode-d-emploi'})">Mode d'Emploi</a>
 							</li>
 							<li role="menuitem" ui-sref-active="active">
 								<a>Références</a>
@@ -102,7 +102,7 @@
 					</li>
 					<li ui-sref-active="active"><a ui-sref="news-list">PrescriNews</a></li>
 					<li ui-sref-active="active"><a ui-sref="pages({id: 'sources-d-informations'})">Sources</a></li>
-					<li ui-sref-active="active"><a ui-sref="null">Contact</a></li>
+					<li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
 					<li id="user-info-xs" class="visible-xs">
 						<!-- Logged In User profile -->
 						<a ui-sref="logout" ng-if="currentUser">Déconnexion</a>
@@ -150,7 +150,9 @@
 <script src="front/app/controllers/association.js"></script>
 <script src="front/app/controllers/pathology.js"></script>
 <script src="front/app/controllers/page.js"></script>
+<script src="front/app/controllers/contact.js"></script>
 <script src="front/app/controllers/news.js"></script>
+<script src="front/app/services/commons.js"></script>
 <script src="front/app/services/models.js"></script>
 <script src="front/app/services/login.js"></script>
 <script src="front/app/directives.js"></script>

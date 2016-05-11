@@ -51,6 +51,10 @@
     color: red;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .invalid {
     border-color: red;
     outline-color: red;
@@ -304,6 +308,10 @@
     font-size: 1.2em;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.jumbotron .lead a {
+    color: #333;
 }
 
 @media (min-width: 769px) and (max-width: 991px) {
@@ -705,4 +713,21 @@
 
 #asso-list td.actions {
     text-align: center;
+}
+
+
+/****************************/
+/*       CONTACT            */
+#contact-body {
+    min-height: 200px;
+}
+
+#contact-user-sender > * {
+    margin-bottom: 15px;
+}
+
+#contact-from-label {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 25px;
 }

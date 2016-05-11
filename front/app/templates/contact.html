@@ -1,0 +1,49 @@
+<div class="row" id="page-header">
+	<h1>Contact</h1>
+</div>
+
+<div id="content" class="row caduceus">
+	<!-- Messages -->
+	<div id="messages" ng-if="msg" class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		{{ msg }}
+	</div>
+
+	<div id="contact-form" class="col-md-8">
+		<form class="form-horizontal" ng-submit="submit()">
+			<div id="contact-user-sender" ng-if="currentUser">
+				<div id="contact-from-label" class="col-md-2">De</div>
+				<div class="col-md-10">{{ currentUser.name }} <{{ currentUser._id }}></div>
+			</div>
+			<div class="form-group" ng-if="!currentUser">
+				<label for="sender-name" class="control-label col-md-2">Nom</label>
+				<div class="col-md-10">
+					<input type="text" id="sender-name" class="form-control col-md-10" ng-model="contactForm.sender.name" required/>
+				</div>
+			</div>
+			<div class="form-group" ng-if="!currentUser">
+				<label for="sender-email" class="control-label col-md-2">Email</label>
+				<div class="col-md-10">
+					<input type="text" id="sender-email" class="form-control col-md-10" ng-model="contactForm.sender.email" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="contact-subject" class="control-label col-md-2">Sujet</label>
+				<div class="col-md-10">
+					<input text="text" id="contact-subject" class="form-control col-md-10" ng-model="contactForm.subject" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="contact-body" class="control-label col-md-2">Message</label>
+				<div class="col-md-10">
+					<textarea id="contact-body" class="form-control" ng-model="contactForm.body" required></textarea>
+				</div>
+			</div>
+			<button class="btn btn-primary btn-lg">Envoyer</button>
+		</form>
+	</div>
+
+	<div id="sidebar" class="col-md-4">
+	</div>
+
+</div>

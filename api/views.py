@@ -5,6 +5,7 @@ from flask.ext.login import login_required, login_user, logout_user, current_use
 from api import app, login_manager
 from api.models import *
 from api.decorators import required_role
+from api.services import mail as mail_service
 
 
 @app.route('/')
@@ -169,6 +170,13 @@ def association():
 def search_association():
 	q = request.args.get('q')
 	return jsonify(data=Association.search_by_name(q, proj=None))
+
+
+@app.route('/api/mail', methods=['POST'])
+def send_mail():
+	data = json.loads(request.data)
+	mail_service.send(data)
+	return jsonify({'success': True})
 
 
 ###############

@@ -4,10 +4,10 @@ install:
 	(pip install -r requirements.txt && bower install)
 
 test:
-	py.test -v test
+	honcho run py.test -v test
 
 run:
-	python runserver.py --debug
+	honcho start
 
 update-spec:
 	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'

@@ -10,7 +10,7 @@ from speciality import Speciality
 from substance import Substance
 from association import Association
 
-bleach.ALLOWED_TAGS += ['p', 'br', 'span', 'div', 'img', 'i', 'u']
+bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 

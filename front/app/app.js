@@ -6,6 +6,7 @@ var app = angular.module('prescrisurApp', [
 	'yaru22.angular-timeago',
 	'textAngular',
 	'ngSanitize',
+	'prescrisurApp.commonsServices',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
 	'prescrisurApp.directives',
@@ -52,6 +53,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			controller: 'LogoutController',
 			template: '',
 			access: {restricted: true}
+		})
+		.state('contact', {
+			url: '/contact',
+			controller: 'ContactController',
+			templateUrl: 'front/app/templates/contact.html',
+			access: {restricted: false}
 		})
 		.state('pages-edit', {
 			url: '/pages/edit/:id',
