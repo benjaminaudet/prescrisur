@@ -8,5 +8,5 @@ class EnvConfig(object):
 	MAIL_PORT = 465
 	MAIL_USE_TLS = False
 	MAIL_USE_SSL = True
-	MAIL_USERNAME = 'pboutruche@octo.com'
-	MAIL_PASSWORD = 'rikpied1'
+	MAIL_USERNAME = 'prescrisur@gmail.com'
+	MAIL_PASSWORD = 'gabin2014'
