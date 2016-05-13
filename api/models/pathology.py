@@ -55,7 +55,11 @@ class Pathology(BaseModel):
 		for l in levels:
 			if 'is_class' in l and l['is_class'] == True:
 				therapeutic_class = self.compute_therapeutic_class(l)
-				therapeutic_class['pathology_id'] = self._id
+				therapeutic_class['pathology'] = {
+					'_id': self._id,
+					'name': self.name,
+					'updated_at': self.updated_at
+				}
 				if 'class_id' in l:
 					therapeutic_class['_id'] = l['class_id']
 				TherapeuticClass(**therapeutic_class).save()

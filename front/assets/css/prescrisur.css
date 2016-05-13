@@ -492,23 +492,27 @@
 /****************************/
 /*       PATHOLOGY          */
 #pathology h2 {
+    font-family: ErasMedium, Arial, sans-serif;
     font-size: 16pt;
     line-height: 1.2;
 }
 
 #pathology h3 {
+    font-family: ErasMedium, Arial, sans-serif;
     font-size: 14pt;
     font-weight: normal;
     line-height: 1.2;
 }
 
 #pathology h4 {
+    font-family: ErasMedium, Arial, sans-serif;
     font-size: 13pt;
     font-weight: normal;
     line-height: 1.2;
 }
 
 #pathology h5 {
+    font-family: ErasMedium, Arial, sans-serif;
     font-size: 12pt;
     font-weight: normal;
     line-height: 1.2;
@@ -710,7 +714,8 @@
     padding: 0;
 }
 
-#asso-edit h2, h3,
+#asso-edit h2,
+#asso-edit h3,
 #asso-list h2 {
     font-family: ErasMedium, Arial, sans-serif;
 }

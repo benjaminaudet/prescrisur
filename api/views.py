@@ -80,6 +80,14 @@ def search_pathology():
 	return jsonify(data=Pathology.search_by_name(q))
 
 
+@app.route('/api/classes/<class_id>', methods=['GET'])
+def therapeutic_class(class_id=None):
+	t_class = TherapeuticClass.get(class_id)
+	if not t_class:
+		abort(404)
+	return jsonify(data=t_class)
+
+
 @app.route('/api/classes/search')
 def search_therapeutic_class():
 	q = request.args.get('q')

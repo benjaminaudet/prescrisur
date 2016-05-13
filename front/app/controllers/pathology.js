@@ -127,7 +127,7 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.displaySpecialities = function(specialities) {
 			if(!specialities[0].hasOwnProperty('enabled')) {
-				$scope.checkAll(specialities);
+				$scope.checkAllSpecialities(specialities);
 			}
 		};
 

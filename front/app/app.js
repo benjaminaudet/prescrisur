@@ -126,6 +126,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/pathology.html',
 			access: {restricted: false}
 		})
+		.state('classes', {
+			url: '/classes/:id',
+			controller: 'TherapeuticClassController',
+			templateUrl: 'front/app/templates/therapeutic-class.html',
+			access: {restricted: false}
+		})
 		.state('specialities', {
 			url: '/specialities/:id',
 			controller: 'SpecialityController',

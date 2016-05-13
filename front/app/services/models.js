@@ -8,6 +8,12 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	}
 ])
 
+.factory('TherapeuticClassService', ['$resource',
+	function($resource){
+		return $resource('/api/classes/:id');
+	}
+])
+
 .factory('SubstancePathologyService', ['$resource',
 	function($resource){
 		return $resource('/api/substances/pathologies/:id');
