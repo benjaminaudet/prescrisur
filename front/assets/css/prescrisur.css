@@ -756,6 +756,13 @@
     padding-right: 25px;
 }
 
+@media(max-width: 991px) {
+    #contact-from-label {
+        text-align: left;
+        padding-left: 0px;
+    }
+}
+
 #contact-form .text {
     text-align: justify;
     border: 1px solid rgba(230,103,135,0.2);
