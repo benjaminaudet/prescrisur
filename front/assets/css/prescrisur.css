@@ -415,11 +415,22 @@
 /****************************/
 /*         REGISTER        */
 #register-form {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 40px 30px;
     width: 90%;
     margin: auto;
+}
+
+#register-form form {
+    padding: 40px 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+#register-form .text {
+    text-align: justify;
+    border: 1px solid rgba(230,103,135,0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
 }
 
 #register-form input {
@@ -429,6 +440,7 @@
 #register-form .submit {
     padding: 0 10%;
 }
+
 
 /****************************/
 /*        PATHOLOGY         */
@@ -742,4 +754,20 @@
     font-weight: bold;
     text-align: right;
     padding-right: 25px;
+}
+
+#contact-form .text {
+    text-align: justify;
+    border: 1px solid rgba(230,103,135,0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+#contact-text {
+    font-size: 0.9em;
+}
+
+#contact-text a {
+    font-size: 1.2em;
 }

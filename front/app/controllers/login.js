@@ -51,14 +51,19 @@ angular.module('prescrisurApp.controllers')
 .controller("RegisterController", [
 	'$scope',
 	'$state',
+	'PageService',
 	'AuthService',
 
-	function($scope, $state, AuthService) {
+	function($scope, $state, PageService, AuthService) {
 		$scope.registerForm = {};
 
 		if($scope.currentUser) {
 			setTimeout(function() { $state.go('home'); }, 1500);
 		}
+		
+		PageService.get({id : 'inscription'}, function(data) {
+			$scope.text = data.data;
+		});
 
 		$scope.checkPassword = function() {
 			var password = $scope.registerForm.passwd;

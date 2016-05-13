@@ -10,6 +10,8 @@
 	</div>
 
 	<div id="contact-form" class="col-md-8">
+		<div class="text" ng-bind-html="textPrescrisur.text"></div>
+
 		<form class="form-horizontal" ng-submit="submit()">
 			<div id="contact-user-sender" ng-if="currentUser">
 				<div id="contact-from-label" class="col-md-2">De</div>
@@ -44,6 +46,7 @@
 	</div>
 
 	<div id="sidebar" class="col-md-4">
+		<div id="contact-text" ng-bind-html="textNicole.text"></div>
 	</div>
 
 </div>
