@@ -80,6 +80,12 @@ def search_pathology():
 	return jsonify(data=Pathology.search_by_name(q))
 
 
+@app.route('/api/classes/search')
+def search_therapeutic_class():
+	q = request.args.get('q')
+	return jsonify(data=TherapeuticClass.search_by_name(q))
+
+
 @app.route('/api/pages', methods=['POST'])
 @app.route('/api/pages/<page_id>', methods=['PUT'])
 @required_role('admin')
