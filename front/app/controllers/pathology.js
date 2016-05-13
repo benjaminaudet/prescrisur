@@ -131,10 +131,20 @@ angular.module('prescrisurApp.controllers')
 			}
 		};
 
-		$scope.checkAll = function(specialities, checkValue) {
+		$scope.checkAllSpecialities = function(specialities, checkValue) {
 			checkValue = (checkValue != undefined) ? checkValue : true;
 			specialities.forEach(function(spec) {
 				spec.enabled = checkValue;
+			});
+		};
+		
+		$scope.checkChildren = function(level) {
+			if(!level.hasOwnProperty('levels')) {
+				return;
+			}
+			level.levels.forEach(function(l) {
+				l.is_class = level.is_class;
+				$scope.checkChildren(l);
 			});
 		};
 

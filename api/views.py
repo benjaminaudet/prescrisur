@@ -50,10 +50,8 @@ def search_pathologies_from_substance(subst_id):
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
 	patho = Pathology(**data).check().refresh_update_date()
-	if patho_id:
-		patho.save()
-	else:
-		patho.create()
+	patho.save_therapeutic_classes()
+	patho.save()
 	return jsonify(data=patho)
 
 
@@ -88,10 +86,7 @@ def search_pathology():
 def edit_page(page_id=None):
 	data = json.loads(request.data)
 	p = Page(**data).check()
-	if page_id:
-		p.save()
-	else:
-		p.create()
+	p.save()
 	return jsonify(data=p)
 
 
@@ -110,10 +105,7 @@ def page(page_id=None):
 def edit_news(news_id=None):
 	data = json.loads(request.data)
 	n = News(**data).check().refresh_update_date().set_author(current_user)
-	if news_id:
-		n.save()
-	else:
-		n.create()
+	n.save()
 	return jsonify(data=n)
 
 
@@ -142,10 +134,7 @@ def news(news_id=None):
 def edit_association(asso_id=None):
 	data = json.loads(request.data)
 	asso = Association(**data)
-	if asso_id:
-		asso.save()
-	else:
-		asso.create()
+	asso.save()
 	return jsonify(data=asso)
 
 

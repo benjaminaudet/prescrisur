@@ -58,6 +58,9 @@
 	<!-- Level Text -->
 	<div class="form-group">
 		<text-angular ng-model="data.text" class="pathology-editor"></text-angular>
+		<!-- Level Class Checkbox -->
+		<input type="checkbox" ng-model="data.is_class" ng-click="checkChildren(data)" />
+		<label class="control-label">Classe Pharmaco-Thérapeutique</label>
 	</div>
 	<!-- Level subTree -->
 	<div ng-if="data.levels && data.levels.length > 0">
@@ -118,8 +121,8 @@
 		<tr ng-show="entry.product.displayOptions">
 			<td colspan="5">
 				<div class="check-all">
-					<a ng-click="checkAll(entry.product.specialities)">Tout Cocher</a> /
-					<a ng-click="checkAll(entry.product.specialities, false)">Décocher</a>
+					<a ng-click="checkAllSpecialities(entry.product.specialities)">Tout Cocher</a> /
+					<a ng-click="checkAllSpecialities(entry.product.specialities, false)">Décocher</a>
 				</div>
 				<div class="speciality" ng-repeat="spec in entry.product.specialities">
 					<input type="checkbox" ng-model="spec.enabled" />

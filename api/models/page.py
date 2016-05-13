@@ -12,7 +12,7 @@ bleach.ALLOWED_ATTRIBUTES.update({
 
 
 class Page(BaseModel):
-	def __init__(self, name, text, _id=None):
+	def __init__(self, name, text, _id=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name
 		self.text = text

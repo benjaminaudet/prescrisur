@@ -9,6 +9,7 @@ from base_model import BaseModel
 from speciality import Speciality
 from substance import Substance
 from association import Association
+from therapeutic_class import TherapeuticClass
 
 bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
@@ -23,7 +24,7 @@ class Pathology(BaseModel):
 		'ok': 'Molécule Recommandée (voir RCP)'
 	}
 
-	def __init__(self, name, _id=None, levels=None, intro=None, conclu=None, updated_at=None):
+	def __init__(self, name, _id=None, levels=None, intro=None, conclu=None, updated_at=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name
 		self.levels = levels if levels else []
@@ -46,6 +47,38 @@ class Pathology(BaseModel):
 		if not objs:
 			return []
 		return list(objs)
+
+	def save_therapeutic_classes(self):
+		return self.find_therapeutic_classes(self.levels)
+
+	def find_therapeutic_classes(self, levels):
+		for l in levels:
+			if 'is_class' in l and l['is_class'] == True:
+				therapeutic_class = self.compute_therapeutic_class(l)
+				therapeutic_class['pathology_id'] = self._id
+				if 'class_id' in l:
+					therapeutic_class['_id'] = l['class_id']
+				TherapeuticClass(**therapeutic_class).save()
+				continue
+			if 'levels' in l:
+				self.find_therapeutic_classes(l['levels'])
+		return
+
+	def compute_therapeutic_class(self, level):
+		therapeutic_class_level = {
+			'name': level['name']
+		}
+		if 'text' in level:
+			therapeutic_class_level['text'] = level['text']
+		if 'levels' in level:
+			sub_class_levels = []
+			for l in level['levels']:
+				if 'is_class' in l and l['is_class'] == True:
+					sub_class_levels.append(self.compute_therapeutic_class(l))
+			therapeutic_class_level['levels'] = sub_class_levels
+		elif 'entries' in level:
+			therapeutic_class_level['entries'] = level['entries']
+		return therapeutic_class_level
 
 	def check(self):
 		self.name = bleach.clean(self.name)

@@ -42,6 +42,39 @@ def cleaned_pathology(pathology):
 	return pathology.check()
 
 
+@pytest.fixture(autouse=True)
+def therapeutic_class():
+	return {
+		'is_class': True,
+		'name': 'class',
+		'text': 'class text',
+		'levels': [
+			{
+				'is_class': True,
+				'name': 'class1',
+				'text': 'class text1',
+				'levels': [
+					{
+						'is_class': False,
+						'name': 'class11',
+						'text': 'class text11',
+					},
+					{
+						'is_class': True,
+						'name': 'class12',
+						'entries': 'super'
+					}
+				]
+			},
+			{
+				'is_class': False,
+				'name': 'class2',
+				'text': 'class text2',
+			}
+		]
+	}
+
+
 def test_slugified_id(pathology):
 	assert pathology._id == 'pathologie-testee'
 
@@ -68,6 +101,26 @@ def test_serialize(cleaned_pathology):
 	serialized_cleaned_pathology = cleaned_pathology.serialize()
 	assert serialized_cleaned_pathology['_id'] == 'pathologie-testee'
 	assert serialized_cleaned_pathology['levels'][1]['levels'][1]['entries'][0]['product']['name'] == 'lol'
+
+
+def test_compute_class_level(pathology, therapeutic_class):
+	computed_class = pathology.compute_therapeutic_class(therapeutic_class)
+	assert computed_class == {
+		'name': 'class',
+		'text': 'class text',
+		'levels': [
+			{
+				'name': 'class1',
+				'text': 'class text1',
+				'levels': [
+					{
+						'name': 'class12',
+						'entries': 'super'
+					}
+				]
+			}
+		]
+	}
 
 
 class TestBleachedText:

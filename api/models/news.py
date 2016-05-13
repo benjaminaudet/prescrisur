@@ -4,7 +4,7 @@ from page import Page
 
 
 class News(Page):
-	def __init__(self, name, text, _id=None, author=None, created_at=None, updated_at=None):
+	def __init__(self, name, text, _id=None, author=None, created_at=None, updated_at=None, **kwargs):
 		super(News, self).__init__(name, text, _id)
 		self.author = author
 		self.created_at = created_at if created_at else datetime.datetime.now().isoformat()
