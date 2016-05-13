@@ -10,3 +10,4 @@ class EnvConfig(object):
 	MAIL_USE_SSL = True
 	MAIL_USERNAME = 'prescrisur@gmail.com'
 	MAIL_PASSWORD = 'gabin2014'
+	MAIL_DEFAULT_SENDER = None
