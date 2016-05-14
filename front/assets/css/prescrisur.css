@@ -804,3 +804,20 @@
 #users-stats {
     list-style: none;
 }
+
+.right-inner-icon {
+    position: relative;
+}
+
+.right-inner-icon input {
+    padding-right: 30px;
+    margin-bottom: 15px;
+    border-radius: 50px;
+}
+
+.right-inner-icon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}

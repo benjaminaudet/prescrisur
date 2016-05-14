@@ -11,6 +11,11 @@
 	</div>
 
 	<div class="col-md-8 col-md-pull-4">
+		<div id="users-search" class="right-inner-icon">
+			<i class="fa fa-search"></i>
+			<input type="search" class="form-control" ng-model="query" placeholder="Filtrer par nom, email, role"/>
+		</div>
+
 		<div class="panel panel-default">
 			<table id="users-list" class="table table-condensed table-striped table-bordered">
 				<tr>
@@ -18,7 +23,7 @@
 					<th>Email</th>
 					<th>Admin ?</th>
 				</tr>
-				<tr class="user" ng-repeat="user in users | orderBy:'name'">
+				<tr class="user" ng-repeat="user in users | orderBy:'name' | filter:query">
 					<td>{{ user.name }}</td>
 					<td>
 						<a href="mailto:{{ user._id }}">{{ user._id }}</a>
