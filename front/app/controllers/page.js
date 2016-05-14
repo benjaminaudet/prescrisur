@@ -44,11 +44,12 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PageEditController", [
 	'$scope',
-	'$location',
+	'$state',
 	'$stateParams',
+	'PageTitleService',
 	'PageService',
 
-	function($scope, $location, $stateParams, PageService) {
+	function($scope, $state, $stateParams, PageTitleService, PageService) {
 		PageTitleService.setTitle('Nouvelle Page');
 
 		if($stateParams.id) {
@@ -61,7 +62,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.submit = function () {
 			var afterSave = function (data) {
 				var savedPage = data.data;
-				$location.path('/pages/' + savedPage._id);
+				$state.go('pages.read', {id: savedPage._id});
 			};
 
 			if ($stateParams.id) {

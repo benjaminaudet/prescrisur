@@ -68,13 +68,13 @@ angular.module('prescrisurApp.controllers')
 
 .controller("PathologyEditController", [
 	'$scope',
-	'$location',
+	'$state',
 	'$stateParams',
 	'PageTitleService',
 	'SearchService',
 	'PathologyService',
 
-	function($scope, $location, $stateParams, PageTitleService, SearchService, PathologyService) {
+	function($scope, $state, $stateParams, PageTitleService, SearchService, PathologyService) {
 		PageTitleService.setTitle('Nouvelle Pathologie');
 
 		$scope.results = [];
@@ -210,7 +210,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.submit = function() {
 			var afterSave = function(data) {
 				var savedPatho = data.data;
-				$location.path('/pathologies/'+savedPatho._id);
+				$state.go('pathologies', {id: savedPatho._id});
 			};
 
 			if($stateParams.id) {

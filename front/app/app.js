@@ -19,7 +19,7 @@ angular.module('prescrisurApp.controllers', []);
 // Routing
 app.config(function($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise('error');
+	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
 		.state('home', {
@@ -29,12 +29,64 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			params: {msg: null},
 			access: {restricted: false}
 		})
-		.state('error', {
-			url: '/error',
-			controller : 'ErrorController',
-			templateUrl: 'front/app/templates/error.html',
-			params: {code: null},
+		// Pathologies
+		.state('pathologies-new', {
+			url: '/pathologies/new',
+			controller: 'PathologyEditController',
+			templateUrl: 'front/app/templates/pathology-edit.html',
+			access: {restricted: true, admin: true}
+		})
+		.state('pathologies', {
+			url: '/pathologies/:id',
+			controller: 'PathologyController',
+			templateUrl: 'front/app/templates/pathology.html',
 			access: {restricted: false}
+		})
+			.state('pathologies.edit', {
+				url: '/edit',
+				views: {
+					'@': {
+						controller: 'PathologyEditController',
+						templateUrl: 'front/app/templates/pathology-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
+		// Classes
+		.state('classes', {
+			url: '/classes/:id',
+			controller: 'TherapeuticClassController',
+			templateUrl: 'front/app/templates/therapeutic-class.html',
+			access: {restricted: false}
+		})
+		// Specialities
+		.state('specialities', {
+			url: '/specialities/:id',
+			controller: 'SpecialityController',
+			templateUrl: 'front/app/templates/speciality.html',
+			access: {restricted: false}
+		})
+		// Substances
+		.state('substances', {
+			url: '/substances/:id',
+			controller: 'SubstanceController',
+			templateUrl: 'front/app/templates/substance.html',
+			access: {restricted: true}
+		})
+		// Associations
+		.state('associations', {
+			url: '/associations',
+			controller: 'AssociationController',
+			templateUrl: 'front/app/templates/association.html',
+			params: {msg: null},
+			access: {restricted: true, admin: true}
+		})
+		// Users
+		.state('users', {
+			url: '/users',
+			controller: 'UserAdminController',
+			templateUrl: 'front/app/templates/user-admin.html',
+			access: {restricted: true, admin: true}
 		})
 		.state('register', {
 			url: '/register',
@@ -55,108 +107,92 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			template: '',
 			access: {restricted: true}
 		})
+		// Pages
+		.state('pages', {
+			url: '/pages',
+			controller: 'PageController',
+			templateUrl: 'front/app/templates/page-admin.html',
+			access: {restricted: true, admin: true}
+		})
+			.state('pages.new', {
+				url: '/new',
+				views: {
+					'@': {
+						controller: 'PageEditController',
+						templateUrl: 'front/app/templates/page-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
+			.state('pages.read', {
+				url: '/:id',
+				views: {
+					'@': {
+						controller: 'PageController',
+						templateUrl: 'front/app/templates/page.html'
+					}
+				},
+				access: {restricted: false}
+			})
+			.state('pages.edit', {
+				url: '/:id/edit',
+				views: {
+					'@': {
+						controller: 'PageEditController',
+						templateUrl: 'front/app/templates/page-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
 		.state('contact', {
 			url: '/contact',
 			controller: 'ContactController',
 			templateUrl: 'front/app/templates/contact.html',
 			access: {restricted: false}
 		})
-		.state('pages-edit', {
-			url: '/pages/edit/:id',
-			controller: 'PageEditController',
-			templateUrl: 'front/app/templates/page-edit.html',
-			access: {restricted: true, admin: true}
-		})
-		.state('pages-new', {
-			url: '/pages/new',
-			controller: 'PageEditController',
-			templateUrl: 'front/app/templates/page-edit.html',
-			access: {restricted: true, admin: true}
-		})
-		.state('pages', {
-			url: '/pages/:id',
-			controller: 'PageController',
-			templateUrl: 'front/app/templates/page.html',
-			access: {restricted: false}
-		})
-		.state('pages-admin', {
-			url: '/pages',
-			controller: 'PageController',
-			templateUrl: 'front/app/templates/page-admin.html',
-			access: {restricted: false}
-		})
-		.state('news-edit', {
-			url: '/news/edit/:id',
-			controller: 'NewsEditController',
-			templateUrl: 'front/app/templates/news-edit.html',
-			access: {restricted: true, admin: true}
-		})
-		.state('news-new', {
-			url: '/news/new',
-			controller: 'NewsEditController',
-			templateUrl: 'front/app/templates/news-edit.html',
-			access: {restricted: true, admin: true}
-		})
+		// News
 		.state('news', {
-			url: '/news/:id',
-			controller: 'NewsController',
-			templateUrl: 'front/app/templates/news.html',
-			access: {restricted: false}
-		})
-		.state('news-list', {
 			url: '/news',
 			controller: 'NewsController',
 			templateUrl: 'front/app/templates/news.html',
 			access: {restricted: false}
 		})
-		.state('pathologies-edit', {
-			url: '/pathologies/edit/:id',
-			controller: 'PathologyEditController',
-			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true, admin: true}
-		})
-		.state('pathologies-new', {
-			url: '/pathologies/new',
-			controller: 'PathologyEditController',
-			templateUrl: 'front/app/templates/pathology-edit.html',
-			access: {restricted: true, admin: true}
-		})
-		.state('pathologies', {
-			url: '/pathologies/:id',
-			controller: 'PathologyController',
-			templateUrl: 'front/app/templates/pathology.html',
+			.state('news.new', {
+				url: '/new',
+				views: {
+					'@': {
+						controller: 'NewsEditController',
+						templateUrl: 'front/app/templates/news-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
+			.state('news.read', {
+				url: '/:id',
+				views: {
+					'@': {
+						controller: 'NewsController',
+						templateUrl: 'front/app/templates/news.html'
+					}
+				},
+				access: {restricted: false}
+			})
+			.state('news.edit', {
+				url: '/:id/edit',
+				views: {
+					'@': {
+						controller: 'NewsEditController',
+						templateUrl: 'front/app/templates/news-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
+		.state('error', {
+			url: '/error',
+			controller : 'ErrorController',
+			templateUrl: 'front/app/templates/error.html',
+			params: {code: null},
 			access: {restricted: false}
-		})
-		.state('classes', {
-			url: '/classes/:id',
-			controller: 'TherapeuticClassController',
-			templateUrl: 'front/app/templates/therapeutic-class.html',
-			access: {restricted: false}
-		})
-		.state('specialities', {
-			url: '/specialities/:id',
-			controller: 'SpecialityController',
-			templateUrl: 'front/app/templates/speciality.html',
-			access: {restricted: false}
-		})
-		.state('substances', {
-			url: '/substances/:id',
-			controller: 'SubstanceController',
-			templateUrl: 'front/app/templates/substance.html',
-			access: {restricted: true}
-		})
-		.state('associations', {
-			url: '/associations',
-			controller: 'AssociationController',
-			templateUrl: 'front/app/templates/association.html',
-			params: {msg: null},
-			access: {restricted: true, admin: true}
-		})
-		.state('users', {
-			url: '/users',
-			controller: 'UserAdminController',
-			templateUrl: 'front/app/templates/user-admin.html',
-			access: {restricted: true, admin: true}
 		})
 });
 

@@ -31,12 +31,12 @@ angular.module('prescrisurApp.controllers')
 
 .controller("NewsEditController", [
 	'$scope',
-	'$location',
+	'$state',
 	'$stateParams',
 	'PageTitleService',
 	'NewsService',
 
-	function($scope, $location, $stateParams, PageTitleService, NewsService) {
+	function($scope, $state, $stateParams, PageTitleService, NewsService) {
 		PageTitleService.setTitle('Nouvelle News');
 
 		if($stateParams.id) {
@@ -49,7 +49,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.submit = function () {
 			var afterSave = function (data) {
 				var savedPage = data.data;
-				$location.path('/news/' + savedPage._id);
+				$state.go('news.read', { id: savedPage._id });
 			};
 
 			if ($stateParams.id) {

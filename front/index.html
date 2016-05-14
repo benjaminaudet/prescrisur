@@ -57,9 +57,9 @@
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="user-dropdown">
 					<li><a ui-sref="pathologies-new" ng-if="isAuthorized('admin')">Nouvelle Pathologie</a></li>
-					<li><a ui-sref="news-new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
+					<li><a ui-sref="news.new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
 					<li><a ui-sref="associations" ng-if="isAuthorized('admin')">Associations</a></li>
-					<li><a ui-sref="pages-admin" ng-if="isAuthorized('admin')">Pages</a></li>
+					<li><a ui-sref="pages" ng-if="isAuthorized('admin')">Pages</a></li>
 					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
 					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
 					<li class="btn-logout"><a ui-sref="logout">
@@ -90,21 +90,21 @@
 						<a class="dropdown-toggle parent-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">À Propos</a>
 						<ul class="dropdown-menu subnav">
 							<li role="menuitem" ui-sref-active="active">
-								<a ui-sref="pages({id: 'presentation'})">Présentation</a>
+								<a ui-sref="pages.read({id: 'presentation'})">Présentation</a>
 							</li>
 							<li role="menuitem" ui-sref-active="active">
-								<a ui-sref="pages({id: 'pourquoi-prescrisur'})">Pourquoi Prescrisur ?</a>
+								<a ui-sref="pages.read({id: 'pourquoi-prescrisur'})">Pourquoi Prescrisur ?</a>
 							</li>
 							<li role="menuitem" ui-sref-active="active">
-								<a ui-sref="pages({id: 'mode-d-emploi'})">Mode d'Emploi</a>
+								<a ui-sref="pages.read({id: 'mode-d-emploi'})">Mode d'Emploi</a>
 							</li>
 							<li role="menuitem" ui-sref-active="active">
 								<a>Références</a>
 							</li>
 						</ul>
 					</li>
-					<li ui-sref-active="active"><a ui-sref="news-list">PrescriNews</a></li>
-					<li ui-sref-active="active"><a ui-sref="pages({id: 'sources-d-informations'})">Sources</a></li>
+					<li ui-sref-active="active"><a ui-sref="news">PrescriNews</a></li>
+					<li ui-sref-active="active"><a ui-sref="pages.read({id: 'sources-d-informations'})">Sources</a></li>
 					<li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
 					<li id="user-info-xs" class="visible-xs">
 						<!-- Logged In User profile -->

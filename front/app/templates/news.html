@@ -15,7 +15,7 @@
 				<h2 class="inline">{{ n.name }}</h2>
 				<div ng-if="isAuthorized('admin')" class="inline action-buttons">
 					<div class="btn-group" role="group">
-						<a ui-sref="news-edit({id: n._id})" type="button" class="btn btn-sm btn-default">
+						<a ui-sref="news.edit({id: n._id})" type="button" class="btn btn-sm btn-default">
 							<i class="fa fa-edit"></i>
 						</a>
 						<a ng-click="delete(n._id)" type="button" class="btn btn-sm btn-danger">

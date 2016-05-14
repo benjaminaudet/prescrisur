@@ -8,7 +8,7 @@
 <div class="jumbotron">
 	<h1>Recherche en un clic!</h1>
 	<p class="lead">
-		Utilisez les quatres entrées pour accéder à l'information, ou référez-vous au <a ui-sref="pages({id: 'mode-d-emploi'})">manuel d'utilisation</a>.
+		Utilisez les quatres entrées pour accéder à l'information, ou référez-vous au <a ui-sref="pages.read({id: 'mode-d-emploi'})">manuel d'utilisation</a>.
 	</p>
 	<div id="search-buttons" class="form-group">
 		<div class="btn-group btn-group-justified" data-toggle="buttons">
@@ -45,7 +45,7 @@
 		<h2>PrescriNews</h2>
 		<ul>
 			<li ng-repeat="n in news | limitTo: 5">
-				<a ui-sref="news({id: n._id})">{{ n.name }}</a>
+				<a ui-sref="news.read({id: n._id})">{{ n.name }}</a>
 				<small class="info">par {{ n.author.name }} - {{ n.created_at | date:"dd/MM/yyyy" }}</small>
 			</li>
 		</ul>
