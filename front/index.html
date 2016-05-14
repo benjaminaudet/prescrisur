@@ -59,6 +59,7 @@
 					<li><a ui-sref="news-new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
 					<li><a ui-sref="associations" ng-if="isAuthorized('admin')">Associations</a></li>
 					<li><a ui-sref="pages-list" ng-if="isAuthorized('admin')">Pages</a></li>
+					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
 					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
 					<li class="btn-logout"><a ui-sref="logout">
 						<i class="fa fa-sign-out"></i>
@@ -151,6 +152,7 @@
 <script src="front/app/controllers/association.js"></script>
 <script src="front/app/controllers/pathology.js"></script>
 <script src="front/app/controllers/therapeutic-class.js"></script>
+<script src="front/app/controllers/user.js"></script>
 <script src="front/app/controllers/page.js"></script>
 <script src="front/app/controllers/contact.js"></script>
 <script src="front/app/controllers/news.js"></script>

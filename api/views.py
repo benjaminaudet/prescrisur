@@ -176,6 +176,12 @@ def search_association():
 	return jsonify(data=Association.search_by_name(q, proj=None))
 
 
+@app.route('/api/users', methods=['GET'])
+@required_role('admin')
+def users():
+	return jsonify(data=User.all())
+
+
 @app.route('/api/mail', methods=['POST'])
 def send_mail():
 	data = json.loads(request.data)

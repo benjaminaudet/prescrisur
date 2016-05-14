@@ -54,4 +54,10 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 			update: { method:'PUT' }
 		});
 	}
+])
+
+.factory('UserService', ['$resource',
+	function($resource){
+		return $resource('/api/users');
+	}
 ]);

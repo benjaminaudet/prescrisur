@@ -427,6 +427,7 @@
 
 #register-form .text {
     text-align: justify;
+    background-color: rgba(245,245,245,0.3);
     border: 1px solid rgba(230,103,135,0.2);
     border-radius: 10px;
     padding: 10px 20px;
@@ -770,6 +771,7 @@
 
 #contact-form .text {
     text-align: justify;
+    background-color: rgba(245,245,245,0.3);
     border: 1px solid rgba(230,103,135,0.2);
     border-radius: 10px;
     padding: 10px 20px;
@@ -782,4 +784,23 @@
 
 #contact-text a {
     font-size: 1.2em;
+}
+
+
+/****************************/
+/*       ADMIN USERS        */
+#users-list .icon {
+    text-align: center;
+}
+
+#users-list .icon .ok {
+    color: #3CAB00;
+}
+
+#users-list .icon .nok {
+    color: #6E0018;
+}
+
+#users-stats {
+    list-style: none;
 }

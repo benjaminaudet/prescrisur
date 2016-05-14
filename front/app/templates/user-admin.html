@@ -1,0 +1,38 @@
+<div class="row" id="page-header">
+	<h1>Liste des Inscrits</h1>
+</div>
+
+<div id="content" class="row caduceus">
+	<div id="sidebar" class="col-md-4 col-md-push-8">
+		<h2>Stats</h2>
+		<ul id="users-stats">
+			<li>Nombre d'inscrits : {{ users.length }}</li>
+		</ul>
+	</div>
+
+	<div class="col-md-8 col-md-pull-4">
+		<div class="panel panel-default">
+			<table id="users-list" class="table table-condensed table-striped table-bordered">
+				<tr>
+					<th>Nom</th>
+					<th>Email</th>
+					<th>Admin ?</th>
+				</tr>
+				<tr class="user" ng-repeat="user in users | orderBy:'name'">
+					<td>{{ user.name }}</td>
+					<td>
+						<a href="mailto:{{ user._id }}">{{ user._id }}</a>
+					</td>
+					<td class="icon">
+					<span class="ok" ng-if="isAdmin(user.roles)">
+						<i class="fa fa-check-circle"></i>
+					</span>
+					<span class="nok" ng-if="!isAdmin(user.roles)">
+						<i class="fa fa-times-circle"></i>
+					</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

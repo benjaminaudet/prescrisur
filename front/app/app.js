@@ -151,6 +151,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			params: {msg: null},
 			access: {restricted: true, admin: true}
 		})
+		.state('users', {
+			url: '/users',
+			controller: 'UserAdminController',
+			templateUrl: 'front/app/templates/user-admin.html',
+			params: {msg: null},
+			access: {restricted: true, admin: true}
+		})
 });
 
 // On route change
