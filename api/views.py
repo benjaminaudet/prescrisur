@@ -182,6 +182,18 @@ def users():
 	return jsonify(data=User.all())
 
 
+@app.route('/api/users/<user_id>/subscription', methods=['PUT', 'DELETE'])
+def subscribe(user_id):
+	u = User.get(user_id)
+	if not u:
+		abort(404)
+	if request.method == 'PUT':
+		u.add_role('subscriber').save()
+	elif request.method == 'DELETE':
+		u.remove_role('subscriber').save()
+	return jsonify({'success': True})
+
+
 @app.route('/api/mail', methods=['POST'])
 def send_mail():
 	data = json.loads(request.data)

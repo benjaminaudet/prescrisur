@@ -3,10 +3,13 @@
 </div>
 
 <div id="content" class="row caduceus">
+	<flash-message duration="4000" show-close="true"></flash-message>
+
 	<div id="sidebar" class="col-md-4 col-md-push-8">
 		<h2>Stats</h2>
 		<ul id="users-stats">
 			<li>Nombre d'inscrits : {{ users.length }}</li>
+			<li>Nombre d'abonnés : {{ subscribers.length }}</li>
 		</ul>
 	</div>
 
@@ -22,19 +25,28 @@
 					<th>Nom</th>
 					<th>Email</th>
 					<th>Admin ?</th>
+					<th>Abonné ?</th>
 				</tr>
-				<tr class="user" ng-repeat="user in users | orderBy:'name' | filter:query">
+				<tr class="user" ng-repeat="user in users | filter:query">
 					<td>{{ user.name }}</td>
 					<td>
 						<a href="mailto:{{ user._id }}">{{ user._id }}</a>
 					</td>
 					<td class="icon">
-					<span class="ok" ng-if="isAdmin(user.roles)">
-						<i class="fa fa-check-circle"></i>
-					</span>
-					<span class="nok" ng-if="!isAdmin(user.roles)">
-						<i class="fa fa-times-circle"></i>
-					</span>
+						<div class="ok" ng-if="hasRole('admin', user.roles)">
+							<i class="fa fa-check-circle"></i>
+						</div>
+						<div class="nok" ng-if="!hasRole('admin', user.roles)">
+							<i class="fa fa-times-circle"></i>
+						</div>
+					</td>
+					<td class="icon">
+						<div class="btn btn-success btn-xs" ng-if="hasRole('subscriber', user.roles)" ng-click="subscribe(user, false)">
+							<i class="fa fa-check"></i> Abonné
+						</div>
+						<div class="btn btn-default btn-xs" ng-if="!hasRole('subscriber', user.roles)" ng-click="subscribe(user, true)">
+							<i class="fa fa-times"></i> Non Abonné
+						</div>
 					</td>
 				</tr>
 			</table>

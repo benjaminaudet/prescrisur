@@ -60,4 +60,13 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	function($resource){
 		return $resource('/api/users');
 	}
+])
+
+.factory('UserSubscriptionService', ['$resource',
+	function($resource){
+		return $resource('/api/users/:id/subscription', null, {
+			subscribe: { method: 'PUT' },
+			unsubscribe: { method: 'DELETE' }
+		});
+	}
 ]);

@@ -1,4 +1,5 @@
 from passlib.hash import pbkdf2_sha256
+from pymongo import ASCENDING
 
 from base_model import BaseModel
 
@@ -26,6 +27,17 @@ class User(BaseModel):
 	def is_anonymous(self):
 		return False
 
+	@classmethod
+	def all(cls):
+		objs = cls.collection.find().sort('name', ASCENDING)
+		if not objs:
+			return []
+		users = []
+		for u in objs:
+			del u['password_hash']
+			users.append(u)
+		return users
+
 	@staticmethod
 	def hash_password(password=None, password_hash=None):
 		if password_hash:
@@ -36,6 +48,16 @@ class User(BaseModel):
 
 	def verify_password(self, password):
 		return pbkdf2_sha256.verify(password, self.password_hash)
+
+	def add_role(self, role):
+		if role not in self.roles:
+			self.roles.append(role)
+		return self
+
+	def remove_role(self, role):
+		if role in self.roles:
+			self.roles.remove(role)
+		return self
 
 	def get_id(self):
 		return self._id

@@ -2,6 +2,7 @@ var app = angular.module('prescrisurApp', [
 	'ui.router',
 	'ui.select',
 	'ui.bootstrap',
+	'ngFlash',
 	'colorpicker.module',
 	'yaru22.angular-timeago',
 	'textAngular',
@@ -155,7 +156,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/users',
 			controller: 'UserAdminController',
 			templateUrl: 'front/app/templates/user-admin.html',
-			params: {msg: null},
 			access: {restricted: true, admin: true}
 		})
 });
