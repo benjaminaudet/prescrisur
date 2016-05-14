@@ -16,9 +16,12 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'PageTitleService',
 	'AuthService',
 
-	function($scope, $state, $stateParams, AuthService) {
+	function($scope, $state, $stateParams, PageTitleService, AuthService) {
+		PageTitleService.setTitle('Connexion');
+
 		$scope.loginForm = {};
 		$scope.needLogin = $stateParams.needLogin;
 
@@ -51,10 +54,13 @@ angular.module('prescrisurApp.controllers')
 .controller("RegisterController", [
 	'$scope',
 	'$state',
+	'PageTitleService',
 	'PageService',
 	'AuthService',
 
-	function($scope, $state, PageService, AuthService) {
+	function($scope, $state, PageTitleService, PageService, AuthService) {
+		PageTitleService.setTitle('Inscription');
+
 		$scope.registerForm = {};
 
 		if($scope.currentUser) {

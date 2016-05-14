@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr_FR" ng-app="prescrisurApp">
+<html lang="fr_FR" ng-app="prescrisurApp" ng-controller="MainController" ng-cloak>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,9 +36,9 @@
 
 	<base href="/">
 
-	<title>Prescrisur</title>
+	<title>{{ PageTitleService.title() }} | Prescrisur</title>
 </head>
-<body ng-controller="MainController" ng-cloak>
+<body>
 
 <div class="container">
 
@@ -59,7 +59,7 @@
 					<li><a ui-sref="pathologies-new" ng-if="isAuthorized('admin')">Nouvelle Pathologie</a></li>
 					<li><a ui-sref="news-new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
 					<li><a ui-sref="associations" ng-if="isAuthorized('admin')">Associations</a></li>
-					<li><a ui-sref="pages-list" ng-if="isAuthorized('admin')">Pages</a></li>
+					<li><a ui-sref="pages-admin" ng-if="isAuthorized('admin')">Pages</a></li>
 					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
 					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
 					<li class="btn-logout"><a ui-sref="logout">

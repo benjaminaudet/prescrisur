@@ -2,10 +2,13 @@ angular.module('prescrisurApp.controllers')
 
 .controller("ContactController", [
 	'$scope',
+	'PageTitleService',
 	'PageService',
 	'MailService',
 
-	function($scope, PageService, MailService) {
+	function($scope, PageTitleService, PageService, MailService) {
+		PageTitleService.setTitle('Aide à la Prescription');
+
 		$scope.contactForm = {};
 		
 		if($scope.currentUser) {

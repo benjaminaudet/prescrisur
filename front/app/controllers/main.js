@@ -4,8 +4,11 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$rootScope',
+	'PageTitleService',
 
-	function($scope, $state, $rootScope) {
+	function($scope, $state, $rootScope, PageTitleService) {
+		$scope.PageTitleService = PageTitleService;
+
 		$scope.currentUser = null;
 
 		$rootScope.setCurrentUser = function(user) {

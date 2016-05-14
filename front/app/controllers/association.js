@@ -4,10 +4,13 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'PageTitleService',
 	'AssociationService',
 	'SearchService',
 
-	function($scope, $state, $stateParams, AssociationService, SearchService) {
+	function($scope, $state, $stateParams, PageTitleService, AssociationService, SearchService) {
+		PageTitleService.setTitle('Associations de Substances');
+		
 		var emptyAssociation = {name: null, substances: []};
 		$scope.association = emptyAssociation;
 		$scope.editMode = false;

@@ -4,17 +4,20 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'PageTitleService',
 	'NewsService',
 
-	function($scope, $state, $stateParams, NewsService) {
+	function($scope, $state, $stateParams, PageTitleService, NewsService) {
 
 		if ($stateParams.id) {
 			NewsService.get({ id: $stateParams.id }, function(data) {
 				$scope.news = data.data;
+				PageTitleService.setTitle($scope.news.name + ' | PrescriNews');
 			});
 		} else {
 			NewsService.get(function(data){
 				$scope.news = data.data;
+				PageTitleService.setTitle('PrescriNews');
 			})
 		}
 
@@ -30,13 +33,16 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$location',
 	'$stateParams',
+	'PageTitleService',
 	'NewsService',
 
-	function($scope, $location, $stateParams, NewsService) {
+	function($scope, $location, $stateParams, PageTitleService, NewsService) {
+		PageTitleService.setTitle('Nouvelle News');
 
 		if($stateParams.id) {
 			NewsService.get({ id: $stateParams.id }, function(data) {
 				$scope.news = data.data;
+				PageTitleService.setTitle('Modifier une News');
 			});
 		}
 

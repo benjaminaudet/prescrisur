@@ -5,18 +5,21 @@ angular.module('prescrisurApp.controllers')
 	'$window',
 	'$timeout',
 	'$stateParams',
+	'PageTitleService',
 	'PageService',
 
-	function($scope, $window, $timeout, $stateParams, PageService) {
+	function($scope, $window, $timeout, $stateParams, PageTitleService, PageService) {
 		$scope.page = null;
 
 		if ($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {
 				$scope.page = data.data;
+				PageTitleService.setTitle($scope.page.name);
 			});
 		} else {
 			PageService.get(function(data) {
 				$scope.pages = data.data;
+				PageTitleService.setTitle('Administration des Pages');
 			});
 		}
 
@@ -46,10 +49,12 @@ angular.module('prescrisurApp.controllers')
 	'PageService',
 
 	function($scope, $location, $stateParams, PageService) {
+		PageTitleService.setTitle('Nouvelle Page');
 
 		if($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {
 				$scope.page = data.data;
+				PageTitleService.setTitle('Modifier une Page');
 			});
 		}
 

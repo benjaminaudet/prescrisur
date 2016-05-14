@@ -79,10 +79,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'front/app/templates/page.html',
 			access: {restricted: false}
 		})
-		.state('pages-list', {
+		.state('pages-admin', {
 			url: '/pages',
 			controller: 'PageController',
-			templateUrl: 'front/app/templates/page-list.html',
+			templateUrl: 'front/app/templates/page-admin.html',
 			access: {restricted: false}
 		})
 		.state('news-edit', {

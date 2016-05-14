@@ -6,4 +6,12 @@ angular.module('prescrisurApp.commonsServices', ['ngResource'])
 			send: { method: 'POST' }
 		});
 	}
-]);
+])
+
+.factory('PageTitleService', function() {
+	var title = 'Prescrisur';
+	return {
+		title: function() { return title; },
+		setTitle: function(newTitle) { title = newTitle }
+	};
+});

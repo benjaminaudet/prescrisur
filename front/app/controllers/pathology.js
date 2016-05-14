@@ -7,13 +7,15 @@ angular.module('prescrisurApp.controllers')
 	'$timeout',
 	'$location',
 	'$stateParams',
+	'PageTitleService',
 	'PathologyService',
 
-	function($scope, $state, $window, $timeout, $location, $stateParams, PathologyService) {
+	function($scope, $state, $window, $timeout, $location, $stateParams, PageTitleService, PathologyService) {
 		$scope.pathology = null;
 
 		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
+			PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
 		});
 
 		$scope.delete = function() {
@@ -68,10 +70,13 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$location',
 	'$stateParams',
+	'PageTitleService',
 	'SearchService',
 	'PathologyService',
 
-	function($scope, $location, $stateParams, SearchService, PathologyService) {
+	function($scope, $location, $stateParams, PageTitleService, SearchService, PathologyService) {
+		PageTitleService.setTitle('Nouvelle Pathologie');
+
 		$scope.results = [];
 		$scope.recommandations = ['none', 'alert', 'middle', 'ok'];
 		$scope.productTypes = [
@@ -83,6 +88,7 @@ angular.module('prescrisurApp.controllers')
 		if($stateParams.id) {
 			PathologyService.get({ id: $stateParams.id }, function(data) {
 				$scope.pathology = data.data;
+				PageTitleService.setTitle('Modifier une Pathologie');
 			});
 		}
 		else {

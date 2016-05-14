@@ -5,10 +5,13 @@ angular.module('prescrisurApp.controllers')
 	'$state',
 	'Flash',
 	'filterFilter',
+	'PageTitleService',
 	'UserService',
 	'UserSubscriptionService',
 	
-	function($scope, $state, Flash, filterFilter, UserService, UserSubscriptionService) {
+	function($scope, $state, Flash, filterFilter, PageTitleService, UserService, UserSubscriptionService) {
+		PageTitleService.setTitle('Administration des Utilisateurs');
+
 		UserService.get(function(data) {
 			$scope.users = data.data;
 			$scope.subscribers = filterFilter(data.data, { roles: 'subscriber' });
