@@ -197,10 +197,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 // On route change
-app.run(function ($rootScope, $state, $window, AuthService) {
+app.run(function ($rootScope, $state, $window, ConfirmQuitService, AuthService) {
 	var postLoginState, postLoginParams;
 	$rootScope.$on('$stateChangeStart',
 		function (event, toState, toParams) {
+			// Prevent confirm before quit to run on all pages
+			ConfirmQuitService.destroy();
+
+			// Authenticate user
 			AuthService.getUser()
 				.then(function(user) {
 					if(postLoginState && AuthService.isLoggedIn()) {
@@ -211,17 +215,17 @@ app.run(function ($rootScope, $state, $window, AuthService) {
 						return $state.go('error', {code: 403});
 					}
 					$rootScope.setCurrentUser(user);
-			})
-			.catch(function(e) {
-				if(e.need_login || toState.access.restricted) {
-					postLoginState = $state.current.name;
-					postLoginParams = $state.params;
-					return $state.go('login', {needLogin: true});
-				} else if(e.need_role || toState.access.admin) {
-					return $state.go('error', {code: 403});
-				}
-				$rootScope.setCurrentUser(null);
-			});
+				})
+				.catch(function(e) {
+					if(e.need_login || toState.access.restricted) {
+						postLoginState = $state.current.name;
+						postLoginParams = $state.params;
+						return $state.go('login', {needLogin: true});
+					} else if(e.need_role || toState.access.admin) {
+						return $state.go('error', {code: 403});
+					}
+					$rootScope.setCurrentUser(null);
+				});
 		});
 });
 

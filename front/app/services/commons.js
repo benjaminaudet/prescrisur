@@ -14,4 +14,39 @@ angular.module('prescrisurApp.commonsServices', ['ngResource'])
 		title: function() { return title; },
 		setTitle: function(newTitle) { title = newTitle }
 	};
-});
+})
+
+.factory('ConfirmQuitService', ['$window',
+	function($window) {
+		var init= function($scope) {
+			// On quit page
+			$window.onbeforeunload = function (event) {
+				var message = "Vous n'avez pas enregistré vos modifications !";
+				if (typeof event == 'undefined') {
+					event = window.event;
+				}
+				if (event) {
+					event.returnValue = message;
+				}
+				return message;
+			};
+
+			// On route change
+			$scope.$on('$stateChangeStart', function(event) {
+				var answer = confirm("Vous n'avez pas enregistré vos modifications ! \n\r Voulez-vous vraiment quitter cette page ?");
+				if (!answer) {
+					event.preventDefault();
+				}
+			});
+		};
+		
+		var destroy = function() {
+			$window.onbeforeunload = undefined;
+		};
+
+		return {
+			init: init,
+			destroy: destroy
+		}
+	}
+]);

@@ -71,11 +71,13 @@ angular.module('prescrisurApp.controllers')
 	'$state',
 	'$stateParams',
 	'PageTitleService',
+	'ConfirmQuitService',
 	'SearchService',
 	'PathologyService',
 
-	function($scope, $state, $stateParams, PageTitleService, SearchService, PathologyService) {
+	function($scope, $state, $stateParams, PageTitleService, ConfirmQuitService, SearchService, PathologyService) {
 		PageTitleService.setTitle('Nouvelle Pathologie');
+		ConfirmQuitService.init($scope);
 
 		$scope.results = [];
 		$scope.recommandations = ['none', 'alert', 'middle', 'ok'];

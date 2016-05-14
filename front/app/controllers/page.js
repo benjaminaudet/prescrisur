@@ -47,10 +47,12 @@ angular.module('prescrisurApp.controllers')
 	'$state',
 	'$stateParams',
 	'PageTitleService',
+	'ConfirmQuitService',
 	'PageService',
 
-	function($scope, $state, $stateParams, PageTitleService, PageService) {
+	function($scope, $state, $stateParams, PageTitleService, ConfirmQuitService, PageService) {
 		PageTitleService.setTitle('Nouvelle Page');
+		ConfirmQuitService.init($scope);
 
 		if($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {
