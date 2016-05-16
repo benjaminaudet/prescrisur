@@ -1,4 +1,5 @@
 # coding=utf-8
+import base64
 from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 from pymongo.errors import DuplicateKeyError
@@ -217,15 +218,26 @@ def user_loader(email):
 	return User.get(email)
 
 
+@login_manager.request_loader
+def load_user_from_request(request):
+	api_key = request.args.get('api_key')
+	if api_key:
+		user = User.verify_auth_token(api_key)
+		if user and user.confirmed:
+			return user
+	return None
+
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-	return jsonify({'need_login': True}), 401
+	return jsonify(need_login=True), 401
 
 
 @api.route('/api/register', methods=['POST'])
 def register():
 	data = json.loads(request.data)
 	user = User(**data)
+	user.generate_auth_token()
 	user.create()
 	send_confirm_email(user.email)
 	return jsonify(success=True)
@@ -257,6 +269,7 @@ def confirm_email(token):
 
 @api.route('/api/reset/send', methods=['POST'])
 def send_reset_password():
+	# TODO: check if confirmed
 	email = request.get_json()['email']
 	send_reset_password_email(email)
 	return jsonify(success=True)
@@ -293,7 +306,7 @@ def login():
 	elif not user.confirmed:
 		return jsonify(not_confirmed=True), 400
 	login_user(user)
-	return jsonify(data=user)
+	return jsonify(data=user.clean())
 
 
 @api.route('/api/logout')
@@ -307,8 +320,7 @@ def logout():
 def get_user_status():
 	if not current_user.is_authenticated:
 		return jsonify(user=False)
-	delattr(current_user, 'password_hash')
-	return jsonify(user=current_user)
+	return jsonify(user=current_user.clean())
 
 
 # Errors

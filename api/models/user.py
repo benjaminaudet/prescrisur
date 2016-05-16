@@ -1,18 +1,21 @@
 from slugify import slugify
 from pymongo import ASCENDING
+from flask import current_app
 from passlib.hash import pbkdf2_sha256
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
 
 from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None, confirmed=False):
+	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None, confirmed=False, token=None):
 		self._id = _id if _id else slugify(email)
 		self.email = email
 		self.password_hash = self.hash_password(password, password_hash)
 		self.name = name
 		self.roles = roles if roles else []
 		self.confirmed = confirmed
+		self.token = token
 
 	@property
 	def is_active(self):
@@ -58,6 +61,26 @@ class User(BaseModel):
 
 	def verify_password(self, password):
 		return pbkdf2_sha256.verify(password, self.password_hash)
+
+	def generate_auth_token(self):
+		s = Serializer(current_app.config['SECRET_KEY'], expires_in=None)
+		self.token = s.dumps(self.email, salt=current_app.config['SECURITY_PASSWORD_SALT'])
+
+	@staticmethod
+	def verify_auth_token(token):
+		s = Serializer(current_app.config['SECRET_KEY'])
+		try:
+			email = s.loads(token, salt=current_app.config['SECURITY_PASSWORD_SALT'])
+		except SignatureExpired:
+			return None # valid token, but expired
+		except BadSignature:
+			return None # invalid token
+		return User.get_by_email(email)
+
+	def clean(self):
+		delattr(self, 'password_hash')
+		delattr(self, 'token')
+		return self
 
 	def add_role(self, role):
 		if role not in self.roles:

@@ -177,7 +177,7 @@ angular.module('prescrisurApp.controllers')
 				$scope.disabled = true;
 			} else {
 				$scope.badConfirmPasswd = false;
-				$scope.disabled = true;
+				$scope.disabled = false;
 			}
 			return !$scope.badConfirmPasswd;
 		};
