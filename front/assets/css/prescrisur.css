@@ -45,6 +45,14 @@
     display: none !important;
 }
 
+.btn.btn-primary {
+    background-color: #3283bf;
+}
+
+.btn.btn-primary.active {
+    background-color: #236892;
+}
+
 /****************************/
 /*     CLASSES USUELLES     */
 .red {
@@ -301,6 +309,7 @@
 
 .jumbotron h1 {
     font-family: ErasMedium, Arial, sans-serif;
+    font-size: 3em;
 }
 
 .jumbotron .btn-group .btn {
