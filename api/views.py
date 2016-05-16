@@ -236,7 +236,7 @@ def register():
 @api.route('/api/login', methods=['POST'])
 def login():
 	data = json.loads(request.data)
-	user = User.get(data['email'])
+	user = User.get_by_email(data['email'])
 	if not user:
 		abort(401)
 	if user.verify_password(data['passwd']):

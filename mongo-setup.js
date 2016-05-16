@@ -1,4 +1,6 @@
+db.User.createIndex({'email': 1}, { sparse: true });
 db.Page.createIndex({'name': 1}, { sparse: true });
+db.News.createIndex({'name': 1}, { sparse: true });
 db.Speciality.createIndex({'name': 1}, { sparse: true });
 db.Substance.createIndex({'name': 1}, { sparse: true });
 db.Pathology.createIndex({'name': 1}, { sparse: true });

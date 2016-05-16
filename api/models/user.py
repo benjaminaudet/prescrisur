@@ -1,19 +1,17 @@
-from passlib.hash import pbkdf2_sha256
+from slugify import slugify
 from pymongo import ASCENDING
+from passlib.hash import pbkdf2_sha256
 
 from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, password=None, password_hash=None, name=None, roles=None):
-		self._id = _id
+	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None):
+		self._id = _id if _id else slugify(email)
+		self.email = email
 		self.password_hash = self.hash_password(password, password_hash)
 		self.name = name
 		self.roles = roles if roles else []
-
-	@property
-	def email(self):
-		return self._id
 
 	@property
 	def is_active(self):
@@ -26,6 +24,13 @@ class User(BaseModel):
 	@property
 	def is_anonymous(self):
 		return False
+
+	@classmethod
+	def get_by_email(cls, email):
+		user = cls.collection.find_one({'email': email})
+		if not user:
+			return None
+		return User(**user)
 
 	@classmethod
 	def all(cls):

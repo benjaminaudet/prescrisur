@@ -14,7 +14,7 @@ function ($q, $timeout, $http) {
 		var deferred = $q.defer();
 
 		// send a post request to the server
-		$http.post('/api/register', {name: name, _id: email, password: password})
+		$http.post('/api/register', {name: name, email: email, password: password})
 			// handle success
 			.success(function (data, status) {
 				if(status === 200 && data.success){
