@@ -4,7 +4,7 @@
 
 <div id="content" class="row caduceus">
 	<div id="sidebar" class="col-md-3 col-md-push-9">
-		<div class="btn btn-default" ng-click="print()">
+		<div class="btn btn-default" ng-if="isAuthorized('admin')" ng-click="print()">
 			<i class="fa fa-print"></i>
 			Imprimer la Pathologie
 		</div>
