@@ -2,24 +2,26 @@
 from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
-from api import app, login_manager
+from api import login_manager
 from api.models import *
 from api.decorators import required_role
 from api.services import mail as mail_service
 
+api = Blueprint('api', __name__)
 
-@app.route('/')
+
+@api.route('/')
 def index():
 	return app.send_static_file('index.html')
 
 
-@app.route('/api/specialities/search')
+@api.route('/api/specialities/search')
 def search_speciality():
 	q = request.args.get('q')
 	return jsonify(data=Speciality.search_by_name(q))
 
 
-@app.route('/api/substances/<subst_id>')
+@api.route('/api/substances/<subst_id>')
 @login_required
 def substance(subst_id):
 	subst = Substance.get(subst_id)
@@ -28,7 +30,7 @@ def substance(subst_id):
 	return jsonify(data=subst)
 
 
-@app.route('/api/substances/search')
+@api.route('/api/substances/search')
 def search_substance():
 	q = request.args.get('q')
 	with_spec = request.args.get('specialities')
@@ -38,14 +40,14 @@ def search_substance():
 		return jsonify(data=Substance.search_by_name(q, {'name': 1, 'status': 1, 'specialities': 1}))
 
 
-@app.route('/api/substances/pathologies/<subst_id>')
+@api.route('/api/pathologies/substances/<subst_id>')
 @login_required
 def search_pathologies_from_substance(subst_id):
 	return jsonify(data=Pathology.search_by_substance(subst_id))
 
 
-@app.route('/api/pathologies', methods=['POST'])
-@app.route('/api/pathologies/<patho_id>', methods=['PUT'])
+@api.route('/api/pathologies', methods=['POST'])
+@api.route('/api/pathologies/<patho_id>', methods=['PUT'])
 @required_role('admin')
 def edit_pathology(patho_id=None):
 	data = json.loads(request.data)
@@ -55,7 +57,7 @@ def edit_pathology(patho_id=None):
 	return jsonify(data=patho)
 
 
-@app.route('/api/pathologies/<patho_id>', methods=['DELETE'])
+@api.route('/api/pathologies/<patho_id>', methods=['DELETE'])
 @required_role('admin')
 def delete_pathology(patho_id):
 	success = False
@@ -65,8 +67,8 @@ def delete_pathology(patho_id):
 	return jsonify({'success': success})
 
 
-@app.route('/api/pathologies', methods=['GET'])
-@app.route('/api/pathologies/<patho_id>', methods=['GET'])
+@api.route('/api/pathologies', methods=['GET'])
+@api.route('/api/pathologies/<patho_id>', methods=['GET'])
 def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
 	if not patho:
@@ -74,13 +76,14 @@ def pathology(patho_id=None):
 	return jsonify(data=patho)
 
 
-@app.route('/api/pathologies/search')
+@api.route('/api/pathologies/search')
 def search_pathology():
 	q = request.args.get('q')
 	return jsonify(data=Pathology.search_by_name(q))
 
 
-@app.route('/api/classes/<class_id>', methods=['GET'])
+@api.route('/api/classes/<class_id>', methods=['GET'])
+@login_required
 def therapeutic_class(class_id=None):
 	t_class = TherapeuticClass.get(class_id)
 	if not t_class:
@@ -88,14 +91,14 @@ def therapeutic_class(class_id=None):
 	return jsonify(data=t_class)
 
 
-@app.route('/api/classes/search')
+@api.route('/api/classes/search')
 def search_therapeutic_class():
 	q = request.args.get('q')
 	return jsonify(data=TherapeuticClass.search_by_name(q))
 
 
-@app.route('/api/pages', methods=['POST'])
-@app.route('/api/pages/<page_id>', methods=['PUT'])
+@api.route('/api/pages', methods=['POST'])
+@api.route('/api/pages/<page_id>', methods=['PUT'])
 @required_role('admin')
 def edit_page(page_id=None):
 	data = json.loads(request.data)
@@ -104,8 +107,8 @@ def edit_page(page_id=None):
 	return jsonify(data=p)
 
 
-@app.route('/api/pages', methods=['GET'])
-@app.route('/api/pages/<page_id>', methods=['GET'])
+@api.route('/api/pages', methods=['GET'])
+@api.route('/api/pages/<page_id>', methods=['GET'])
 def page(page_id=None):
 	p = Page.get(page_id)
 	if not p:
@@ -113,8 +116,8 @@ def page(page_id=None):
 	return jsonify(data=p)
 
 
-@app.route('/api/news', methods=['POST'])
-@app.route('/api/news/<news_id>', methods=['PUT'])
+@api.route('/api/news', methods=['POST'])
+@api.route('/api/news/<news_id>', methods=['PUT'])
 @required_role('admin')
 def edit_news(news_id=None):
 	data = json.loads(request.data)
@@ -123,7 +126,7 @@ def edit_news(news_id=None):
 	return jsonify(data=n)
 
 
-@app.route('/api/news/<news_id>', methods=['DELETE'])
+@api.route('/api/news/<news_id>', methods=['DELETE'])
 @required_role('admin')
 def delete_news(news_id):
 	success = False
@@ -133,8 +136,8 @@ def delete_news(news_id):
 	return jsonify({'success': success})
 
 
-@app.route('/api/news', methods=['GET'])
-@app.route('/api/news/<news_id>', methods=['GET'])
+@api.route('/api/news', methods=['GET'])
+@api.route('/api/news/<news_id>', methods=['GET'])
 def news(news_id=None):
 	n = News.get(news_id)
 	if not n:
@@ -142,8 +145,8 @@ def news(news_id=None):
 	return jsonify(data=n)
 
 
-@app.route('/api/associations', methods=['POST'])
-@app.route('/api/associations/<asso_id>', methods=['PUT'])
+@api.route('/api/associations', methods=['POST'])
+@api.route('/api/associations/<asso_id>', methods=['PUT'])
 @required_role('admin')
 def edit_association(asso_id=None):
 	data = json.loads(request.data)
@@ -152,7 +155,7 @@ def edit_association(asso_id=None):
 	return jsonify(data=asso)
 
 
-@app.route('/api/associations/<asso_id>', methods=['DELETE'])
+@api.route('/api/associations/<asso_id>', methods=['DELETE'])
 @required_role('admin')
 def delete_association(asso_id):
 	success = False
@@ -162,7 +165,7 @@ def delete_association(asso_id):
 	return jsonify({'success': success})
 
 
-@app.route('/api/associations', methods=['GET'])
+@api.route('/api/associations', methods=['GET'])
 def association():
 	asso = Association.get()
 	if not asso:
@@ -170,19 +173,19 @@ def association():
 	return jsonify(data=asso)
 
 
-@app.route('/api/associations/search')
+@api.route('/api/associations/search')
 def search_association():
 	q = request.args.get('q')
 	return jsonify(data=Association.search_by_name(q, proj=None))
 
 
-@app.route('/api/users', methods=['GET'])
+@api.route('/api/users', methods=['GET'])
 @required_role('admin')
 def users():
 	return jsonify(data=User.all())
 
 
-@app.route('/api/users/<user_id>/subscription', methods=['PUT', 'DELETE'])
+@api.route('/api/users/<user_id>/subscription', methods=['PUT', 'DELETE'])
 def subscribe(user_id):
 	u = User.get(user_id)
 	if not u:
@@ -194,7 +197,7 @@ def subscribe(user_id):
 	return jsonify({'success': True})
 
 
-@app.route('/api/mail', methods=['POST'])
+@api.route('/api/mail', methods=['POST'])
 def send_mail():
 	data = json.loads(request.data)
 	mail_service.send(data)
@@ -216,7 +219,7 @@ def unauthorized_handler():
 	return jsonify({'need_login': True}), 401
 
 
-@app.route('/api/register', methods=['POST'])
+@api.route('/api/register', methods=['POST'])
 def register():
 	data = json.loads(request.data)
 	user = User(**data)
@@ -229,7 +232,7 @@ def register():
 	return jsonify(res)
 
 
-@app.route('/api/login', methods=['POST'])
+@api.route('/api/login', methods=['POST'])
 def login():
 	data = json.loads(request.data)
 	user = User.get(data['email'])
@@ -241,14 +244,14 @@ def login():
 	return jsonify({'error': 'error'})
 
 
-@app.route('/api/logout')
+@api.route('/api/logout')
 @login_required
 def logout():
 	logout_user()
 	return jsonify({'success': True})
 
 
-@app.route('/api/me')
+@api.route('/api/me')
 def get_user_status():
 	if not current_user.is_authenticated:
 		return jsonify(user=False)

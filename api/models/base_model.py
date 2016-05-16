@@ -50,7 +50,7 @@ class BaseModel(object):
 		return list(objs)
 
 	@classmethod
-	def search_by_name(cls, name, proj=None):
+	def search_by_name(cls, name, proj='default'):
 		regx = re.compile(name, re.IGNORECASE)
 		return cls._search({'name': regx}, proj, limit=200)
 

@@ -5,9 +5,9 @@ angular.module('prescrisurApp.controllers')
 	'$stateParams',
 	'PageTitleService',
 	'SubstanceService',
-	'SubstancePathologyService',
+	'PathologySubstanceService',
 
-	function($scope, $stateParams, PageTitleService, SubstanceService, SubstancePathologyService) {
+	function($scope, $stateParams, PageTitleService, SubstanceService, PathologySubstanceService) {
 		$scope.substance = null;
 		$scope.pathologies = [];
 
@@ -16,7 +16,7 @@ angular.module('prescrisurApp.controllers')
 			PageTitleService.setTitle($scope.substance.name + ' | Substance');
 		});
 
-		SubstancePathologyService.get({ id: $stateParams.id }, function(data) {
+		PathologySubstanceService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathologies = data.data;
 		})
 	}
