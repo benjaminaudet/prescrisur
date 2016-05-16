@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import current_app, render_template, url_for
 from itsdangerous import URLSafeTimedSerializer
 
@@ -25,6 +26,14 @@ def confirm_token(token, expiration=3600):
 def send_confirm_email(email):
 	token = generate_confirmation_token(email)
 	confirm_url = url_for('api.confirm_email', token=token, _external=True)
-	email_body = render_template('confirm_email.html', confirm_url=confirm_url)
+	email_body = render_template('confirm-email.html', confirm_url=confirm_url)
 	subject = "Prescrisur - Activation"
+	return mail_service.send_from_default(email, subject, email_body)
+
+
+def send_reset_password_email(email):
+	token = generate_confirmation_token(email)
+	confirm_url = url_for('api.index', _external=True) + '#/reset/' + token
+	email_body = render_template('reset-password.html', confirm_url=confirm_url)
+	subject = "Prescrisur - Réinitialisation du mot de passe"
 	return mail_service.send_from_default(email, subject, email_body)

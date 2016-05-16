@@ -107,6 +107,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			template: '',
 			access: {restricted: true}
 		})
+		.state('reset-password', {
+			url: '/reset/:token',
+			controller : 'ResetPasswordController',
+			templateUrl: 'front/app/templates/reset-password.html',
+			access: {restricted: false}
+		})
 		// Pages
 		.state('pages', {
 			url: '/pages',

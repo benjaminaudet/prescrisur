@@ -243,14 +243,43 @@ def confirm_email(token):
 	try:
 		email = confirm_token(token)
 	except Exception as e:
-		return 'Erreur dans la confirmation de votre compte...'
+		return 'Lien non valide'
 	user = User.get_by_email(email)
+	if not user:
+		abort(404)
 	if user.confirmed:
 		return 'Votre compte est déjà confirmé !'
 	else:
 		user.confirm()
 		login_user(user)
 	return redirect('/')
+
+
+@api.route('/api/reset/send', methods=['POST'])
+def send_reset_password():
+	email = request.get_json()['email']
+	send_reset_password_email(email)
+	return jsonify(success=True)
+
+
+@api.route('/api/reset', methods=['POST'])
+def reset_password():
+	data = request.get_json()
+	user = User.get_by_email(data['email'])
+	if not user:
+		abort(404)
+	user.password_hash = user.hash_password(data['passwd'])
+	user.save()
+	return jsonify(success=True)
+
+
+@api.route('/api/reset/<token>')
+def validate_reset_password(token):
+	try:
+		email = confirm_token(token)
+	except Exception as e:
+		return jsonify(error=True), 400
+	return jsonify(email=email)
 
 
 @api.route('/api/login', methods=['POST'])

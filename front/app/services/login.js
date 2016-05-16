@@ -56,6 +56,81 @@ function ($q, $timeout, $http) {
 		return deferred.promise;
 		
 	}
+	
+	function sendPasswordResetMail(email) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.post('/api/reset/send', {email: email})
+		// handle success
+			.success(function (data, status) {
+				if(status === 200 && data.success){
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+		
+	}
+	
+	
+	function resetPassword(email, passwd) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.post('/api/reset', {email: email, passwd: passwd})
+		// handle success
+			.success(function (data, status) {
+				if(status === 200 && data.success){
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+		
+	}
+	
+
+	function checkResetPassword(token) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.get('/api/reset/'+token)
+		// handle success
+			.success(function (data, status) {
+				if(status === 200){
+					deferred.resolve(data);
+				} else {
+					deferred.reject(data);
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+
+	}
+	
 
 	function login(email, passwd) {
 		// create a new instance of deferred
@@ -132,6 +207,9 @@ function ($q, $timeout, $http) {
 		logout: logout,
 		register: register,
 		confirm: confirm,
+		sendPasswordResetMail: sendPasswordResetMail,
+		checkResetPassword: checkResetPassword,
+		resetPassword: resetPassword,
 		getUser: getUser
 	});
 }]);

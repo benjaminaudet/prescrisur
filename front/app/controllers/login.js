@@ -69,8 +69,86 @@ angular.module('prescrisurApp.controllers')
 		};
 	}
 ])
+	
 
+.controller("ResetPasswordController", [
+	'$scope',
+	'$state',
+	'$stateParams',
+	'$timeout',
+	'AuthService',
 
+	function($scope, $state, $stateParams, $timeout, AuthService) {
+		$scope.resetForm = {};
+		
+		if($stateParams.token) {
+			AuthService.checkResetPassword($stateParams.token)
+				.then(function (data) {
+					$scope.resetConfirmed = true;
+					$scope.resetForm.email = data.email;
+				})
+				// handle error
+				.catch(function (error) {
+					if(error.error) {
+						$scope.tokenError = true;
+					}
+				});
+		}
+
+		$scope.checkPassword = function() {
+			var password = $scope.resetForm.passwd;
+			var confirm = $scope.resetForm.confirmPasswd;
+			if (password != '' && password != confirm) {
+				$scope.badConfirmPasswd = true;
+				$scope.disabled = true;
+			} else {
+				$scope.badConfirmPasswd = false;
+				$scope.disabled = false;
+			}
+			return !$scope.badConfirmPasswd;
+		};
+
+		$scope.resetPassword = function() {
+			// initial values
+			$scope.error = false;
+			$scope.disabled = true;
+
+			AuthService.resetPassword($scope.resetForm.email, $scope.resetForm.passwd)
+				.then(function (data) {
+					$scope.success = true;
+					$timeout(function () { $state.go('login'); }, 1500);
+				})
+				// handle error
+				.catch(function (error) {
+					if(error.error) {
+						$scope.error = true;
+					}
+				});
+		};
+
+		$scope.sendReset = function() {
+			// initial values
+			$scope.error = false;
+			$scope.disabled = true;
+
+			AuthService.sendPasswordResetMail($scope.resetForm.email)
+			// handle success
+				.then(function (user) {
+					$scope.sent = true;
+					$scope.disabled = false;
+				})
+				// handle error
+				.catch(function (error) {
+					if(error.error) {
+						$scope.error = error.error;
+					}
+					$scope.disabled = false;
+				});
+		}
+	}
+])
+	
+	
 .controller("RegisterController", [
 	'$scope',
 	'$state',
@@ -96,8 +174,10 @@ angular.module('prescrisurApp.controllers')
 			var confirm = $scope.registerForm.confirmPasswd;
 			if (password != '' && password != confirm) {
 				$scope.badConfirmPasswd = true;
+				$scope.disabled = true;
 			} else {
 				$scope.badConfirmPasswd = false;
+				$scope.disabled = true;
 			}
 			return !$scope.badConfirmPasswd;
 		};
