@@ -145,14 +145,14 @@ def news(news_id=None):
 	return jsonify(data=n)
 
 
+@api.route('/api/associations/<asso_id>', methods=['PUT'], endpoint='update_association')
 @api.route('/api/associations', methods=['POST'])
-@api.route('/api/associations/<asso_id>', methods=['PUT'])
 @required_role('admin')
 def edit_association(asso_id=None):
-	data = json.loads(request.data)
+	data = request.json
 	asso = Association(**data)
-	asso.save()
-	return jsonify(data=asso)
+	status_code = asso.save_or_create(asso_id)
+	return jsonify(data=asso), status_code
 
 
 @api.route('/api/associations/<asso_id>', methods=['DELETE'])
@@ -166,7 +166,8 @@ def delete_association(asso_id):
 
 
 @api.route('/api/associations', methods=['GET'])
-def association():
+@required_role('admin')
+def associations():
 	asso = Association.get()
 	if not asso:
 		abort(404)
@@ -176,7 +177,7 @@ def association():
 @api.route('/api/associations/search')
 def search_association():
 	q = request.args.get('q')
-	return jsonify(data=Association.search_by_name(q, proj=None))
+	return jsonify(data=Association.search_by_name(q, proj={'name': 1, 'specialities': 1}))
 
 
 @api.route('/api/users', methods=['GET'])

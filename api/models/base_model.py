@@ -59,7 +59,18 @@ class BaseModel(object):
 		return jsonpickle.decode(to_string)
 
 	def create(self):
-		self.collection.insert_one(self.serialize())
+		return self.collection.insert_one(self.serialize())
 
 	def save(self, upsert=True):
-		self.collection.update_one({'_id': self._id}, {'$set': self.serialize()}, upsert=upsert)
+		return self.collection.update_one({'_id': self._id}, {'$set': self.serialize()}, upsert=upsert)
+
+	def save_or_create(self, obj_id):
+		if obj_id:
+			save = self.save()
+			status_code = 200
+		else:
+			save = self.create()
+			status_code = 201
+		if not save.acknowledged:
+			return 400
+		return status_code

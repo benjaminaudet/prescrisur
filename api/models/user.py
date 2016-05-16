@@ -43,7 +43,7 @@ class User(BaseModel):
 		if password_hash:
 			return password_hash
 		if password:
-			return pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
+			return pbkdf2_sha256.encrypt(password, rounds=20000, salt_size=32)
 		return None
 
 	def verify_password(self, password):

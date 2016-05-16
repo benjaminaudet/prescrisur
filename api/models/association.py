@@ -10,7 +10,7 @@ class Association(BaseModel):
 		self._id = _id if _id else slugify(name)
 		self.name = name
 		self.substances = self.add_substances(substances) if substances else []
-		self.specialities = specialities if specialities else self.add_specialities(substances)
+		self.specialities = specialities if specialities else self.add_specialities(self.substances)
 
 	@staticmethod
 	def add_substances(substances):
@@ -24,7 +24,7 @@ class Association(BaseModel):
 	def add_specialities(substances):
 		specs = []
 		for s in substances:
-			subst = Substance.get(s['_id'])
+			subst = Substance.get(s._id)
 			specs += subst.specialities
 		specs.sort(key=lambda x: x.name)
 		return specs
