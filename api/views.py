@@ -7,12 +7,12 @@ from api.models import *
 from api.decorators import required_role
 from api.services import mail as mail_service
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', __name__, static_folder='../front')
 
 
 @api.route('/')
 def index():
-	return app.send_static_file('index.html')
+	return api.send_static_file('index.html')
 
 
 @api.route('/api/specialities/search')
