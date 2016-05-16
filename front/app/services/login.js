@@ -25,12 +25,36 @@ function ($q, $timeout, $http) {
 			})
 			// handle error
 			.error(function (data) {
-				deferred.reject();
+				deferred.reject(data);
 			});
 
 		// return promise object
 		return deferred.promise;
 
+	}
+	
+	function confirm(email) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.post('/api/confirm/send', {email: email})
+		// handle success
+			.success(function (data, status) {
+				if(status === 200 && data.success){
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+		
 	}
 
 	function login(email, passwd) {
@@ -50,9 +74,9 @@ function ($q, $timeout, $http) {
 				}
 			})
 			// handle error
-			.error(function () {
+			.error(function (error) {
 				user = null;
-				deferred.reject();
+				deferred.reject(error);
 			});
 
 		// return promise object
@@ -107,6 +131,7 @@ function ($q, $timeout, $http) {
 		login: login,
 		logout: logout,
 		register: register,
+		confirm: confirm,
 		getUser: getUser
 	});
 }]);

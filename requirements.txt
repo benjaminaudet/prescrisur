@@ -1,3 +1,4 @@
+itsdangerous
 Flask==0.10.1
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
@@ -9,3 +10,4 @@ bleach==1.4.2
 freezegun==0.3.7
 passlib==1.6.5
 honcho==0.7.1
+mongomock==3.3.0

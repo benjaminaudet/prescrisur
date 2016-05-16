@@ -6,12 +6,13 @@ from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None):
+	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None, confirmed=False):
 		self._id = _id if _id else slugify(email)
 		self.email = email
 		self.password_hash = self.hash_password(password, password_hash)
 		self.name = name
 		self.roles = roles if roles else []
+		self.confirmed = confirmed
 
 	@property
 	def is_active(self):
@@ -42,6 +43,10 @@ class User(BaseModel):
 			del u['password_hash']
 			users.append(u)
 		return users
+
+	def confirm(self):
+		self.confirmed = True
+		return self.save()
 
 	@staticmethod
 	def hash_password(password=None, password_hash=None):

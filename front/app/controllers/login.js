@@ -28,6 +28,19 @@ angular.module('prescrisurApp.controllers')
 		if($scope.currentUser) {
 			setTimeout(function() { $state.go('home'); }, 1500);
 		}
+		
+		$scope.sendConfirmation = function() {
+			AuthService.confirm($scope.loginForm.email)
+				.then(function() {
+					$scope.confirmSent = true;
+					$scope.error = false;
+					$scope.confirmAgain = true;
+				})
+				.catch(function() {
+					$scope.error = "Problème dans l'envoi de la confirmation...";
+					$scope.confirmAgain = true;
+				});
+		};
 
 		$scope.login = function () {
 			// initial values
@@ -42,8 +55,15 @@ angular.module('prescrisurApp.controllers')
 					$scope.disabled = false;
 				})
 				// handle error
-				.catch(function () {
-					$scope.error = true;
+				.catch(function (error) {
+					if(error.error) {
+						$scope.error = error.error;
+					} else if (error.bad_password) {
+						$scope.error = 'Mauvais login/mot de passe !';
+					} else if (error.not_confirmed) {
+						$scope.error = "Votre compte n'a pas été confirmé !";
+						$scope.confirmAgain = true;
+					}
 					$scope.disabled = false;
 				});
 		};
@@ -96,8 +116,12 @@ angular.module('prescrisurApp.controllers')
 						$scope.disabled = false;
 					})
 					// handle error
-					.catch(function () {
-						$scope.error = true;
+					.catch(function (error,a,b,c) {
+						if(error.error) {
+							$scope.error = error.error;
+						} else if (error.already_exist) {
+							$scope.error = 'Un compte existe déjà avec cette adresse mail !';
+						}
 						$scope.disabled = false;
 					});
 			} else {

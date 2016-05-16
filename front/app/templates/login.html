@@ -9,8 +9,14 @@
 
 	<form ng-if="!currentUser" id="login-form" class="form" ng-submit="login()">
 		<div ng-if="error" class="alert alert-danger">
-			Mauvais mot de passe / email
+			{{ error }}
+			<a ng-if="confirmAgain" ng-click="sendConfirmation()">Renvoyer un mail de confirmation</a>
 		</div>
+
+		<div ng-if="confirmSent" class="alert alert-danger">
+			Un mail vient de vous êtes envoyé. Confirmez votre adresse email : {{ loginForm.email }}, puis <a ui-sref="login">Connectez-vous</a>
+		</div>
+
 		<div class="form-group">
 			<label for="login-email" class="control-label col-md-4">Email</label>
 			<div class="col-md-8">

@@ -1,11 +1,13 @@
 # coding=utf-8
 from flask import *
 from flask.ext.login import login_required, login_user, logout_user, current_user
+from pymongo.errors import DuplicateKeyError
 
 from api import login_manager
 from api.models import *
 from api.decorators import required_role
 from api.services import mail as mail_service
+from api.services.confirm_token import *
 
 api = Blueprint('api', __name__, static_folder='../front')
 
@@ -201,7 +203,7 @@ def subscribe(user_id):
 @api.route('/api/mail', methods=['POST'])
 def send_mail():
 	data = json.loads(request.data)
-	mail_service.send(data)
+	mail_service.send_to_default(data)
 	return jsonify({'success': True})
 
 
@@ -224,13 +226,31 @@ def unauthorized_handler():
 def register():
 	data = json.loads(request.data)
 	user = User(**data)
-	res = {'success': False}
+	user.create()
+	send_confirm_email(user.email)
+	return jsonify(success=True)
+
+
+@api.route('/api/confirm/send', methods=['POST'])
+def send_confirm():
+	email = request.get_json()['email']
+	send_confirm_email(email)
+	return jsonify(success=True)
+
+
+@api.route('/api/confirm/<token>')
+def confirm_email(token):
 	try:
-		user.create()
-		res['success'] = True
+		email = confirm_token(token)
 	except Exception as e:
-		res['error'] = repr(e)
-	return jsonify(res)
+		return 'Erreur dans la confirmation de votre compte...'
+	user = User.get_by_email(email)
+	if user.confirmed:
+		return 'Votre compte est déjà confirmé !'
+	else:
+		user.confirm()
+		login_user(user)
+	return redirect('/')
 
 
 @api.route('/api/login', methods=['POST'])
@@ -239,10 +259,12 @@ def login():
 	user = User.get_by_email(data['email'])
 	if not user:
 		abort(401)
-	if user.verify_password(data['passwd']):
-		login_user(user)
-		return jsonify(data=user)
-	return jsonify({'error': 'error'})
+	if not user.verify_password(data['passwd']):
+		return jsonify(bad_password=True), 400
+	elif not user.confirmed:
+		return jsonify(not_confirmed=True), 400
+	login_user(user)
+	return jsonify(data=user)
 
 
 @api.route('/api/logout')
@@ -258,3 +280,14 @@ def get_user_status():
 		return jsonify(user=False)
 	delattr(current_user, 'password_hash')
 	return jsonify(user=current_user)
+
+
+# Errors
+@api.errorhandler(DuplicateKeyError)
+def duplicate_key(error):
+	return jsonify(already_exist=True), 400
+
+
+@api.errorhandler(Exception)
+def unhandled_error(error):
+	return jsonify(error=repr(error)), 500

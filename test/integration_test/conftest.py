@@ -26,7 +26,7 @@ def user_collection(request):
 
 @pytest.fixture(scope='function')
 def user(client, user_collection, request):
-	test_user = User(_id="test", email='test@test', password='default', name='Test')
+	test_user = User(_id="test", email='test@test', password='default', name='Test', confirmed=True)
 	User.collection = user_collection
 	test_user.save()
 	client.post(url_for('api.login'), data=json.dumps(dict(email='test@test', passwd='default')))
@@ -40,7 +40,7 @@ def user(client, user_collection, request):
 
 @pytest.fixture(scope='function')
 def admin(client, user_collection, request):
-	test_user = User(_id="test", email='test@test', password='default', name='Test', roles=['admin'])
+	test_user = User(_id="test", email='test@test', password='default', name='Test', roles=['admin'], confirmed=True)
 	User.collection = user_collection
 	test_user.save()
 	client.post(url_for('api.login'), data=json.dumps(dict(email='test@test', passwd='default')))

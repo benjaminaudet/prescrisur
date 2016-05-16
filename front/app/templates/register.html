@@ -6,12 +6,12 @@
 	<div ng-if="currentUser" class="alert alert-danger">Vous êtes déjà connecté avec {{ currentUser.name }} ! Redirection...</div>
 
 	<div ng-if="registered">
-		<div class="alert alert-success">Inscription effectuée ! Vous pouvez désormais vous connecter avec : {{ registerForm.email }}. <a ui-sref="login">Connexion</a></div>
+		<div class="alert alert-success">Inscription effectuée ! Un mail vient de vous êtes envoyé. Confirmez votre adresse email : {{ registerForm.email }}, puis <a ui-sref="login">Connectez-vous</a></div>
 	</div>
 
 	<div ng-if="!currentUser && !registered">
 		<div ng-if="error" class="alert alert-danger">
-			Un utilisateur existe déjà avec cet email !
+			{{ error }}
 		</div>
 
 		<div id="register-form">
@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="submit">
-					<button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="disabled">S'inscrire</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-disabled="disabled">S'inscrire</button>
 				</div>
 			</form>
 		</div>
