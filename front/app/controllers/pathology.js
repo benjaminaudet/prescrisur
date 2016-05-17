@@ -198,7 +198,7 @@ angular.module('prescrisurApp.controllers')
 			if(!data.entries) {
 				data.entries = [];
 			}
-			data.entries.push({reco: {_id: 'none'}, type: 'specialities'});
+			data.entries.push({reco: {_id: 'none'}, type: 'substances'});
 		};
 
 		$scope.addInfo = function(entry) {

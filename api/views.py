@@ -203,6 +203,7 @@ def subscribe(user_id):
 
 @api.route('/api/mail', methods=['POST'])
 def send_mail():
+	# TODO: check sender ???
 	data = json.loads(request.data)
 	mail_service.send_to_default(data)
 	return jsonify({'success': True})
