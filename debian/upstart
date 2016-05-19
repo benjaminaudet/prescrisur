@@ -14,7 +14,7 @@ setgid nogroup
 script
   set -a
   . /etc/prescrisur.config
-  /usr/share/python/prescrisur/bin/python /usr/share/python/prescrisur/bin/gunicorn -w 3 -b 0.0.0.0:5000 -t 5 --work-class gevent api:app
+  /usr/share/python/prescrisur/bin/python /usr/share/python/prescrisur/bin/gunicorn -w 3 -b 0.0.0.0:5000 -t 5 --worker-class gevent api:app
 end script
 
 # prevent re-spawning more than once every second

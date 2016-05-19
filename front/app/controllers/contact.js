@@ -12,7 +12,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.contactForm = {};
 		
 		if($scope.currentUser) {
-			$scope.contactForm.sender = {name: $scope.currentUser.name, email: $scope.currentUser._id};
+			$scope.contactForm.sender = {name: $scope.currentUser.name, email: $scope.currentUser.email};
 		}
 		
 		// Load texts

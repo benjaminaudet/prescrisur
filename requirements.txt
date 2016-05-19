@@ -17,3 +17,4 @@ honcho==0.7.1
 mongomock==3.3.0
 gunicorn==19.5.0
 gevent==1.1.1
+sentinels==0.0.6

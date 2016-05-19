@@ -11,7 +11,7 @@ from substance import Substance
 from association import Association
 from therapeutic_class import TherapeuticClass
 
-bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u']
+bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u', 'font']
 bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 
