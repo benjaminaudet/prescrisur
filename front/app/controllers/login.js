@@ -76,9 +76,10 @@ angular.module('prescrisurApp.controllers')
 	'$state',
 	'$stateParams',
 	'$timeout',
+	'Flash',
 	'AuthService',
 
-	function($scope, $state, $stateParams, $timeout, AuthService) {
+	function($scope, $state, $stateParams, $timeout, Flash, AuthService) {
 		$scope.resetForm = {};
 		
 		if($stateParams.token) {
@@ -90,7 +91,7 @@ angular.module('prescrisurApp.controllers')
 				// handle error
 				.catch(function (error) {
 					if(error.error) {
-						$scope.tokenError = true;
+						Flash.create('danger', "Le code de confirmation est erroné. Merci de recommencer.", 0)
 					}
 				});
 		}
@@ -114,14 +115,14 @@ angular.module('prescrisurApp.controllers')
 			$scope.disabled = true;
 
 			AuthService.resetPassword($scope.resetForm.email, $scope.resetForm.passwd)
-				.then(function (data) {
-					$scope.success = true;
+				.then(function () {
+					Flash.create('success', 'Votre mot de passe a bien été changé ! Redirection...');
 					$timeout(function () { $state.go('login'); }, 1500);
 				})
 				// handle error
 				.catch(function (error) {
 					if(error.error) {
-						$scope.error = true;
+						Flash.create('danger', "Aucun utilisateur avec cette adresse n'est enregistré !", 0);
 					}
 				});
 		};
@@ -133,14 +134,16 @@ angular.module('prescrisurApp.controllers')
 
 			AuthService.sendPasswordResetMail($scope.resetForm.email)
 			// handle success
-				.then(function (user) {
-					$scope.sent = true;
+				.then(function () {
+					Flash.create('success', 'Un mail vient de vous êtes envoyé à '+ $scope.resetForm.email +'. Suivez le lien pour réinitialiser votre mot de passe.');
 					$scope.disabled = false;
 				})
 				// handle error
 				.catch(function (error) {
-					if(error.error) {
-						$scope.error = error.error;
+					if(error.no_user) {
+						Flash.create('danger', "Aucun utilisateur avec cette adresse n'est enregistré !", 0);
+					} else if(error.not_confirmed) {
+						Flash.create('danger', "Cet utilisateur n'a pas confirmé son adresse email, merci de confirmer l'adresse : " + $scope.resetForm.email, 0);
 					}
 					$scope.disabled = false;
 				});

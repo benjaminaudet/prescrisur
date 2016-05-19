@@ -203,7 +203,6 @@ def subscribe(user_id):
 
 @api.route('/api/mail', methods=['POST'])
 def send_mail():
-	# TODO: check sender ???
 	data = json.loads(request.data)
 	mail_service.send_to_default(data)
 	return jsonify({'success': True})
@@ -270,8 +269,12 @@ def confirm_email(token):
 
 @api.route('/api/reset/send', methods=['POST'])
 def send_reset_password():
-	# TODO: check if confirmed
 	email = request.get_json()['email']
+	user = User.get_by_email(email)
+	if not user:
+		return jsonify(no_user=True), 404
+	if not user.confirmed:
+		return jsonify(not_confirmed=True), 400
 	send_reset_password_email(email)
 	return jsonify(success=True)
 

@@ -15,7 +15,7 @@
 		<form class="form-horizontal" ng-submit="submit()">
 			<div id="contact-user-sender" ng-if="currentUser">
 				<span id="contact-from-label" class="col-md-2">De</span>
-				<span class="col-md-10">{{ currentUser.name }} <{{ currentUser._id }}></span>
+				<span class="col-md-10">{{ currentUser.name }} <{{ currentUser.email }}></span>
 			</div>
 			<div class="form-group" ng-if="!currentUser">
 				<label for="sender-name" class="control-label col-md-2">Nom</label>
