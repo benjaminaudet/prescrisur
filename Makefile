@@ -4,7 +4,7 @@ install:
 	(pip install -r requirements.txt && bower install)
 
 test:
-	honcho run py.test -v test
+	honcho run py.test -v -n 2 --cov=api test
 
 run:
 	honcho start

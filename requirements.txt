@@ -1,10 +1,13 @@
-itsdangerous
 Flask==0.10.1
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
 pymongo==3.2.2
 jsonpickle==0.9.3
+itsdangerous==0.24
 pytest==2.9.1
+pytest-flask==0.10.0
+pytest-cov==2.2.1
+pytest-xdist==1.14
 python-slugify==1.2.0
 bleach==1.4.2
 freezegun==0.3.7
