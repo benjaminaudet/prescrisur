@@ -101,13 +101,13 @@ def search_therapeutic_class():
 
 
 @api.route('/api/pages', methods=['POST'])
-@api.route('/api/pages/<page_id>', methods=['PUT'])
+@api.route('/api/pages/<page_id>', methods=['PUT'], endpoint='update_page')
 @required_role('admin')
 def edit_page(page_id=None):
-	data = json.loads(request.data)
+	data = request.json
 	p = Page(**data).check()
-	p.save()
-	return jsonify(data=p)
+	status_code = p.save_or_create(page_id)
+	return jsonify(data=p), status_code
 
 
 @api.route('/api/pages', methods=['GET'])
@@ -120,13 +120,13 @@ def page(page_id=None):
 
 
 @api.route('/api/news', methods=['POST'])
-@api.route('/api/news/<news_id>', methods=['PUT'])
+@api.route('/api/news/<news_id>', methods=['PUT'], endpoint='update_news')
 @required_role('admin')
 def edit_news(news_id=None):
-	data = json.loads(request.data)
+	data = request.get_json()
 	n = News(**data).check().refresh_update_date().set_author(current_user)
-	n.save()
-	return jsonify(data=n)
+	status_code = n.save_or_create(news_id)
+	return jsonify(data=n), status_code
 
 
 @api.route('/api/news/<news_id>', methods=['DELETE'])
@@ -148,8 +148,8 @@ def news(news_id=None):
 	return jsonify(data=n)
 
 
-@api.route('/api/associations/<asso_id>', methods=['PUT'], endpoint='update_association')
 @api.route('/api/associations', methods=['POST'])
+@api.route('/api/associations/<asso_id>', methods=['PUT'], endpoint='update_association')
 @required_role('admin')
 def edit_association(asso_id=None):
 	data = request.json

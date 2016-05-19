@@ -11,8 +11,7 @@ class News(Page):
 		self.updated_at = updated_at
 
 	def set_author(self, user):
-		del user.password_hash
-		self.author = user
+		self.author = user.clean()
 		return self
 
 	def refresh_update_date(self):
