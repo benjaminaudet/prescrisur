@@ -24,7 +24,7 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.checkPageInfoState = function() {
 			if($state.current.name == 'pages') {
-				var pagesArray = ['pourquoi-prescrisur', 'presentation'];
+				var pagesArray = ['pourquoi-prescrisur', 'presentation', 'mode-d-emploi', 'references'];
 				if (pagesArray.indexOf($state.params.id) != -1) {
 					return true;
 				}

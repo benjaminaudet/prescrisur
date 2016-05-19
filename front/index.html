@@ -62,6 +62,8 @@
 					<li><a ui-sref="pages" ng-if="isAuthorized('admin')">Pages</a></li>
 					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
 					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
+					<li><a ui-sref="profile">Modifier mon Profil</a></li>
+					<li role="separator" class="divider"></li>
 					<li class="btn-logout"><a ui-sref="logout">
 						<i class="fa fa-sign-out"></i>
 						Déconnexion
@@ -123,7 +125,7 @@
 
 	<!-- Site footer -->
 	<footer class="footer">
-		<p>Prescrisur© 2016, site indépendant. Tous droits réservés | <a ui-sref="pages({id: 'mentions-legales'})">Mentions Légales</a> | Contact</p>
+		<p>Prescrisur© 2016, site indépendant. Tous droits réservés | <a ui-sref="pages.read({id: 'mentions-legales'})">Mentions Légales</a> | Contact</p>
 	</footer>
 
 </div> <!-- /container -->

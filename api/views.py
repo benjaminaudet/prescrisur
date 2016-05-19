@@ -317,10 +317,26 @@ def logout():
 	return jsonify({'success': True})
 
 
-@api.route('/api/me')
+@api.route('/api/me', methods=['GET'])
 def get_user_status():
 	if not current_user.is_authenticated:
 		return jsonify(user=False)
+	return jsonify(user=current_user.clean())
+
+
+@api.route('/api/me', methods=['PUT'])
+@login_required
+def update_user_profile():
+	data = request.get_json()
+	# Set name
+	current_user.name = data['name']
+	# Check password
+	if all(p in data for p in ['currentPasswd', 'newPasswd', 'confirmNewPasswd']):
+		if current_user.verify_password(data['currentPasswd']) and data['newPasswd'] == data['confirmNewPasswd']:
+			current_user.password_hash = current_user.hash_password(data['newPasswd'])
+		else:
+			return jsonify(bad_password=True), 400
+	current_user.save()
 	return jsonify(user=current_user.clean())
 
 

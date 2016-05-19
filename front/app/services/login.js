@@ -199,6 +199,27 @@ function ($q, $timeout, $http) {
 
 		return deferred.promise;
 	}
+	
+	function updateUser(data) {
+		var deferred = $q.defer();
+
+		$http.put('/api/me', data)
+		// handle success
+			.success(function (data) {
+				user = data.user;
+				if(!user) {
+					deferred.reject({});
+				}
+				deferred.resolve(user);
+			})
+			// handle error
+			.error(function (e) {
+				user = null;
+				deferred.reject(e);
+			});
+
+		return deferred.promise;
+	}
 
 	// return available functions for use in controllers
 	return ({
@@ -210,6 +231,7 @@ function ($q, $timeout, $http) {
 		sendPasswordResetMail: sendPasswordResetMail,
 		checkResetPassword: checkResetPassword,
 		resetPassword: resetPassword,
-		getUser: getUser
+		getUser: getUser,
+		updateUser: updateUser
 	});
 }]);

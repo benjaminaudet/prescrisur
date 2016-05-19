@@ -101,6 +101,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			params: {needLogin: false},
 			access: {restricted: false}
 		})
+		.state('profile', {
+			url: '/me',
+			controller : 'UserController',
+			templateUrl: 'front/app/templates/user-edit.html',
+			access: {restricted: true}
+		})
 		.state('logout', {
 			url: '/logout',
 			controller: 'LogoutController',

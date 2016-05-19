@@ -1,5 +1,47 @@
 angular.module('prescrisurApp.controllers')
+	
+	
+.controller("UserController", [
+	'$scope',
+	'Flash',
+	'AuthService',
 
+	function($scope, Flash, AuthService) {
+		$scope.me = {name: $scope.currentUser.name};
+
+		$scope.checkPassword = function() {
+			var password = $scope.me.newPasswd;
+			var confirm = $scope.me.confirmNewPasswd;
+			if (password != '' && password != confirm) {
+				$scope.badConfirmPasswd = true;
+				$scope.disabled = true;
+			} else {
+				$scope.badConfirmPasswd = false;
+				$scope.disabled = false;
+			}
+			return !$scope.badConfirmPasswd;
+		};
+		
+		$scope.submit = function() {
+			$scope.error = false;
+			$scope.disabled = true;
+			
+			AuthService.updateUser($scope.me)
+				.then(function () {
+					Flash.create('success', 'Profil mis à jour !');
+					$scope.disabled = false;
+				})
+				.catch(function (error) {
+					if(error.bad_password) {
+						Flash.create('danger', 'Le mot de passe est incorrect.', 0);
+					}
+					$scope.disabled = false;
+				});
+		};
+	}
+])
+	
+	
 .controller("UserAdminController", [
 	'$scope',
 	'$state',
@@ -18,10 +60,8 @@ angular.module('prescrisurApp.controllers')
 		});
 
 		$scope.hasRole = function(role, userRoles) {
-			if(userRoles.indexOf(role) > -1) {
-				return true;
-			}
-			return false;
+			return userRoles.indexOf(role) > -1;
+			
 		};
 		
 		$scope.subscribe = function(user, subscribe) {
