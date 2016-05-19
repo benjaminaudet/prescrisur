@@ -1,6 +1,7 @@
 Flask==0.10.1
 Flask-Login==0.3.2
 Flask-Mail==0.9.1
+Flask-CORS==2.1.2
 pymongo==3.2.2
 jsonpickle==0.9.3
 itsdangerous==0.24
