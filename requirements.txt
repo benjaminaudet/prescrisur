@@ -15,3 +15,5 @@ freezegun==0.3.7
 passlib==1.6.5
 honcho==0.7.1
 mongomock==3.3.0
+gunicorn==19.5.0
+gevent==1.1.1

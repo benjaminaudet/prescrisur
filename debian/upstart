@@ -1,4 +1,4 @@
-description "prescrisur"
+	description "prescrisur"
 
 start on runlevel [2345]
 stop on runlevel [!2345]
@@ -14,7 +14,7 @@ setgid nogroup
 script
   set -a
   . /etc/prescrisur.config
-  /usr/share/python/prescrisur/bin/python -c 'from api import app; app.run("0.0.0.0", port=5000)'
+  /usr/share/python/prescrisur/bin/python /usr/share/python/prescrisur/bin/gunicorn -w 3 -b 0.0.0.0:5000 -t 5 --work-class gevent api:app
 end script
 
 # prevent re-spawning more than once every second
