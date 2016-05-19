@@ -214,11 +214,17 @@ angular.module('prescrisurApp.controllers')
 				var savedPatho = data.data;
 				$state.go('pathologies', {id: savedPatho._id});
 			};
+			var afterError = function() {
+				ConfirmQuitService.init($scope);
+			};
 
-			if($stateParams.id) {
-				PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave);
-			} else {
-				PathologyService.save($scope.pathology, afterSave);
+			if(confirm('Enregistrer les modifications ?')) {
+				ConfirmQuitService.destroy();
+				if($stateParams.id) {
+					PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave, afterError);
+				} else {
+					PathologyService.save($scope.pathology, afterSave, afterError);
+				}
 			}
 			//console.log($scope.pathology);
 		};

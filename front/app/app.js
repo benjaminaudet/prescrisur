@@ -214,7 +214,7 @@ app.run(function ($rootScope, $state, $window, ConfirmQuitService, AuthService) 
 	$rootScope.$on('$stateChangeStart',
 		function (event, toState, toParams) {
 			// Prevent confirm before quit to run on all pages
-			ConfirmQuitService.destroy();
+			ConfirmQuitService.destroyWindowQuit();
 
 			// Authenticate user
 			AuthService.getUser()

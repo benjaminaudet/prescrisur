@@ -53,11 +53,17 @@ angular.module('prescrisurApp.controllers')
 				var savedPage = data.data;
 				$state.go('news.read', { id: savedPage._id });
 			};
+			var afterError = function() {
+				ConfirmQuitService.init($scope);
+			};
 
-			if ($stateParams.id) {
-				NewsService.update({id: $stateParams.id}, $scope.news, afterSave);
-			} else {
-				NewsService.save($scope.news, afterSave);
+			if(confirm('Enregistrer les modifications ?')) {
+				ConfirmQuitService.destroy();
+				if ($stateParams.id) {
+					NewsService.update({id: $stateParams.id}, $scope.news, afterSave, afterError);
+				} else {
+					NewsService.save($scope.news, afterSave, afterError);
+				}
 			}
 			//console.log($scope.news);
 		};

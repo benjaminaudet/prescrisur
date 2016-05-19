@@ -19,7 +19,7 @@ def create_app(config_module):
 	# Import views
 	from views import api
 	app_.register_blueprint(api)
-	
+
 	# Init plugins
 	mail.init_app(app_)
 	cors.init_app(app_)
