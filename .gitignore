@@ -10,8 +10,11 @@ test/.cache/
 .coverage
 
 # Angular
-front/assets/bower_components/
+front/bower_components/
+dist
+node_modules
 out/
+
 
 # Vagrant
 .vagrant/

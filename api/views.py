@@ -10,12 +10,12 @@ from api.decorators import required_role
 from api.services import mail as mail_service
 from api.services.confirm_token import *
 
-api = Blueprint('api', __name__, static_folder='../front')
+api = Blueprint('api', __name__)
 
 
 @api.route('/')
 def index():
-	return api.send_static_file('index.html')
+	return current_app.send_static_file('index.html')
 
 
 @api.route('/api/specialities/search')

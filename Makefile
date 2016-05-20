@@ -1,13 +1,18 @@
 .PHONY: install test
 
-install:
-	(pip install -r requirements.txt && bower install)
+install: deps build
+
+deps:
+	(pip install -r requirements.txt && npm install && bower install)
 
 test:
 	honcho run py.test -v -n 2 --cov=api test
 
 run:
 	honcho start
+
+build:
+	gulp build
 
 update-spec:
 	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'

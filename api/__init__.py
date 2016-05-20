@@ -3,6 +3,7 @@ from flask_mail import Mail
 from flask.ext.cors import CORS
 from flask.ext.login import LoginManager
 
+from api.config import *
 from json_encoder import ModelJSONEncoder
 
 mail = Mail()
@@ -12,9 +13,10 @@ login_manager = LoginManager()
 
 def create_app(config_module):
 	# Create app and set config
-	app_ = Flask(__name__)
+	app_ = MyFlask(__name__)
 	app_.json_encoder = ModelJSONEncoder
 	app_.config.from_object(config_module)
+	app_.set_static_folder()
 
 	# Import views
 	from views import api
@@ -27,4 +29,4 @@ def create_app(config_module):
 	return app_
 
 
-app = create_app('api.config.EnvConfig')
+app = create_app(EnvConfig)

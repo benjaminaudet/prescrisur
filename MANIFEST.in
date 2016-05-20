@@ -1,2 +1,2 @@
-recursive-include front *
+recursive-include dist *
 recursive-include api/templates *
