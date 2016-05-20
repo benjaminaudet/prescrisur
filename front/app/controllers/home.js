@@ -10,7 +10,7 @@ angular.module('prescrisurApp.controllers')
 	'PathologyService',
 
 	function($scope, $state, $stateParams, PageTitleService, SearchService, NewsService, PathologyService) {
-		PageTitleService.setTitle('Aide à la Prescription');
+		PageTitleService.setTitle("Outil d'aide à la Prescription");
 
 		$scope.q = null;
 		$scope.searchType = 'pathologies';
