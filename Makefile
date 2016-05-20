@@ -12,7 +12,7 @@ test:
 	honcho run py.test -v -n 2 --cov=api test
 
 run:
-	honcho start
+	(gulp && honcho start)
 
 
 update-spec:
