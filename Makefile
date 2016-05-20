@@ -1,9 +1,12 @@
-.PHONY: install test
-
-install: deps build
+.PHONY: install test build
 
 deps:
 	(pip install -r requirements.txt && npm install && bower install)
+
+build:
+	(gulp build && rm -rf front/ && mv dist/ front/)
+
+install: deps build
 
 test:
 	honcho run py.test -v -n 2 --cov=api test
@@ -11,8 +14,6 @@ test:
 run:
 	honcho start
 
-build:
-	(gulp build && rm -rf front/ && mv dist/ front/)
 
 update-spec:
 	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'
