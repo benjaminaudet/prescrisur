@@ -37,8 +37,8 @@ gulp.task("usemin", function () {
 			app: [ngmin(), uglify()],
 			css: [minifyCSS()]
 		}))
-		.pipe(replace({regex:'href="assets\/css', replace:'href="dist/assets/css'}))
-		.pipe(replace({regex:'src="js', replace:'src="dist/js'}))
+		.pipe(replace({regex:'href="assets\/css', replace:'href="front/assets/css'}))
+		.pipe(replace({regex:'src="js', replace:'src="front/js'}))
 		.pipe(gulp.dest("dist"));
 });
 

@@ -12,7 +12,7 @@ run:
 	honcho start
 
 build:
-	gulp build
+	(gulp build && mv dist/ front/)
 
 update-spec:
 	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'
