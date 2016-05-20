@@ -13,10 +13,9 @@ login_manager = LoginManager()
 
 def create_app(config_module):
 	# Create app and set config
-	app_ = MyFlask(__name__)
+	app_ = Flask(__name__, static_folder='../front')
 	app_.json_encoder = ModelJSONEncoder
 	app_.config.from_object(config_module)
-	app_.set_static_folder()
 
 	# Import views
 	from views import api
