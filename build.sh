@@ -1,6 +1,6 @@
 #! /bin/bash
 
-make install
+make install-build
 
 version=$(git log -1 --format='%cd.%h' --date=short | sed 's/-//g')
 

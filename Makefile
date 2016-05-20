@@ -1,12 +1,12 @@
 .PHONY: install test build
 
-deps:
+install:
 	(pip install -r requirements.txt && npm install && bower install)
 
 build:
 	(gulp build && rm -rf front/ && mv dist/ front/)
 
-install: deps build
+install-build: install build
 
 test:
 	honcho run py.test -v -n 2 --cov=api test
