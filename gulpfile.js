@@ -3,6 +3,7 @@ var	minifyCSS = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var usemin = require("gulp-usemin");
 var ngmin = require('gulp-ngmin');
+var insert = require('gulp-insert-lines');
 var replace = require('gulp-regex-replace');
 var templateCache = require("gulp-angular-templatecache");
 
@@ -24,7 +25,20 @@ gulp.task("img", function () {
 gulp.task("templates", function () {
 	gulp.src("front/app/templates/**/*.html")
 		.pipe(templateCache("templates.js", {
-			standalone: true
+			standalone: true,
+			root: 'front/app/templates'
+		}))
+		.pipe(gulp.dest("front/app"));
+	gulp.src("front/index.html")
+		.pipe(insert({
+			'before': '<script src="front/app/app.js"></script>',
+			'lineBefore': '<script src="front/app/templates.js"></script>'
+		}))
+		.pipe(gulp.dest("front"));
+	gulp.src("front/app/app.js")
+		.pipe(insert({
+			'before': 'prescrisurApp.commonsServices',
+			'lineBefore': "'templates',"
 		}))
 		.pipe(gulp.dest("front/app"));
 });

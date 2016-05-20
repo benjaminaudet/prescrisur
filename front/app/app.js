@@ -7,7 +7,6 @@ var app = angular.module('prescrisurApp', [
 	'yaru22.angular-timeago',
 	'textAngular',
 	'ngSanitize',
-	'templates',
 	'prescrisurApp.commonsServices',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
@@ -26,7 +25,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('home', {
 			url: '/',
 			controller : 'HomeController',
-			templateUrl: 'home.html',
+			templateUrl: 'front/app/templates/home.html',
 			params: {msg: null},
 			access: {restricted: false}
 		})
@@ -34,13 +33,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('pathologies-new', {
 			url: '/pathologies/new',
 			controller: 'PathologyEditController',
-			templateUrl: 'pathology-edit.html',
+			templateUrl: 'front/app/templates/pathology-edit.html',
 			access: {restricted: true, admin: true}
 		})
 		.state('pathologies', {
 			url: '/pathologies/:id',
 			controller: 'PathologyController',
-			templateUrl: 'pathology.html',
+			templateUrl: 'front/app/templates/pathology.html',
 			access: {restricted: false}
 		})
 			.state('pathologies.edit', {
@@ -48,7 +47,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'PathologyEditController',
-						templateUrl: 'pathology-edit.html'
+						templateUrl: 'front/app/templates/pathology-edit.html'
 					}
 				},
 				access: {restricted: true, admin: true}
@@ -57,28 +56,28 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('classes', {
 			url: '/classes/:id',
 			controller: 'TherapeuticClassController',
-			templateUrl: 'therapeutic-class.html',
+			templateUrl: 'front/app/templates/therapeutic-class.html',
 			access: {restricted: false}
 		})
 		// Specialities
 		.state('specialities', {
 			url: '/specialities/:id',
 			controller: 'SpecialityController',
-			templateUrl: 'speciality.html',
+			templateUrl: 'front/app/templates/speciality.html',
 			access: {restricted: false}
 		})
 		// Substances
 		.state('substances', {
 			url: '/substances/:id',
 			controller: 'SubstanceController',
-			templateUrl: 'substance.html',
+			templateUrl: 'front/app/templates/substance.html',
 			access: {restricted: true}
 		})
 		// Associations
 		.state('associations', {
 			url: '/associations',
 			controller: 'AssociationController',
-			templateUrl: 'association.html',
+			templateUrl: 'front/app/templates/association.html',
 			params: {msg: null},
 			access: {restricted: true, admin: true}
 		})
@@ -86,26 +85,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('users', {
 			url: '/users',
 			controller: 'UserAdminController',
-			templateUrl: 'user-admin.html',
+			templateUrl: 'front/app/templates/user-admin.html',
 			access: {restricted: true, admin: true}
 		})
 		.state('register', {
 			url: '/register',
 			controller : 'RegisterController',
-			templateUrl: 'register.html',
+			templateUrl: 'front/app/templates/register.html',
 			access: {restricted: false}
 		})
 		.state('login', {
 			url: '/login',
 			controller : 'LoginController',
-			templateUrl: 'login.html',
+			templateUrl: 'front/app/templates/login.html',
 			params: {needLogin: false},
 			access: {restricted: false}
 		})
 		.state('profile', {
 			url: '/me',
 			controller : 'UserController',
-			templateUrl: 'user-edit.html',
+			templateUrl: 'front/app/templates/user-edit.html',
 			access: {restricted: true}
 		})
 		.state('logout', {
@@ -117,14 +116,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('reset-password', {
 			url: '/reset/:token',
 			controller : 'ResetPasswordController',
-			templateUrl: 'reset-password.html',
+			templateUrl: 'front/app/templates/reset-password.html',
 			access: {restricted: false}
 		})
 		// Pages
 		.state('pages', {
 			url: '/pages',
 			controller: 'PageController',
-			templateUrl: 'page-admin.html',
+			templateUrl: 'front/app/templates/page-admin.html',
 			access: {restricted: true, admin: true}
 		})
 			.state('pages.new', {
@@ -132,7 +131,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'PageEditController',
-						templateUrl: 'page-edit.html'
+						templateUrl: 'front/app/templates/page-edit.html'
 					}
 				},
 				access: {restricted: true, admin: true}
@@ -142,7 +141,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'PageController',
-						templateUrl: 'page.html'
+						templateUrl: 'front/app/templates/page.html'
 					}
 				},
 				access: {restricted: false}
@@ -152,7 +151,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'PageEditController',
-						templateUrl: 'page-edit.html'
+						templateUrl: 'front/app/templates/page-edit.html'
 					}
 				},
 				access: {restricted: true, admin: true}
@@ -160,14 +159,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('contact', {
 			url: '/contact',
 			controller: 'ContactController',
-			templateUrl: 'contact.html',
+			templateUrl: 'front/app/templates/contact.html',
 			access: {restricted: false}
 		})
 		// News
 		.state('news', {
 			url: '/news',
 			controller: 'NewsController',
-			templateUrl: 'news.html',
+			templateUrl: 'front/app/templates/news.html',
 			access: {restricted: false}
 		})
 			.state('news.new', {
@@ -175,7 +174,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'NewsEditController',
-						templateUrl: 'news-edit.html'
+						templateUrl: 'front/app/templates/news-edit.html'
 					}
 				},
 				access: {restricted: true, admin: true}
@@ -185,7 +184,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'NewsController',
-						templateUrl: 'news.html'
+						templateUrl: 'front/app/templates/news.html'
 					}
 				},
 				access: {restricted: false}
@@ -195,7 +194,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				views: {
 					'@': {
 						controller: 'NewsEditController',
-						templateUrl: 'news-edit.html'
+						templateUrl: 'front/app/templates/news-edit.html'
 					}
 				},
 				access: {restricted: true, admin: true}
@@ -203,7 +202,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('error', {
 			url: '/error',
 			controller : 'ErrorController',
-			templateUrl: 'error.html',
+			templateUrl: 'front/app/templates/error.html',
 			params: {code: null},
 			access: {restricted: false}
 		})
