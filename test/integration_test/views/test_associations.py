@@ -143,3 +143,44 @@ def test_update_asso_not_logged_in_401(collection, client):
 	res = client.put(url_for('api.update_association', asso_id='1'), data=json.dumps(obj), content_type='application/json')
 
 	assert res.status_code == 401
+
+
+def test_delete_asso(collection, client, admin):
+	# Given
+	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
+	collection.insert(obj)
+	Association.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))
+	res_get = client.get(url_for('api.associations'))
+
+	# Then
+	assert res_del.status_code == 200
+	assert res_get.status_code == 404
+
+
+def test_delete_asso_unauthorized_403(collection, client, user):
+	# Given
+	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
+	collection.insert(obj)
+	Association.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))
+
+	# Then
+	assert res_del.status_code == 403
+
+
+def test_delete_asso_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
+	collection.insert(obj)
+	Association.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))
+
+	# Then
+	assert res_del.status_code == 401

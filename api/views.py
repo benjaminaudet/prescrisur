@@ -50,14 +50,14 @@ def search_pathologies_from_substance(subst_id):
 
 
 @api.route('/api/pathologies', methods=['POST'])
-@api.route('/api/pathologies/<patho_id>', methods=['PUT'])
+@api.route('/api/pathologies/<patho_id>', methods=['PUT'], endpoint='update_pathology')
 @required_role('admin')
 def edit_pathology(patho_id=None):
-	data = json.loads(request.data)
+	data = request.get_json()
 	patho = Pathology(**data).check().refresh_update_date()
 	patho.save_therapeutic_classes()
-	patho.save()
-	return jsonify(data=patho)
+	status_code = patho.save_or_create(patho_id)
+	return jsonify(data=patho), status_code
 
 
 @api.route('/api/pathologies/<patho_id>', methods=['DELETE'])
@@ -70,7 +70,7 @@ def delete_pathology(patho_id):
 	return jsonify({'success': success})
 
 
-@api.route('/api/pathologies', methods=['GET'])
+@api.route('/api/pathologies', methods=['GET'], endpoint='pathologies')
 @api.route('/api/pathologies/<patho_id>', methods=['GET'])
 def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
@@ -165,7 +165,7 @@ def delete_association(asso_id):
 	remove = Association.delete(asso_id)
 	if remove.acknowledged:
 		success = True
-	return jsonify({'success': success})
+	return jsonify(success=success)
 
 
 @api.route('/api/associations', methods=['GET'])
@@ -317,7 +317,7 @@ def login():
 @login_required
 def logout():
 	logout_user()
-	return jsonify({'success': True})
+	return jsonify(success=True)
 
 
 @api.route('/api/me', methods=['GET'])

@@ -6,7 +6,7 @@ from api.models import User
 
 @pytest.fixture(autouse=True)
 def user():
-	return User(_id="pbo", password="password", name="PBO")
+	return User(_id="pbo", password="password", name="PBO", token="coucou")
 
 
 def test_verify_password(user):
@@ -55,3 +55,13 @@ def test_remove_role_does_not_exist(user):
 
 	# Then
 	assert len(user.roles) == 2
+
+
+def test_clean(user):
+	# When
+	clean_user = user.clean()
+
+	# Then
+	assert clean_user == user
+	assert not hasattr(user, 'password_hash')
+	assert not hasattr(user, 'token')

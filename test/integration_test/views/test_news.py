@@ -105,3 +105,46 @@ def test_update_news_not_logged_in(collection, client):
 	res = client.put(url_for('api.update_news', news_id='news'), data=json.dumps(update_obj), content_type='application/json')
 
 	assert res.status_code == 401
+
+
+def test_delete_news(collection, client, admin):
+	# Given
+	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
+	collection.insert(obj)
+	News.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
+	res_get = client.get(url_for('api.news', news_id='02039'))
+
+	# Then
+	assert res_del.status_code == 200
+	assert res_get.status_code == 404
+
+
+def test_delete_news_unauthorized_403(collection, client, user):
+	# Given
+	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
+	collection.insert(obj)
+	News.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
+
+	# Then
+	assert res_del.status_code == 403
+
+
+def test_delete_news_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
+	collection.insert(obj)
+	News.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
+
+	# Then
+	assert res_del.status_code == 401
+
+
