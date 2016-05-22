@@ -32,8 +32,12 @@
 <script type="text/ng-template"  id="patho-edit-tree.html">
 	<!-- Level Name -->
 	<div class="form-group level-header">
-		<label class="level-name col-xs-1 control-label">{{ data.rank }}{{ $index + 1 }}.</label>
-		<div class="col-xs-9">
+		<label class="level-name col-xs-2 control-label">
+			<i class="fa fa-arrow-up" ng-if="$index > 0" ng-click="goUp(data, $index)"></i>
+			<i class="fa fa-arrow-down" ng-if="!$last" ng-click="goDown(data, $index)"></i>
+			{{ data.rank }}{{ $index + 1 }}.
+		</label>
+		<div class="col-xs-8">
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</div>
 		<div class="btn-group-vertical level-actions col-xs-2" role="group">

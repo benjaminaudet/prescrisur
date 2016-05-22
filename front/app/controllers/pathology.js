@@ -156,6 +156,41 @@ angular.module('prescrisurApp.controllers')
 			});
 		};
 
+		var findLevel = function(data, $index) {
+			var levelName = getRank(data.rank, $index);
+			var splitLevel = levelName.split('.');
+			splitLevel = splitLevel.slice(0, -1);
+			splitLevel.pop();
+			var levelToGo = $scope.pathology.levels;
+			splitLevel.forEach(function(i) {
+				levelToGo = levelToGo[i-1].levels;
+			});
+			return levelToGo;
+		};
+
+		var changeRank = function(data, newIndex) {
+			if(data.hasOwnProperty('levels')) {
+				data.levels.forEach(function(l, levelIndex) {
+					l.rank = data.rank + (newIndex + 1) + '.';
+					changeRank(l, levelIndex);
+				});
+			}
+		};
+
+		$scope.goUp = function(data, $index) {
+			var levelToGo = findLevel(data, $index);
+			levelToGo[$index] = levelToGo[$index - 1];
+			levelToGo[$index - 1] = data;
+			changeRank(data, $index - 1);
+		};
+
+		$scope.goDown = function(data, $index) {
+			var levelToGo = findLevel(data, $index);
+			levelToGo[$index] = levelToGo[$index + 1];
+			levelToGo[$index + 1] = data;
+			changeRank(data, $index + 1);
+		};
+
 		$scope.removeLevel= function(data, $index) {
 			var levelName = getRank(data.rank, $index);
 			var splitLevel = levelName.split('.');
