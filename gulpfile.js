@@ -44,7 +44,7 @@ gulp.task("templates", function () {
 });
 
 // index.html
-gulp.task("usemin", function () {
+gulp.task("usemin", ["templates"], function () {
 	return gulp.src("front/index.html")
 		.pipe(usemin({
 			path: process.env.ASSETS_DIR || '../prescrisur',
