@@ -4,6 +4,8 @@
 </div>
 
 <div id="content" class="row">
+	<flash-message duration="4000" show-close="true"></flash-message>
+
 	<form ng-submit="submit()" id="text-form" class="form-horizontal">
 		<!-- News Name -->
 		<div class="form-group">
@@ -15,6 +17,6 @@
 			<text-angular ng-model="news.text" class="page-editor"></text-angular>
 		</div>
 
-		<button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
+		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">Enregistrer</button>
 	</form>
 </div>

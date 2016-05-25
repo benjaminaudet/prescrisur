@@ -46,11 +46,12 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'ConfirmQuitService',
 	'PageService',
 
-	function($scope, $state, $stateParams, PageTitleService, ConfirmQuitService, PageService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, ConfirmQuitService, PageService) {
 		PageTitleService.setTitle('Nouvelle Page');
 		ConfirmQuitService.init($scope);
 
@@ -62,20 +63,26 @@ angular.module('prescrisurApp.controllers')
 		}
 
 		$scope.submit = function () {
-			var afterSave = function (data) {
-				var savedPage = data.data;
-				$state.go('pages.read', {id: savedPage._id});
+			var afterSave = function(msg) {
+				return function (data) {
+					var savedPage = data.data;
+					Flash.create('success', msg);
+					$state.go('pages.read', {id: savedPage._id});
+				}
 			};
 			var afterError = function() {
+				$scope.disabled = false;
+				Flash.create('danger', 'Une erreur est survenue...', 0);
 				ConfirmQuitService.init($scope);
 			};
 
 			if(confirm('Enregistrer les modifications ?')) {
+				$scope.disabled = true;
 				ConfirmQuitService.destroy();
 				if ($stateParams.id) {
-					PageService.update({id: $stateParams.id}, $scope.page, afterSave, afterError);
+					PageService.update({id: $stateParams.id}, $scope.page, afterSave('Page mise à jour !'), afterError);
 				} else {
-					PageService.save($scope.page, afterSave, afterError);
+					PageService.save($scope.page, afterSave('Page créée !'), afterError);
 				}
 			}
 			//console.log($scope.page);

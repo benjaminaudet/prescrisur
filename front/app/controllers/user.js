@@ -32,9 +32,11 @@ angular.module('prescrisurApp.controllers')
 					$scope.disabled = false;
 				})
 				.catch(function (error) {
+					var msg = 'Une erreur est survenue...';
 					if(error.bad_password) {
-						Flash.create('danger', 'Le mot de passe est incorrect.', 0);
+						msg = 'Le mot de passe est incorrect';
 					}
+					Flash.create('danger', msg, 0);
 					$scope.disabled = false;
 				});
 		};
@@ -61,7 +63,6 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.hasRole = function(role, userRoles) {
 			return userRoles.indexOf(role) > -1;
-			
 		};
 		
 		$scope.subscribe = function(user, subscribe) {
@@ -71,11 +72,15 @@ angular.module('prescrisurApp.controllers')
 					$state.go('users', {}, {reload: true});
 				}
 			};
+
+			var afterError = function() {
+				Flash.create('danger', 'Une erreur est survenue...', 0);
+			};
 			
 			if (subscribe) {
-				UserSubscriptionService.subscribe({ id: user._id }, {}, afterSave(user.name + ' abonné !'));
+				UserSubscriptionService.subscribe({ id: user._id }, {}, afterSave(user.name + ' abonné !'), afterError);
 			} else {
-				UserSubscriptionService.unsubscribe({ id: user._id }, afterSave(user.name + ' désabonné !'));
+				UserSubscriptionService.unsubscribe({ id: user._id }, afterSave(user.name + ' désabonné !'), afterError);
 			}
 		}
 	}

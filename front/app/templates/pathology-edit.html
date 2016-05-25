@@ -4,6 +4,8 @@
 </div>
 
 <div id="content" class="row">
+	<flash-message duration="4000" show-close="true"></flash-message>
+
 	<form ng-submit="submit()" id="pathology-form" class="form-horizontal">
 		<!-- Pathology Name -->
 		<div class="form-group">
@@ -24,7 +26,7 @@
 			<label>Conclusion</label>
 			<text-angular ng-model="pathology.conclu" class="pathology-editor"></text-angular>
 		</div>
-		<button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
+		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">Enregistrer</button>
 	</form>
 </div>
 

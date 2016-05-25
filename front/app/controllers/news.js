@@ -4,10 +4,11 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'NewsService',
 
-	function($scope, $state, $stateParams, PageTitleService, NewsService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, NewsService) {
 
 		if ($stateParams.id) {
 			NewsService.get({ id: $stateParams.id }, function(data) {
@@ -22,9 +23,14 @@ angular.module('prescrisurApp.controllers')
 		}
 
 		$scope.delete = function(news_id) {
-			NewsService.delete({ id: news_id }, function() {
-				$state.go('news', {msg: 'News Supprimée !'});
-			});
+			if (confirm('Voulez-vous supprimer cette news ? ')) {
+				NewsService.delete({ id: news_id }, function() {
+					Flash.create('success', 'News supprimée !');
+					$state.go('news', {}, {reload: true});
+				}, function() {
+					Flash.create('danger', 'Une erreur est survenue...', 0);
+				});
+			}
 		}
 	}
 ])
@@ -33,11 +39,12 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'ConfirmQuitService',
 	'NewsService',
 
-	function($scope, $state, $stateParams, PageTitleService, ConfirmQuitService, NewsService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, ConfirmQuitService, NewsService) {
 		PageTitleService.setTitle('Nouvelle News');
 		ConfirmQuitService.init($scope);
 
@@ -49,20 +56,27 @@ angular.module('prescrisurApp.controllers')
 		}
 
 		$scope.submit = function () {
-			var afterSave = function (data) {
-				var savedPage = data.data;
-				$state.go('news.read', { id: savedPage._id });
+			var afterSave = function(msg) {
+				return function (data) {
+					var savedPage = data.data;
+					Flash.create('success', msg);
+					$state.go('news.read', { id: savedPage._id });
+				}
 			};
+
 			var afterError = function() {
+				$scope.disabled = false;
+				Flash.create('danger', 'Une erreur est survenue...', 0);
 				ConfirmQuitService.init($scope);
 			};
 
 			if(confirm('Enregistrer les modifications ?')) {
+				$scope.disabled = true;
 				ConfirmQuitService.destroy();
 				if ($stateParams.id) {
-					NewsService.update({id: $stateParams.id}, $scope.news, afterSave, afterError);
+					NewsService.update({id: $stateParams.id}, $scope.news, afterSave('News mise à jour !'), afterError);
 				} else {
-					NewsService.save($scope.news, afterSave, afterError);
+					NewsService.save($scope.news, afterSave('News créée !'), afterError);
 				}
 			}
 			//console.log($scope.news);

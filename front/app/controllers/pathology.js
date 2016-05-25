@@ -7,10 +7,11 @@ angular.module('prescrisurApp.controllers')
 	'$timeout',
 	'$location',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'PathologyService',
 
-	function($scope, $state, $window, $timeout, $location, $stateParams, PageTitleService, PathologyService) {
+	function($scope, $state, $window, $timeout, $location, $stateParams, Flash, PageTitleService, PathologyService) {
 		$scope.pathology = null;
 		$scope.foldAll = false;
 
@@ -22,7 +23,8 @@ angular.module('prescrisurApp.controllers')
 		$scope.delete = function() {
 			if(confirm('Voulez-vous supprimer cette Pathologie ?')) {
 				PathologyService.delete({ id: $stateParams.id }, function(data) {
-					$state.go('home', {msg: 'Pathologie Supprimée !'});
+					Flash.create('success', 'Pathologie Supprimée !');
+					$state.go('home');
 				});
 			}
 		};
@@ -78,12 +80,13 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'ConfirmQuitService',
 	'SearchService',
 	'PathologyService',
 
-	function($scope, $state, $stateParams, PageTitleService, ConfirmQuitService, SearchService, PathologyService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, ConfirmQuitService, SearchService, PathologyService) {
 		PageTitleService.setTitle('Nouvelle Pathologie');
 		ConfirmQuitService.init($scope);
 
@@ -253,20 +256,27 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.submit = function() {
-			var afterSave = function(data) {
-				var savedPatho = data.data;
-				$state.go('pathologies', {id: savedPatho._id});
+			var afterSave = function(msg) {
+				return function(data) {
+					var savedPatho = data.data;
+					Flash.create('success', msg);
+					$state.go('pathologies', {id: savedPatho._id});
+				}
 			};
+
 			var afterError = function() {
+				$scope.disabled = false;
+				Flash.create('danger', 'Une erreur est survenue...', 0);
 				ConfirmQuitService.init($scope);
 			};
 
 			if(confirm('Enregistrer les modifications ?')) {
+				$scope.disabled = true;
 				ConfirmQuitService.destroy();
 				if($stateParams.id) {
-					PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave, afterError);
+					PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave('Pathologie mise à jour !'), afterError);
 				} else {
-					PathologyService.save($scope.pathology, afterSave, afterError);
+					PathologyService.save($scope.pathology, afterSave('Pathologie créée !'), afterError);
 				}
 			}
 			//console.log($scope.pathology);
