@@ -621,6 +621,10 @@
     padding-left: 10px;
 }
 
+#print-patho {
+    margin-bottom: 5px;
+}
+
 /****************************/
 /*       SIDEBAR            */
 #sidebar h2,

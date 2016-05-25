@@ -4,12 +4,23 @@
 
 <div id="content" class="row caduceus">
 	<div id="sidebar" class="col-md-3 col-md-push-9">
-		<div class="btn btn-default" ng-if="isAuthorized('admin')" ng-click="print()">
-			<i class="fa fa-print"></i>
-			Imprimer la Pathologie
+		<h2>Infos & Médicaments</h2>
+		<div ng-click="toggleShowAll()" type="button" class="btn btn-default" ng-switch="foldAll">
+			<span ng-switch-when="true">
+				<i class="fa fa-compress"></i>
+				Tout Replier
+			</span>
+			<span ng-switch-default>
+				<i class="fa fa-expand"></i>
+				Tout Déplier
+			</span>
 		</div>
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>
+			<div id="print-patho" class="btn btn-default" ng-click="print()">
+				<i class="fa fa-print"></i>
+				Imprimer la Pathologie
+			</div>
 			<div class="btn-group" role="group">
 				<a ui-sref="pathologies.edit({id: pathology._id})" type="button" class="btn btn-default">
 					<i class="fa fa-edit"></i>

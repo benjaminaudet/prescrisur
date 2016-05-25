@@ -12,6 +12,7 @@ angular.module('prescrisurApp.controllers')
 
 	function($scope, $state, $window, $timeout, $location, $stateParams, PageTitleService, PathologyService) {
 		$scope.pathology = null;
+		$scope.foldAll = false;
 
 		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
@@ -19,9 +20,11 @@ angular.module('prescrisurApp.controllers')
 		});
 
 		$scope.delete = function() {
-			PathologyService.delete({ id: $stateParams.id }, function(data) {
-				$state.go('home', {msg: 'Pathologie Supprimée !'});
-			});
+			if(confirm('Voulez-vous supprimer cette Pathologie ?')) {
+				PathologyService.delete({ id: $stateParams.id }, function(data) {
+					$state.go('home', {msg: 'Pathologie Supprimée !'});
+				});
+			}
 		};
 
 		$scope.scrollTo = function(rank, $index) {
@@ -41,6 +44,11 @@ angular.module('prescrisurApp.controllers')
 			$timeout(function() {
 				onPrintFinished($window.print())
 			}, 500);
+		};
+
+		$scope.toggleShowAll = function() {
+			$scope.foldAll = !$scope.foldAll;
+			showAll($scope.pathology, $scope.foldAll);
 		};
 
 		var showAll = function(obj, value) {
