@@ -4,7 +4,7 @@ install:
 	pip install -r requirements.txt
 
 deps:
-    (pip install -r requirements.txt && npm install && bower install)
+	(pip install -r requirements.txt && npm install && bower install)
 
 build:
 	(honcho run gulp build && rm -rf front/ && mv dist/ front/)
