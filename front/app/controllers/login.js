@@ -2,11 +2,13 @@ angular.module('prescrisurApp.controllers')
 
 .controller("LogoutController", [
 	'$state',
+	'Flash',
 	'AuthService',
 
-	function($state, AuthService) {
+	function($state, Flash, AuthService) {
 		AuthService.logout().then(function () {
-			$state.go('home', {msg: 'Déconnecté !'}, {reload: true});
+			Flash.create('success', 'Déconnecté !');
+			$state.go('home', {}, {reload: true});
 		});
 	}
 ])
@@ -16,28 +18,33 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'AuthService',
 
-	function($scope, $state, $stateParams, PageTitleService, AuthService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, AuthService) {
 		PageTitleService.setTitle('Connexion');
 
 		$scope.loginForm = {};
-		$scope.needLogin = $stateParams.needLogin;
+
+		if($stateParams.needLogin) {
+			Flash.create('danger', 'Vous devez vous connecter pour accéder à cette page !', 0);
+		}
 
 		if($scope.currentUser) {
+			Flash.create('danger', 'Vous êtes déjà connecté avec '+ $scope.currentUser.name +' ! Redirection...');
 			setTimeout(function() { $state.go('home'); }, 1500);
 		}
 		
 		$scope.sendConfirmation = function() {
 			AuthService.confirm($scope.loginForm.email)
 				.then(function() {
-					$scope.confirmSent = true;
-					$scope.error = false;
-					$scope.confirmAgain = true;
+					var msg = 'Un mail vient de vous êtes envoyé. Confirmez votre adresse email : '+ $scope.loginForm.email +', puis <a ui-sref="login">Connectez-vous</a>';
+					Flash.create('success', msg, 0);
+					$scope.confirmAgain = false;
 				})
 				.catch(function() {
-					$scope.error = "Problème dans l'envoi de la confirmation...";
+					Flash.create('danger', 'Problème dans l\'envoi de la confirmation...', 0);
 					$scope.confirmAgain = true;
 				});
 		};
@@ -51,19 +58,21 @@ angular.module('prescrisurApp.controllers')
 			AuthService.login($scope.loginForm.email, $scope.loginForm.passwd)
 				// handle success
 				.then(function (user) {
+					Flash.create('success', 'Connecté !');
 					$state.go('home');
-					$scope.disabled = false;
 				})
 				// handle error
 				.catch(function (error) {
+					var msg;
 					if(error.error) {
-						$scope.error = error.error;
+						msg = error.error;
 					} else if (error.bad_password) {
-						$scope.error = 'Mauvais login/mot de passe !';
+						msg = 'Mauvais login/mot de passe !';
 					} else if (error.not_confirmed) {
-						$scope.error = "Votre compte n'a pas été confirmé !";
+						msg = 'Votre compte n\'a pas été confirmé !';
 						$scope.confirmAgain = true;
 					}
+					Flash.create('danger', msg, 0);
 					$scope.disabled = false;
 				});
 		};
@@ -140,11 +149,13 @@ angular.module('prescrisurApp.controllers')
 				})
 				// handle error
 				.catch(function (error) {
+					var msg = 'Une erreur est survenue...';
 					if(error.no_user) {
-						Flash.create('danger', "Aucun utilisateur avec cette adresse n'est enregistré !", 0);
+						msg = "Aucun utilisateur avec cette adresse n'est enregistré !";
 					} else if(error.not_confirmed) {
-						Flash.create('danger', "Cet utilisateur n'a pas confirmé son adresse email, merci de confirmer l'adresse : " + $scope.resetForm.email, 0);
+						msg = "Cet utilisateur n'a pas confirmé son adresse email, merci de confirmer l'adresse : " + $scope.resetForm.email;
 					}
+					Flash.create('danger', msg, 0);
 					$scope.disabled = false;
 				});
 		}
@@ -155,16 +166,18 @@ angular.module('prescrisurApp.controllers')
 .controller("RegisterController", [
 	'$scope',
 	'$state',
+	'Flash',
 	'PageTitleService',
 	'PageService',
 	'AuthService',
 
-	function($scope, $state, PageTitleService, PageService, AuthService) {
+	function($scope, $state, Flash, PageTitleService, PageService, AuthService) {
 		PageTitleService.setTitle('Inscription');
 
 		$scope.registerForm = {};
 
 		if($scope.currentUser) {
+			Flash.create('danger', 'Vous êtes déjà connecté avec '+ $scope.currentUser.name +' ! Redirection...');
 			setTimeout(function() { $state.go('home'); }, 1500);
 		}
 		
@@ -195,19 +208,23 @@ angular.module('prescrisurApp.controllers')
 				AuthService.register($scope.registerForm.name, $scope.registerForm.email, $scope.registerForm.passwd)
 					// handle success
 					.then(function () {
-						$scope.registered = true;
+						var msg = 'Inscription effectuée ! Un mail vient de vous êtes envoyé. Confirmez votre adresse email : '+ $scope.registerForm.email +', puis <a ui-sref="login">Connectez-vous</a>';
+						Flash.create('success', msg, 0);
 						$scope.disabled = false;
 					})
 					// handle error
 					.catch(function (error,a,b,c) {
+						var msg;
 						if(error.error) {
-							$scope.error = error.error;
+							msg = error.error;
 						} else if (error.already_exist) {
-							$scope.error = 'Un compte existe déjà avec cette adresse mail !';
+							msg = 'Un compte existe déjà avec cette adresse mail !';
 						}
+						Flash.create('danger', msg, 0);
 						$scope.disabled = false;
 					});
 			} else {
+				Flash.create('danger', 'La confirmation du mot de passe est invalide !', 0);
 				$scope.disabled = false;
 			}
 		};

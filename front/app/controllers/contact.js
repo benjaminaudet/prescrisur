@@ -2,15 +2,16 @@ angular.module('prescrisurApp.controllers')
 
 .controller("ContactController", [
 	'$scope',
+	'Flash',
 	'PageTitleService',
 	'PageService',
 	'MailService',
 
-	function($scope, PageTitleService, PageService, MailService) {
-		PageTitleService.setTitle('Aide à la Prescription');
+	function($scope, Flash, PageTitleService, PageService, MailService) {
+		PageTitleService.setTitle('Contact');
 
 		$scope.contactForm = {};
-		
+
 		if($scope.currentUser) {
 			$scope.contactForm.sender = {name: $scope.currentUser.name, email: $scope.currentUser.email};
 		}
@@ -24,8 +25,14 @@ angular.module('prescrisurApp.controllers')
 		});
 
 		$scope.submit = function() {
-			MailService.send($scope.contactForm, function(data) {
-				$scope.msg = 'Message Envoyé !';
+			$scope.disabled = true;
+
+			MailService.send($scope.contactForm, function() {
+				Flash.create('success', 'Message Envoyé !');
+			}, function() {
+				var msg = 'Une erreur est survenue. Réessayez ou envoyez directement un mail à <a href="mailto:prescrisur@gmail.com">prescrisur@gmail.com</a>';
+				Flash.create('danger', msg, 0);
+				$scope.disabled = false;
 			});
 			// console.log($scope.contactForm);
 		}

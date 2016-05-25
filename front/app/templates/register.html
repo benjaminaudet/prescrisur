@@ -3,17 +3,6 @@
 </div>
 
 <div id="content" class="row caduceus">
-	<div ng-if="currentUser" class="alert alert-danger">Vous êtes déjà connecté avec {{ currentUser.name }} ! Redirection...</div>
-
-	<div ng-if="registered">
-		<div class="alert alert-success">Inscription effectuée ! Un mail vient de vous êtes envoyé. Confirmez votre adresse email : {{ registerForm.email }}, puis <a ui-sref="login">Connectez-vous</a></div>
-	</div>
-
-	<div ng-if="!currentUser && !registered">
-		<div ng-if="error" class="alert alert-danger">
-			{{ error }}
-		</div>
-
 		<div id="register-form">
 			<div class="text" ng-bind-html="text.text"></div>
 

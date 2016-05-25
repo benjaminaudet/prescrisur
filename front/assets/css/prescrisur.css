@@ -49,7 +49,8 @@
     background-color: #3283bf;
 }
 
-.btn.btn-primary.active {
+.btn.btn-primary.active,
+.btn.btn-primary:hover {
     background-color: #236892;
 }
 

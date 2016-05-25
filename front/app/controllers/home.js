@@ -15,7 +15,6 @@ angular.module('prescrisurApp.controllers')
 		$scope.q = null;
 		$scope.searchType = 'pathologies';
 		$scope.results = [];
-		$scope.msg = $stateParams.msg;
 		
 		NewsService.get(function(data) {
 			$scope.news = data.data;

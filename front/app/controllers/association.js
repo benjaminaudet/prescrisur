@@ -4,18 +4,16 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'AssociationService',
 	'SearchService',
 
-	function($scope, $state, $stateParams, PageTitleService, AssociationService, SearchService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, AssociationService, SearchService) {
 		PageTitleService.setTitle('Associations de Substances');
-		
-		var emptyAssociation = {name: null, substances: []};
-		$scope.association = emptyAssociation;
-		$scope.editMode = false;
 
-		$scope.msg = $stateParams.msg;
+		$scope.association = {name: null, substances: []};
+		$scope.editMode = false;
 
 		AssociationService.get(function(data) {
 			$scope.associations = data.data;
@@ -24,7 +22,8 @@ angular.module('prescrisurApp.controllers')
 		$scope.delete = function(assoID) {
 			AssociationService.delete({id: assoID}, function(data) {
 				if (data.success) {
-					$state.go('associations', {msg: 'Association Supprimée !'}, {reload: true})
+					Flash.create('success', 'Association Supprimée !');
+					$state.go('associations', {}, {reload: true})
 				}
 			});
 		};
@@ -60,24 +59,34 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.submit = function () {
+			$scope.disabled = true;
+			
 			var afterSave = function (msg) {
 				return function() {
-					$state.go('associations', {msg: msg}, {reload: true})
+					$scope.disabled = false;
+					Flash.create('success', msg);
+					$state.go('associations', {}, {reload: true})
 				}
 			};
 			if($scope.editMode) {
 				AssociationService.update({ id: $scope.association._id }, $scope.association, afterSave('Association Modifiée !'));
 			} else {
-				AssociationService.save($scope.association, afterSave('Association Créée !'));
+				AssociationService.save($scope.association, afterSave('Association Créée !'), function(data) {
+					var msg = 'Une erreur est survenue !';
+					if(data.data.already_exist) {
+						msg = 'Une association porte déjà ce nom !';
+					}
+					Flash.create('danger', msg, 0);
+					$scope.disabled = false;
+				});
 			}
 			// console.log($scope.association);
 		};
 		
 		$scope.cancel = function () {
-			$scope.association = emptyAssociation;
+			$scope.association = {name: null, substances: []};
 			$scope.editMode = false;
 		};
-
 
 		var searchMessage = function(msg) {
 			return [{
