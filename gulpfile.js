@@ -47,6 +47,7 @@ gulp.task("templates", function () {
 gulp.task("usemin", function () {
 	return gulp.src("front/index.html")
 		.pipe(usemin({
+			path: process.env.ASSETS_DIR || '../prescrisur',
 			lib: [uglify()],
 			app: [ngmin(), uglify()],
 			css: [minifyCSS()]
@@ -56,5 +57,4 @@ gulp.task("usemin", function () {
 		.pipe(gulp.dest("dist"));
 });
 
-gulp.task('default', ['templates']);
 gulp.task('build',['templates', 'usemin', 'fonts', 'fontawesome', 'img']);

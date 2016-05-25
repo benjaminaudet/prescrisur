@@ -7,6 +7,8 @@ var app = angular.module('prescrisurApp', [
 	'yaru22.angular-timeago',
 	'textAngular',
 	'ngSanitize',
+'templates',
+'templates',
 	'prescrisurApp.commonsServices',
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
