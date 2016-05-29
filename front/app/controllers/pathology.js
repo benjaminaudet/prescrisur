@@ -203,21 +203,23 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.removeLevel= function(data, $index) {
-			var levelName = getRank(data.rank, $index);
-			var splitLevel = levelName.split('.');
-			splitLevel = splitLevel.slice(0, -1);
-			var toDel = splitLevel.pop() - 1;
-			var levelToGo = $scope.pathology.levels;
-			var supLevelToGo = $scope.pathology;
-			splitLevel.forEach(function(i) {
-				supLevelToGo = levelToGo[i-1];
-				levelToGo = supLevelToGo.levels;
-			});
-			if(levelToGo.length == 1) {
-				delete supLevelToGo.levels;
-				return;
+			if(confirm('Voulez-vous supprimer ce niveau ?')) {
+				var levelName = getRank(data.rank, $index);
+				var splitLevel = levelName.split('.');
+				splitLevel = splitLevel.slice(0, -1);
+				var toDel = splitLevel.pop() - 1;
+				var levelToGo = $scope.pathology.levels;
+				var supLevelToGo = $scope.pathology;
+				splitLevel.forEach(function(i) {
+					supLevelToGo = levelToGo[i-1];
+					levelToGo = supLevelToGo.levels;
+				});
+				if(levelToGo.length == 1) {
+					delete supLevelToGo.levels;
+					return;
+				}
+				levelToGo.splice(toDel, 1);	
 			}
-			levelToGo.splice(toDel, 1);
 		};
 
 		$scope.removeEntry = function(level, $index) {
@@ -300,7 +302,7 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.canAddSubLevel = function(data) {
-			return data.depth < 4;
+			return data.depth < 4 && (!data.hasOwnProperty('entries') || data.entries.length == 0);
 		};
 
 		$scope.canAddEntry = function(data) {
