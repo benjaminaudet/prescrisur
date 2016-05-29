@@ -276,15 +276,15 @@
 /****************************/
 /*       TEXT ANGULAR       */
 .pathology-editor .ta-editor {
-    min-height: 200px;
-    height: 200px;
+    min-height: 150px;
+    height: 150px;
     overflow: auto;
     font-family: inherit;
     font-size: 100%;
 }
 
 .pathology-editor .ta-scroll-window > .ta-bind {
-    min-height: 199px;
+    min-height: 149px;
 }
 
 .page-editor .ta-editor {
