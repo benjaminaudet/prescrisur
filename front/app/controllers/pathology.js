@@ -257,31 +257,39 @@ angular.module('prescrisurApp.controllers')
 			$scope.pathology.levels.push({rank: '', depth: 1});
 		};
 
-		$scope.submit = function() {
-			var afterSave = function(msg) {
-				return function(data) {
-					var savedPatho = data.data;
-					Flash.create('success', msg);
-					$state.go('pathologies', {id: savedPatho._id});
-				}
-			};
-
-			var afterError = function() {
-				$scope.disabled = false;
-				Flash.create('danger', 'Une erreur est survenue...', 0);
-				ConfirmQuitService.init($scope);
-			};
-
-			if(confirm('Enregistrer les modifications ?')) {
-				$scope.disabled = true;
-				ConfirmQuitService.destroy();
-				if($stateParams.id) {
-					PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave('Pathologie mise à jour !'), afterError);
-				} else {
-					PathologyService.save($scope.pathology, afterSave('Pathologie créée !'), afterError);
-				}
+		$scope.setStatus = function(product) {
+			if(!product.status) {
+				product.status = 'G';
+			} else {
+				product.status = null;
 			}
-			//console.log($scope.pathology);
+		};
+
+		$scope.submit = function() {
+			// var afterSave = function(msg) {
+			// 	return function(data) {
+			// 		var savedPatho = data.data;
+			// 		Flash.create('success', msg);
+			// 		$state.go('pathologies', {id: savedPatho._id});
+			// 	}
+			// };
+			//
+			// var afterError = function() {
+			// 	$scope.disabled = false;
+			// 	Flash.create('danger', 'Une erreur est survenue...', 0);
+			// 	ConfirmQuitService.init($scope);
+			// };
+			//
+			// if(confirm('Enregistrer les modifications ?')) {
+			// 	$scope.disabled = true;
+			// 	ConfirmQuitService.destroy();
+			// 	if($stateParams.id) {
+			// 		PathologyService.update({ id: $stateParams.id }, $scope.pathology, afterSave('Pathologie mise à jour !'), afterError);
+			// 	} else {
+			// 		PathologyService.save($scope.pathology, afterSave('Pathologie créée !'), afterError);
+			// 	}
+			// }
+			console.log($scope.pathology);
 		};
 
 		var getRank = function(parentRank, $index) {
@@ -322,6 +330,10 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.isSubstanceOrAsso = function(entry) {
 			return (entry.type == 'substances' || entry.type == 'associations') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
+		};
+
+		$scope.isSubstanceOrSpeciality = function(entry) {
+			return (entry.type == 'substances' || entry.type == 'specialities') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
 		};
 	}
 ]);

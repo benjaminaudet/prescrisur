@@ -103,7 +103,8 @@
 			<td class="col-md-6">
 				<ui-select ng-model="entry.product">
 					<ui-select-match placeholder="Nom du Produit" ng-click="search($select, entry.type, true)">
-						<span ng-bind="$select.selected.name"></span>
+						{{ $select.selected.name }}
+						<span class="spec-status" ng-if="$select.selected.status">{{ $select.selected.status }}</span>
 					</ui-select-match>
 					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select, entry.type)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 200">
 						{{ r.name }}  <span class="spec-status" ng-if="r.status">{{ r.status }}</span>
@@ -111,6 +112,11 @@
 				</ui-select>
 			</td>
 			<td class="col-md-3">
+				<span class="btn" ng-class="(entry.product.status=='G') ? 'btn-success' : 'btn-danger'" ng-click="setStatus(entry.product)" ng-show="isSubstanceOrSpeciality(entry)">
+					<i class="fa fa-times" ng-if="entry.product.status!='G'"></i>
+					<i class="fa fa-check" ng-if="entry.product.status=='G'"></i>
+					G
+				</span>
 				<span class="btn btn-default" ng-show="isSubstanceOrAsso(entry)" ng-click="displaySpecialities(entry.product.specialities)" ng-model="entry.product.displayOptions" uib-btn-checkbox>
 					Plus
 				</span>

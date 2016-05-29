@@ -488,6 +488,7 @@
 }
 
 .btn.remove-entry {
+    padding: 6px;
     background-color: white;
 }
 
