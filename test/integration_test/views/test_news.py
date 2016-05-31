@@ -130,9 +130,11 @@ def test_delete_news_unauthorized_403(collection, client, user):
 
 	# When
 	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
+	res_get = client.get(url_for('api.news', news_id='02039'))
 
 	# Then
 	assert res_del.status_code == 403
+	assert res_get.status_code == 200
 
 
 def test_delete_news_not_logged_in_401(collection, client):

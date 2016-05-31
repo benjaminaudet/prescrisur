@@ -103,6 +103,13 @@ def search_therapeutic_class():
 	return jsonify(data=TherapeuticClass.search_by_name(q))
 
 
+@api.route('/api/classes/<class_id>', methods=['DELETE'])
+@required_role('admin')
+def delete_therapeutic_class(class_id):
+	remove = TherapeuticClass.delete(class_id)
+	return jsonify(success=remove.acknowledged)
+
+
 @api.route('/api/pages', methods=['POST'])
 @api.route('/api/pages/<page_id>', methods=['PUT'], endpoint='update_page')
 @required_role('admin')

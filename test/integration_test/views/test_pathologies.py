@@ -175,9 +175,11 @@ def test_delete_patho_unauthorized_403(collection, client, user):
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology', patho_id='patho'))
+	res_get = client.get(url_for('api.pathology', patho_id='patho'))
 
 	# Then
 	assert res_del.status_code == 403
+	assert res_get.status_code == 200
 
 
 def test_delete_patho_not_logged_in_401(collection, client):

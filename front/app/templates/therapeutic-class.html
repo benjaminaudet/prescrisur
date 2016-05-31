@@ -4,6 +4,13 @@
 
 <div id="content" class="row">
 	<div id="sidebar" class="col-md-4 col-md-push-8">
+		<div ng-if="isAuthorized('admin')">
+			<h2>Admin</h2>
+			<div ng-click="delete()" type="button" class="btn btn-danger">
+				<i class="fa fa-trash"></i>
+				Supprimer
+			</div>
+		</div>
 		<h2>Pathologie Associée</h2>
 		<a ui-sref="pathologies({id: therapeuticClass.pathology._id})">
 			{{ therapeuticClass.pathology.name }}

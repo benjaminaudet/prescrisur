@@ -62,3 +62,46 @@ def test_search_class(collection, client):
 		{"_id": "02039", "name": "Class"},
 		{"_id": "02032", "name": "Superclass"}
 	]
+
+
+def test_delete_class(collection, client, admin):
+	# Given
+	obj = {"_id": "02039", "name": "Classe", "pathology": "Patho", "text": None, "levels": None, "entries": None}
+	collection.insert(obj)
+	TherapeuticClass.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_therapeutic_class', class_id='02039'))
+	res_get = client.get(url_for('api.therapeutic_class', class_id='02039'))
+
+	# Then
+	assert res_del.status_code == 200
+	assert res_get.status_code == 404
+
+
+def test_delete_class_unauthorized_403(collection, client, user):
+	# Given
+	obj = {"_id": "02039", "name": "Classe", "pathology": "Patho", "text": None, "levels": None, "entries": None}
+	collection.insert(obj)
+	TherapeuticClass.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_therapeutic_class', class_id='02039'))
+	res_get = client.get(url_for('api.therapeutic_class', class_id='02039'))
+
+	# Then
+	assert res_del.status_code == 403
+	assert res_get.status_code == 200
+
+
+def test_delete_class_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "02039", "name": "Classe", "pathology": "Patho", "text": None, "levels": None, "entries": None}
+	collection.insert(obj)
+	TherapeuticClass.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_therapeutic_class', class_id='02039'))
+
+	# Then
+	assert res_del.status_code == 401
