@@ -6,7 +6,7 @@ from pymongo.errors import DuplicateKeyError
 
 from api import login_manager
 from api.models import *
-from api.decorators import required_role
+from api.decorators import required_role, monitored
 from api.services import mail as mail_service
 from api.services.confirm_token import *
 
@@ -26,6 +26,7 @@ def search_speciality():
 
 @api.route('/api/substances/<subst_id>')
 @login_required
+@monitored()
 def substance(subst_id):
 	subst = Substance.get(subst_id)
 	if not subst:
@@ -72,6 +73,7 @@ def delete_pathology(patho_id):
 
 @api.route('/api/pathologies', methods=['GET'], endpoint='pathologies')
 @api.route('/api/pathologies/<patho_id>', methods=['GET'])
+@monitored()
 def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
 	if not patho:
@@ -87,6 +89,7 @@ def search_pathology():
 
 @api.route('/api/classes/<class_id>', methods=['GET'])
 @login_required
+@monitored()
 def therapeutic_class(class_id=None):
 	t_class = TherapeuticClass.get(class_id)
 	if not t_class:
@@ -112,6 +115,7 @@ def edit_page(page_id=None):
 
 @api.route('/api/pages', methods=['GET'])
 @api.route('/api/pages/<page_id>', methods=['GET'])
+@monitored()
 def page(page_id=None):
 	p = Page.get(page_id)
 	if not p:
@@ -141,6 +145,7 @@ def delete_news(news_id):
 
 @api.route('/api/news', methods=['GET'])
 @api.route('/api/news/<news_id>', methods=['GET'])
+@monitored()
 def news(news_id=None):
 	n = News.get(news_id)
 	if not n:
@@ -190,6 +195,7 @@ def users():
 
 
 @api.route('/api/users/<user_id>/subscription', methods=['PUT', 'DELETE'])
+@required_role('admin')
 def subscribe(user_id):
 	u = User.get(user_id)
 	if not u:

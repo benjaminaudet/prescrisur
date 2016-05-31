@@ -4,7 +4,7 @@ from flask.ext.cors import CORS
 from flask.ext.login import LoginManager
 
 from api.config import *
-from json_encoder import ModelJSONEncoder
+from api.services.json_encoder import ModelJSONEncoder
 
 mail = Mail()
 cors = CORS()
