@@ -8,6 +8,7 @@
 .cache/
 test/.cache/
 .coverage
+*.log
 
 # Angular
 front/bower_components/
