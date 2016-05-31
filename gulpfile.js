@@ -7,6 +7,7 @@ var insert = require('gulp-insert-lines');
 var replace = require('gulp-regex-replace');
 var templateCache = require("gulp-angular-templatecache");
 
+
 // Assets
 gulp.task("fonts", function () {
 	gulp.src("front/assets/fonts/*")
@@ -57,4 +58,4 @@ gulp.task("usemin", ["templates"], function () {
 		.pipe(gulp.dest("dist"));
 });
 
-gulp.task('build',['templates', 'usemin', 'fonts', 'fontawesome', 'img']);
+gulp.task('build',['usemin', 'fonts', 'fontawesome', 'img']);

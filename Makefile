@@ -7,7 +7,7 @@ deps:
 	(pip install -r requirements.txt && npm install && bower install)
 
 build:
-	(honcho run gulp build && rm -rf front/ && mv dist/ front/)
+	(gulp templates && honcho run gulp build && rm -rf front/ && mv dist/ front/)
 
 install-build: clean-build deps build
 

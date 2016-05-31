@@ -15,8 +15,6 @@ front/bower_components/
 dist
 node_modules
 out/
-front/app/templates.js
-
 
 # Vagrant
 .vagrant/
