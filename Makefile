@@ -9,13 +9,16 @@ deps:
 build:
 	(honcho run gulp build && rm -rf front/ && mv dist/ front/)
 
-install-build: deps build
+install-build: clean-build deps build
 
 test:
 	honcho run py.test -v -n 2 --cov=api test
 
 run:
 	honcho start
+
+clean-build:
+	rm -rf build debian/prescrisur
 
 update-spec:
 	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'

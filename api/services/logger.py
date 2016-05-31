@@ -1,13 +1,14 @@
 import os.path
 import logging
+from flask import current_app
 from logging.handlers import TimedRotatingFileHandler
 
 
 class Logger(logging.getLoggerClass()):
-	def __init__(self, log_name, log_dir=None, level=logging.DEBUG):
+	def __init__(self, log_name, level=logging.DEBUG):
 		logging.getLoggerClass().__init__(self, log_name, level)
 		self.name = log_name
-		self.log_dir = log_dir
+		self.log_dir = current_app.config['LOG_DIR']
 		self.propagate = False
 		self.set_handler(level)
 

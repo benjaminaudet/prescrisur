@@ -1,3 +1,2 @@
-recursive-include front/js *
-recursive-include front/assets *
+recursive-include front *
 recursive-include api/templates *

@@ -11,7 +11,8 @@ setup(name='prescrisur',
           'api/models',
           'api/update',
           'api/services',
-          'front'
+          'front/assets',
+          'front/js'
       ],
       include_package_data=True,
       zip_safe=False,

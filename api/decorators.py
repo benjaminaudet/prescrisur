@@ -20,7 +20,7 @@ def required_role(role):
 
 
 def monitored():
-	logger = Logger('prescrisur.monitor', '/tmp')
+	logger = Logger('prescrisur.monitor')
 	msg = "%s %s %s:%s %d"
 
 	def wrapper(f):
