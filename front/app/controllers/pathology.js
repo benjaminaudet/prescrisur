@@ -18,6 +18,12 @@ angular.module('prescrisurApp.controllers')
 		PathologyService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
 			PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
+		}, function() {
+			$scope.pathology = false;
+			Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...", 1500);
+			$timeout(function() {
+				$state.go('home');
+			}, 1500);
 		});
 
 		$scope.delete = function() {

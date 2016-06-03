@@ -5,7 +5,11 @@
 <div id="content" class="row caduceus">
 	<flash-message duration="4000" show-close="true"></flash-message>
 
-	<div id="sidebar" class="col-md-3 col-md-push-9">
+	<div ng-if="!pathology">
+		<h2 class="center"><i class="fa fa-spinner"></i> Chargement de la Pathologie</h2>
+	</div>
+
+	<div id="sidebar" ng-if="pathology" class="col-md-3 col-md-push-9">
 		<h2>Infos & Médicaments</h2>
 		<div ng-click="toggleShowAll()" type="button" class="btn btn-default" ng-switch="foldAll">
 			<span ng-switch-when="true">
@@ -47,7 +51,7 @@
 		</ul>
 	</div>
 
-	<div id="pathology" class="col-md-9 col-md-pull-3">
+	<div id="pathology" ng-if="pathology" class="col-md-9 col-md-pull-3">
 		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro"></div>
 		<div class="pathology-tree">
 			<div ng-repeat="data in pathology.levels" ng-include="'patho-tree.html'" class="level" depth="1"></div>

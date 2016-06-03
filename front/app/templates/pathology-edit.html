@@ -6,7 +6,11 @@
 <div id="content" class="row">
 	<flash-message duration="4000" show-close="true"></flash-message>
 
-	<form ng-submit="submit()" id="pathology-form" class="form-horizontal">
+	<div ng-if="!pathology">
+		<h2 class="center"><i class="fa fa-spinner"></i> Chargement de la Pathologie</h2>
+	</div>
+
+	<form ng-submit="submit()" ng-if="pathology" id="pathology-form" class="form-horizontal">
 		<!-- Pathology Name -->
 		<div class="form-group">
 			<input class="form-control" type="text" ng-model="pathology.name" placeholder="Pathologie (max 50 caractères)" maxlength="50" required/>
@@ -26,7 +30,12 @@
 			<label>Conclusion</label>
 			<text-angular ng-model="pathology.conclu" class="pathology-editor"></text-angular>
 		</div>
-		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">Enregistrer</button>
+		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">
+			<span ng-if="disabled">
+				<i class="fa fa-spinner"></i> Enregistrement...
+			</span>
+			<span ng-if="!disabled">Enregistrer</span>
+		</button>
 	</form>
 </div>
 
