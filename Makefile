@@ -21,10 +21,10 @@ clean-build:
 	rm -rf build debian/prescrisur
 
 update-spec:
-	python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'
+	honcho run python -c 'from api.update import SpecialityUpdater; SpecialityUpdater().execute()'
 
 update-subst:
-	python -c 'from api.update import SubstanceUpdater; SubstanceUpdater().execute()'
+	honcho run python -c 'from api.update import SubstanceUpdater; SubstanceUpdater().execute()'
 
 update: update-spec update-subst
 
