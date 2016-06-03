@@ -24,5 +24,12 @@ angular.module('prescrisurApp.controllers')
 					});
 				}
 			};
+
+			$scope.entryColspan = function(entry) {
+				if(entry.info) {
+					return 1;
+				}
+				return 2;
+			};
 		}
 	]);

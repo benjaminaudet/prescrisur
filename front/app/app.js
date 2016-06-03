@@ -57,7 +57,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/classes/:id',
 			controller: 'TherapeuticClassController',
 			templateUrl: 'front/app/templates/therapeutic-class.html',
-			access: {restricted: false}
+			access: {restricted: true}
 		})
 		// Specialities
 		.state('specialities', {
