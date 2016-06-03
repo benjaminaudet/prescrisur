@@ -3,7 +3,9 @@
 </div>
 
 <div id="content" class="row">
-	<div id="sidebar" class="col-md-4 col-md-push-8">
+	<flash-message duration="4000" show-close="true"></flash-message>
+
+	<div id="sidebar" ng-if="substance" class="col-md-4 col-md-push-8">
 		<h2>Pathologies Associées</h2>
 		<div class="pathologies">
 			<div ng-if="pathologies.length == 0">
@@ -15,7 +17,7 @@
 		</div>
 	</div>
 
-	<div id="specialities" class="col-md-8 col-md-pull-4">
+	<div id="specialities" ng-if="substance" class="col-md-8 col-md-pull-4">
 		<h2>Spécialités contenant cette substance</h2>
 		<div class="panel panel-default">
 			<table class="table table-condensed table-striped table-bordered">

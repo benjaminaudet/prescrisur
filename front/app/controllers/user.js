@@ -36,7 +36,7 @@ angular.module('prescrisurApp.controllers')
 					if(error.bad_password) {
 						msg = 'Le mot de passe est incorrect';
 					}
-					Flash.create('danger', msg, 0);
+					Flash.create('danger', msg, 10000);
 					$scope.disabled = false;
 				});
 		};
@@ -74,7 +74,7 @@ angular.module('prescrisurApp.controllers')
 			};
 
 			var afterError = function() {
-				Flash.create('danger', 'Une erreur est survenue...', 0);
+				Flash.create('danger', 'Une erreur est survenue...', 10000);
 			};
 			
 			if (subscribe) {

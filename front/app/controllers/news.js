@@ -4,16 +4,22 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'$timeout',
 	'Flash',
 	'PageTitleService',
 	'NewsService',
 
-	function($scope, $state, $stateParams, Flash, PageTitleService, NewsService) {
+	function($scope, $state, $stateParams, $timeout, Flash, PageTitleService, NewsService) {
 
 		if ($stateParams.id) {
 			NewsService.get({ id: $stateParams.id }, function(data) {
 				$scope.news = data.data;
 				PageTitleService.setTitle($scope.news.name + ' | PrescriNews');
+			}, function() {
+				Flash.create('danger', "Cette News n'existe pas ! Redirection...", 1500);
+				$timeout(function() {
+					$state.go('home');
+				}, 1500);
 			});
 		} else {
 			NewsService.get(function(data){
@@ -28,7 +34,7 @@ angular.module('prescrisurApp.controllers')
 					Flash.create('success', 'News supprimée !');
 					$state.go('news', {}, {reload: true});
 				}, function() {
-					Flash.create('danger', 'Une erreur est survenue...', 0);
+					Flash.create('danger', 'Une erreur est survenue...', 10000);
 				});
 			}
 		}
@@ -66,7 +72,7 @@ angular.module('prescrisurApp.controllers')
 
 			var afterError = function() {
 				$scope.disabled = false;
-				Flash.create('danger', 'Une erreur est survenue...', 0);
+				Flash.create('danger', 'Une erreur est survenue...', 10000);
 				ConfirmQuitService.init($scope);
 			};
 

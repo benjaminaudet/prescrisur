@@ -76,7 +76,7 @@ angular.module('prescrisurApp.controllers')
 					if(data.data.already_exist) {
 						msg = 'Une association porte déjà ce nom !';
 					}
-					Flash.create('danger', msg, 0);
+					Flash.create('danger', msg, 10000);
 					$scope.disabled = false;
 				});
 			}

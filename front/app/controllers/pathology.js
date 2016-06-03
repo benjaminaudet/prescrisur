@@ -282,7 +282,7 @@ angular.module('prescrisurApp.controllers')
 
 			var afterError = function() {
 				$scope.disabled = false;
-				Flash.create('danger', 'Une erreur est survenue...', 0);
+				Flash.create('danger', 'Une erreur est survenue...', 10000);
 				ConfirmQuitService.init($scope);
 			};
 

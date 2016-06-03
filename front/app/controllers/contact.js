@@ -31,7 +31,7 @@ angular.module('prescrisurApp.controllers')
 				Flash.create('success', 'Message Envoyé !');
 			}, function() {
 				var msg = 'Une erreur est survenue. Réessayez ou envoyez directement un mail à <a href="mailto:prescrisur@gmail.com">prescrisur@gmail.com</a>';
-				Flash.create('danger', msg, 0);
+				Flash.create('danger', msg, 10000);
 				$scope.disabled = false;
 			});
 			// console.log($scope.contactForm);

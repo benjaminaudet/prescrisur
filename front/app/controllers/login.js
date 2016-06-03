@@ -28,7 +28,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.loginForm = {};
 
 		if($stateParams.needLogin) {
-			Flash.create('danger', 'Vous devez vous connecter pour accéder à cette page !', 0);
+			Flash.create('danger', 'Vous devez vous connecter pour accéder à cette page !', 10000);
 		}
 
 		if($scope.currentUser) {
@@ -44,7 +44,7 @@ angular.module('prescrisurApp.controllers')
 					$scope.confirmAgain = false;
 				})
 				.catch(function() {
-					Flash.create('danger', 'Problème dans l\'envoi de la confirmation...', 0);
+					Flash.create('danger', 'Problème dans l\'envoi de la confirmation...', 10000);
 					$scope.confirmAgain = true;
 				});
 		};
@@ -72,7 +72,7 @@ angular.module('prescrisurApp.controllers')
 						msg = 'Votre compte n\'a pas été confirmé !';
 						$scope.confirmAgain = true;
 					}
-					Flash.create('danger', msg, 0);
+					Flash.create('danger', msg, 10000);
 					$scope.disabled = false;
 				});
 		};
@@ -100,7 +100,7 @@ angular.module('prescrisurApp.controllers')
 				// handle error
 				.catch(function (error) {
 					if(error.error) {
-						Flash.create('danger', "Le code de confirmation est erroné. Merci de recommencer.", 0)
+						Flash.create('danger', "Le code de confirmation est erroné. Merci de recommencer.", 10000)
 					}
 				});
 		}
@@ -131,7 +131,7 @@ angular.module('prescrisurApp.controllers')
 				// handle error
 				.catch(function (error) {
 					if(error.error) {
-						Flash.create('danger', "Aucun utilisateur avec cette adresse n'est enregistré !", 0);
+						Flash.create('danger', "Aucun utilisateur avec cette adresse n'est enregistré !", 10000);
 					}
 				});
 		};
@@ -155,7 +155,7 @@ angular.module('prescrisurApp.controllers')
 					} else if(error.not_confirmed) {
 						msg = "Cet utilisateur n'a pas confirmé son adresse email, merci de confirmer l'adresse : " + $scope.resetForm.email;
 					}
-					Flash.create('danger', msg, 0);
+					Flash.create('danger', msg, 10000);
 					$scope.disabled = false;
 				});
 		}
@@ -209,7 +209,7 @@ angular.module('prescrisurApp.controllers')
 					// handle success
 					.then(function () {
 						var msg = 'Inscription effectuée ! Un mail vient de vous êtes envoyé. Confirmez votre adresse email : '+ $scope.registerForm.email +', puis <a ui-sref="login">Connectez-vous</a>';
-						Flash.create('success', msg, 0);
+						Flash.create('success', msg, 10000);
 						$scope.disabled = false;
 					})
 					// handle error
@@ -220,11 +220,11 @@ angular.module('prescrisurApp.controllers')
 						} else if (error.already_exist) {
 							msg = 'Un compte existe déjà avec cette adresse mail !';
 						}
-						Flash.create('danger', msg, 0);
+						Flash.create('danger', msg, 10000);
 						$scope.disabled = false;
 					});
 			} else {
-				Flash.create('danger', 'La confirmation du mot de passe est invalide !', 0);
+				Flash.create('danger', 'La confirmation du mot de passe est invalide !', 10000);
 				$scope.disabled = false;
 			}
 		};

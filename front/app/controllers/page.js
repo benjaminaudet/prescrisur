@@ -3,18 +3,25 @@ angular.module('prescrisurApp.controllers')
 .controller("PageController", [
 	'$scope',
 	'$window',
-	'$timeout',
+	'$state',
 	'$stateParams',
+	'$timeout',
+	'Flash',
 	'PageTitleService',
 	'PageService',
 
-	function($scope, $window, $timeout, $stateParams, PageTitleService, PageService) {
+	function($scope, $window, $state, $stateParams, $timeout, Flash, PageTitleService, PageService) {
 		$scope.page = null;
 
 		if ($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {
 				$scope.page = data.data;
 				PageTitleService.setTitle($scope.page.name);
+			}, function() {
+				Flash.create('danger', "Cette Page n'existe pas ! Redirection...", 1500);
+				$timeout(function() {
+					$state.go('home');
+				}, 1500);
 			});
 		} else {
 			PageService.get(function(data) {
@@ -72,7 +79,7 @@ angular.module('prescrisurApp.controllers')
 			};
 			var afterError = function() {
 				$scope.disabled = false;
-				Flash.create('danger', 'Une erreur est survenue...', 0);
+				Flash.create('danger', 'Une erreur est survenue...', 10000);
 				ConfirmQuitService.init($scope);
 			};
 
