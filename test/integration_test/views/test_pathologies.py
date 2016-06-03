@@ -71,7 +71,7 @@ def test_search_patho(collection, client):
 		{"_id": "patho1", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
 		{"_id": "patho2", "name": "SuperPatho", "levels": None, "intro": "intro", "conclu": "conclu",
 		 "updated_at": None},
-		{"_id": "patho3", "name": "Super", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+		{"_id": "super", "name": "Super", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
 	]
 	map(lambda o: collection.insert(o), objs)
 	Pathology.collection = collection
