@@ -15,6 +15,7 @@ class classproperty(object):
 
 
 class BaseModel(object):
+	ORDER_BY = [('_id', ASCENDING)]
 
 	@classproperty
 	def collection(cls):
@@ -35,7 +36,7 @@ class BaseModel(object):
 
 	@classmethod
 	def all(cls):
-		objs = cls.collection.find().sort([('created_at', DESCENDING), ('_id', ASCENDING)])
+		objs = cls.collection.find().sort(cls.ORDER_BY)
 		if not objs:
 			return []
 		return list(objs)
@@ -44,7 +45,7 @@ class BaseModel(object):
 	def _search(cls, query, proj='default', limit=0):
 		if proj == 'default':
 			proj = {'name': 1, 'status': 1}
-		objs = cls.collection.find(query, proj, limit=limit).sort('name', ASCENDING)
+		objs = cls.collection.find(query, proj, limit=limit).sort(cls.ORDER_BY)
 		if not objs:
 			return []
 		return list(objs)

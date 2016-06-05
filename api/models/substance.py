@@ -1,9 +1,13 @@
 # coding=utf-8
+from pymongo import ASCENDING
+
 from base_model import BaseModel
 from speciality import Speciality
 
 
 class Substance(BaseModel):
+	ORDER_BY = [('name', ASCENDING)]
+
 	def __init__(self, _id, name, status=None, specialities=None, **kwargs):
 		self._id = _id
 		self.name = name
