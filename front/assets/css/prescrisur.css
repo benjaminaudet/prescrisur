@@ -287,6 +287,18 @@
     min-height: 149px;
 }
 
+.info-editor .ta-editor {
+    min-height: 80px;
+    height: 80px;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.info-editor .ta-scroll-window > .ta-bind {
+    min-height: 79px;
+}
+
 .page-editor .ta-editor {
     min-height: 300px;
     height: auto;
