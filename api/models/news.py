@@ -6,6 +6,7 @@ from page import Page
 
 
 class News(Page):
+	PROJECTION = {'name': 1, 'created_at': 1}
 	ORDER_BY = [('created_at', DESCENDING)]
 
 	def __init__(self, name, text, _id=None, author=None, created_at=None, updated_at=None, **kwargs):

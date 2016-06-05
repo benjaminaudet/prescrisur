@@ -59,8 +59,8 @@ def test_search_class(collection, client):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == [
-		{"_id": "02032", "name": "Superclass"},
-		{"_id": "02039", "name": "Class"}
+		{"_id": "02032", "name": "Superclass", "pathology": "Patho"},
+		{"_id": "02039", "name": "Class", "pathology": "Patho"}
 	]
 
 

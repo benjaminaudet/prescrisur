@@ -68,10 +68,9 @@ def test_get_all_patho_no_patho_404(collection, client):
 def test_search_patho(collection, client):
 	# Given
 	objs = [
-		{"_id": "patho1", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
-		{"_id": "patho2", "name": "SuperPatho", "levels": None, "intro": "intro", "conclu": "conclu",
-		 "updated_at": None},
-		{"_id": "super", "name": "Super", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+		{"_id": "patho1", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"},
+		{"_id": "patho2", "name": "SuperPatho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"},
+		{"_id": "super", "name": "Super", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"}
 	]
 	map(lambda o: collection.insert(o), objs)
 	Pathology.collection = collection
@@ -83,8 +82,8 @@ def test_search_patho(collection, client):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == [
-		{"_id": "patho1", "name": "Patho"},
-		{"_id": "patho2", "name": "SuperPatho"},
+		{"_id": "patho1", "name": "Patho", "updated_at": "2015-12-12 00:00:00"},
+		{"_id": "patho2", "name": "SuperPatho", "updated_at": "2015-12-12 00:00:00"},
 	]
 
 

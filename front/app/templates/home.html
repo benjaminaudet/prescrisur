@@ -28,7 +28,9 @@
 				<span ng-bind="$select.selected.name"></span>
 			</ui-select-match>
 			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
-					{{ r.name }} <span class="spec-status" ng-if="r.status">{{ r.status }}</span>
+				{{ r.name }}
+				<span class="spec-status" ng-if="r.status">{{ r.status }}</span>
+				<span class="pathology" ng-if="r.pathology">({{ r.pathology.name }})</span>
 			</ui-select-choices>
 		</ui-select>
 	</div>
@@ -40,7 +42,7 @@
 	<div class="col-md-7" id="home-news">
 		<h2>PrescriNews</h2>
 		<ul>
-			<li ng-repeat="n in news | limitTo: 5">
+			<li ng-repeat="n in news | orderBy: '-created_at' | limitTo: 5">
 				<a ui-sref="news.read({id: n._id})">{{ n.name }}</a>
 				<small class="info">par {{ n.author.name }} - {{ n.created_at | date:"dd/MM/yyyy" }}</small>
 			</li>
@@ -49,7 +51,7 @@
 	<div class="col-md-5">
 		<h2>Dernières Mises à Jour</h2>
 		<ul>
-			<li ng-repeat="patho in pathologies | limitTo: 5">
+			<li ng-repeat="patho in pathologies | orderBy: '-updated_at' | limitTo: 5">
 				<a ui-sref="pathologies({id: patho._id})">{{ patho.name }}</a>
 				<small>- {{ patho.updated_at | date:"dd/MM/yyyy" }}</small>
 			</li>

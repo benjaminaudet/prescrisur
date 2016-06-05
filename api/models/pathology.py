@@ -16,6 +16,7 @@ bleach.ALLOWED_ATTRIBUTES.update({'a': ['href', 'title', 'target']})
 
 
 class Pathology(BaseModel):
+	PROJECTION = {'name': 1, 'updated_at': 1}
 	AUTHORIZED_TYPES = ['specialities', 'substances', 'associations']
 	RECO_LABELS = {
 		'none': None,
@@ -33,6 +34,10 @@ class Pathology(BaseModel):
 		self.updated_at = updated_at
 
 	@classmethod
+	def all(cls, **kwargs):
+		return super(Pathology, cls).all(cls.PROJECTION)
+
+	@classmethod
 	def search_by_substance(cls, subst_id):
 		return cls._search({'$or': [
 			{'levels.entries.product._id': subst_id},
@@ -40,13 +45,6 @@ class Pathology(BaseModel):
 			{'levels.levels.levels.entries.product._id': subst_id},
 			{'levels.levels.levels.levels.entries.product._id': subst_id}
 		]})
-
-	@classmethod
-	def all(cls):
-		objs = cls.collection.find({}, {'name': 1, 'updated_at': 1}).sort('updated_at', DESCENDING)
-		if not objs:
-			return []
-		return list(objs)
 
 	def save_therapeutic_classes(self):
 		return self.find_therapeutic_classes(self.levels)
@@ -137,11 +135,6 @@ class Pathology(BaseModel):
 			return Association(**product)
 		else:
 			raise ValueError()
-
-	@staticmethod
-	def _linkify_grade(text):
-		regx = re.compile('(Grade (?:A|B|C))(?!</a>)')
-		return regx.sub(r'<a class="grade" href="http://localhost:5000/#/pages/presentation">\1</a>', text)
 
 	def refresh_update_date(self):
 		self.updated_at = datetime.datetime.now().isoformat()

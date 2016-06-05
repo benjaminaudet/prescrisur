@@ -12,6 +12,8 @@ bleach.ALLOWED_ATTRIBUTES.update({
 
 
 class Page(BaseModel):
+	PROJECTION = {'name': 1}
+
 	def __init__(self, name, text, _id=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name

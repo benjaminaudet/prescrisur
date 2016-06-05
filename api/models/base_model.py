@@ -15,6 +15,7 @@ class classproperty(object):
 
 
 class BaseModel(object):
+	PROJECTION = {'name': 1, 'status': 1}
 	ORDER_BY = [('_id', ASCENDING)]
 
 	@classproperty
@@ -31,12 +32,8 @@ class BaseModel(object):
 		return cls(**obj)
 
 	@classmethod
-	def delete(cls, obj_id):
-		return cls.collection.delete_one({'_id': obj_id})
-
-	@classmethod
-	def all(cls):
-		objs = cls.collection.find().sort(cls.ORDER_BY)
+	def all(cls, proj=None):
+		objs = cls.collection.find({}, proj).sort(cls.ORDER_BY)
 		if not objs:
 			return []
 		return list(objs)
@@ -44,7 +41,7 @@ class BaseModel(object):
 	@classmethod
 	def _search(cls, query, proj='default', limit=0):
 		if proj == 'default':
-			proj = {'name': 1, 'status': 1}
+			proj = cls.PROJECTION
 		objs = cls.collection.find(query, proj, limit=limit).sort(cls.ORDER_BY)
 		if not objs:
 			return []
@@ -54,6 +51,10 @@ class BaseModel(object):
 	def search_by_name(cls, name, proj='default'):
 		regx = re.compile(name, re.IGNORECASE)
 		return cls._search({'$or': [{'name': regx}, {'_id': regx}]}, proj, limit=200)
+
+	@classmethod
+	def delete(cls, obj_id):
+		return cls.collection.delete_one({'_id': obj_id})
 
 	def serialize(self):
 		to_string = jsonpickle.encode(self, unpicklable=False)
