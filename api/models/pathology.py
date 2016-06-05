@@ -86,15 +86,15 @@ class Pathology(BaseModel):
 
 	def check(self):
 		self.name = bleach.clean(self.name)
-		self.intro = self._linkify_grade(bleach.clean(self.intro))
-		self.conclu = self._linkify_grade(bleach.clean(self.conclu))
+		self.intro = bleach.clean(self.intro)
+		self.conclu = bleach.clean(self.conclu)
 		self.levels = map(lambda l: self._check_level(l), self.levels)
 		return self
 
 	def _check_level(self, level):
 		level['name'] = bleach.clean(level['name'])
 		if 'text' in level:
-			level['text'] = self._linkify_grade(bleach.clean(level['text']))
+			level['text'] = bleach.clean(level['text'])
 		if 'levels' in level:
 			if len(level['levels']) == 0:
 				del level['levels']
@@ -118,7 +118,7 @@ class Pathology(BaseModel):
 		entry['reco'] = self._check_entry_reco(entry['reco'])
 		# Check info
 		if 'info' in entry:
-			entry['info'] = self._linkify_grade(entry['info'])
+			entry['info'] = entry['info']
 		return entry
 
 	def _check_entry_reco(self, reco):

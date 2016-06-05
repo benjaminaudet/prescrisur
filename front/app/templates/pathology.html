@@ -52,11 +52,11 @@
 	</div>
 
 	<div id="pathology" ng-if="pathology" class="col-md-9 col-md-pull-3">
-		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro"></div>
+		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro | gradify"></div>
 		<div class="pathology-tree">
 			<div ng-repeat="data in pathology.levels" ng-include="'patho-tree.html'" class="level" depth="1"></div>
 		</div>
-		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html="pathology.conclu"></div>
+		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html="pathology.conclu | gradify"></div>
 	</div>
 </div>
 
@@ -65,7 +65,7 @@
 	<div class="level-header" id="{{ data.rank }}{{ $index + 1 }}.">
 		<level-title title="{{ data.name }}" rank="{{ data.rank }}{{ $index + 1 }}." depth="{{ data.depth }}"></level-title>
 	</div>
-	<div class="text level-text" ng-if="data.text" ng-bind-html="data.text"></div>
+	<div class="text level-text" ng-if="data.text" ng-bind-html="data.text | gradify"></div>
 
 	<div ng-if="data.levels && data.levels.length > 0">
 		<div ng-repeat="data in data.levels" ng-include="'patho-tree.html'" class="level" depth="{{ data.depth }}"></div>
@@ -74,8 +74,8 @@
 	<table class="entries table table-curved" ng-if="data.entries && data.entries.length > 0">
 		<tr ng-repeat-start="entry in data.entries">
 			<td class="reco" ng-switch="entry.reco._id">
-				<div ng-switch-when="none"></div>
-				<div ng-switch-default="" uib-tooltip="{{ entry.reco.name }}">
+				<div class="pill" ng-switch-when="none"></div>
+				<div class="pill" ng-switch-default="" uib-tooltip="{{ entry.reco.name }}">
 					<img ng-src="front/assets/img/gelule_{{ entry.reco._id }}_mini.png" alt="{{ entry.reco._id }}" />
 				</div>
 			</td>

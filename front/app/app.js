@@ -11,6 +11,7 @@ var app = angular.module('prescrisurApp', [
 	'prescrisurApp.modelServices',
 	'prescrisurApp.loginServices',
 	'prescrisurApp.directives',
+	'prescrisurApp.filters',
 	'prescrisurApp.controllers'
 ]);
 

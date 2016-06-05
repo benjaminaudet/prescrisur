@@ -91,12 +91,6 @@ def test_check_level(cleaned_pathology):
 	assert 'entries' not in cleaned_pathology.levels[1]['levels'][0]
 
 
-def test_linkify_grade(pathology):
-	assert pathology._linkify_grade('Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade A</a>)') == 'Bonjour (<a href="http://localhost:5000/#/pages/presentation">Grade A</a>)'
-	assert pathology._linkify_grade('Bonjour (Grade B)') == 'Bonjour (<a class="grade" href="http://localhost:5000/#/pages/presentation">Grade B</a>)'
-	assert pathology._linkify_grade('Bonjour <b>Grade C</b>') == 'Bonjour <b><a class="grade" href="http://localhost:5000/#/pages/presentation">Grade C</a></b>'
-
-
 def test_serialize(cleaned_pathology):
 	serialized_cleaned_pathology = cleaned_pathology.serialize()
 	assert serialized_cleaned_pathology['_id'] == 'pathologie-testee'
@@ -129,9 +123,6 @@ class TestBleachedText:
 
 	def test_text_unclean(self, cleaned_pathology):
 		assert cleaned_pathology.intro == '&lt;script&gt;fumed()&lt;/script&gt;'
-
-	def test_linkify_grade(self, cleaned_pathology):
-		assert cleaned_pathology.levels[0]['text'] == 'Bonjour (<a class="grade" href="http://localhost:5000/#/pages/presentation">Grade A</a>)'
 
 
 class TestCheckEntry:

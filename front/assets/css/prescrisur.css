@@ -638,6 +638,16 @@
     margin-bottom: 5px;
 }
 
+a.grade {
+    color: #d80000;
+}
+
+a.grade:hover {
+    color: white;
+    background-color: #d80000;
+    text-decoration: none;
+}
+
 /****************************/
 /*       SIDEBAR            */
 #sidebar h2,
