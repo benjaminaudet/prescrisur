@@ -591,6 +591,25 @@
     width: 5%;
 }
 
+#pathology .entries .reco {
+    padding: 0 !important;
+}
+
+#pathology .entries .reco .pill {
+    padding: 8px;
+}
+
+
+#pathology .text a.grade {
+    color: #d80000;
+}
+
+#pathology .text a.grade:hover {
+    color: white;
+    background-color: #d80000;
+    text-decoration: none;
+}
+
 #pathology .entries .product {
     width: 60%;
 }
@@ -636,16 +655,6 @@
 
 #print-patho {
     margin-bottom: 5px;
-}
-
-a.grade {
-    color: #d80000;
-}
-
-a.grade:hover {
-    color: white;
-    background-color: #d80000;
-    text-decoration: none;
 }
 
 /****************************/
