@@ -13,37 +13,43 @@ def required_role(role):
 			if not current_user.is_authenticated:
 				abort(401)
 			elif role not in current_user.roles:
-				return jsonify({'role_needed': role}), 403
+				return jsonify(role_needed=role), 403
 			return f(*args, **kwargs)
 		return wrapped
 	return wrapper
 
 
-def monitored():
+def monitored(f):
 	logger = Logger('prescrisur.monitor')
 	msg = "%s %s %s:%s %d"
 
-	def wrapper(f):
-		fname = f.func_name
+	def get_func_arg(func_arg, kwargs):
+		if kwargs:
+			func_arg = kwargs.values()[0]
+		return func_arg
 
-		@wraps(f)
-		def wrapped(*args, **kwargs):
-			uid = 'anonymous'
-			func_arg = None
-			if current_user.is_authenticated:
-				uid = current_user._id
-			timestarted = datetime.utcnow()
-			if kwargs:
-				func_arg = kwargs.values()[0]
-			try:
-				res = f(*args, **kwargs)
-				dt = ((datetime.utcnow() - timestarted).total_seconds() * 1000)
-				logger.info(msg % (timestarted.time().isoformat(), uid, fname, func_arg, dt))
-				return res
-			except:
-				dt = ((datetime.utcnow() - timestarted).total_seconds() * 1000)
-				logger.info(msg % (timestarted.time().isoformat(), uid, fname, func_arg, dt))
-				raise
+	def get_uid(uid):
+		if current_user.is_authenticated:
+			uid = current_user._id
+		return uid
 
-		return wrapped
-	return wrapper
+	def log(func_arg, timestarted, uid):
+		dt = ((datetime.utcnow() - timestarted).total_seconds() * 1000)
+		logger.info(msg % (timestarted.time().isoformat(), uid, f.func_name, func_arg, dt))
+
+	@wraps(f)
+	def decorated_view(*args, **kwargs):
+		uid = 'anonymous'
+		func_arg = None
+		uid = get_uid(uid)
+		timestarted = datetime.utcnow()
+		func_arg = get_func_arg(func_arg, kwargs)
+		try:
+			res = f(*args, **kwargs)
+			log(func_arg, timestarted, uid)
+			return res
+		except:
+			log(func_arg, timestarted, uid)
+			raise
+
+	return decorated_view

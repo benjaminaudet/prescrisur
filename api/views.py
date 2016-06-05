@@ -26,7 +26,7 @@ def search_speciality():
 
 @api.route('/api/substances/<subst_id>')
 @login_required
-@monitored()
+@monitored
 def substance(subst_id):
 	subst = Substance.get(subst_id)
 	if not subst:
@@ -53,6 +53,7 @@ def search_pathologies_from_substance(subst_id):
 @api.route('/api/pathologies', methods=['POST'])
 @api.route('/api/pathologies/<patho_id>', methods=['PUT'], endpoint='update_pathology')
 @required_role('admin')
+@monitored
 def edit_pathology(patho_id=None):
 	data = request.get_json()
 	patho = Pathology(**data).check().refresh_update_date()
@@ -63,6 +64,7 @@ def edit_pathology(patho_id=None):
 
 @api.route('/api/pathologies/<patho_id>', methods=['DELETE'])
 @required_role('admin')
+@monitored
 def delete_pathology(patho_id):
 	success = False
 	remove = Pathology.delete(patho_id)
@@ -73,7 +75,7 @@ def delete_pathology(patho_id):
 
 @api.route('/api/pathologies', methods=['GET'], endpoint='pathologies')
 @api.route('/api/pathologies/<patho_id>', methods=['GET'])
-@monitored()
+@monitored
 def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
 	if not patho:
@@ -89,7 +91,7 @@ def search_pathology():
 
 @api.route('/api/classes/<class_id>', methods=['GET'])
 @login_required
-@monitored()
+@monitored
 def therapeutic_class(class_id=None):
 	t_class = TherapeuticClass.get(class_id)
 	if not t_class:
@@ -105,6 +107,7 @@ def search_therapeutic_class():
 
 @api.route('/api/classes/<class_id>', methods=['DELETE'])
 @required_role('admin')
+@monitored
 def delete_therapeutic_class(class_id):
 	remove = TherapeuticClass.delete(class_id)
 	return jsonify(success=remove.acknowledged)
@@ -113,6 +116,7 @@ def delete_therapeutic_class(class_id):
 @api.route('/api/pages', methods=['POST'])
 @api.route('/api/pages/<page_id>', methods=['PUT'], endpoint='update_page')
 @required_role('admin')
+@monitored
 def edit_page(page_id=None):
 	data = request.json
 	p = Page(**data).check()
@@ -122,7 +126,7 @@ def edit_page(page_id=None):
 
 @api.route('/api/pages', methods=['GET'])
 @api.route('/api/pages/<page_id>', methods=['GET'])
-@monitored()
+@monitored
 def page(page_id=None):
 	p = Page.get(page_id)
 	if not p:
@@ -133,6 +137,7 @@ def page(page_id=None):
 @api.route('/api/news', methods=['POST'])
 @api.route('/api/news/<news_id>', methods=['PUT'], endpoint='update_news')
 @required_role('admin')
+@monitored
 def edit_news(news_id=None):
 	data = request.get_json()
 	n = News(**data).check().refresh_update_date().set_author(current_user)
@@ -142,6 +147,7 @@ def edit_news(news_id=None):
 
 @api.route('/api/news/<news_id>', methods=['DELETE'])
 @required_role('admin')
+@monitored
 def delete_news(news_id):
 	success = False
 	remove = News.delete(news_id)
@@ -152,7 +158,7 @@ def delete_news(news_id):
 
 @api.route('/api/news', methods=['GET'])
 @api.route('/api/news/<news_id>', methods=['GET'])
-@monitored()
+@monitored
 def news(news_id=None):
 	n = News.get(news_id)
 	if not n:
@@ -163,6 +169,7 @@ def news(news_id=None):
 @api.route('/api/associations', methods=['POST'])
 @api.route('/api/associations/<asso_id>', methods=['PUT'], endpoint='update_association')
 @required_role('admin')
+@monitored
 def edit_association(asso_id=None):
 	data = request.json
 	asso = Association(**data)
@@ -172,6 +179,7 @@ def edit_association(asso_id=None):
 
 @api.route('/api/associations/<asso_id>', methods=['DELETE'])
 @required_role('admin')
+@monitored
 def delete_association(asso_id):
 	success = False
 	remove = Association.delete(asso_id)
@@ -182,6 +190,7 @@ def delete_association(asso_id):
 
 @api.route('/api/associations', methods=['GET'])
 @required_role('admin')
+@monitored
 def associations():
 	asso = Association.get()
 	if not asso:
@@ -197,12 +206,14 @@ def search_association():
 
 @api.route('/api/users', methods=['GET'])
 @required_role('admin')
+@monitored
 def users():
 	return jsonify(data=User.all())
 
 
 @api.route('/api/users/<user_id>/subscription', methods=['PUT', 'DELETE'])
 @required_role('admin')
+@monitored
 def subscribe(user_id):
 	u = User.get(user_id)
 	if not u:
@@ -215,6 +226,7 @@ def subscribe(user_id):
 
 
 @api.route('/api/mail', methods=['POST'])
+@monitored
 def send_mail():
 	data = json.loads(request.data)
 	mail_service.send_to_default(data)
