@@ -345,6 +345,7 @@ def get_user_status():
 def update_user_profile():
 	data = request.get_json()
 	# Set name
+	# TODO: set email
 	current_user.name = data['name']
 	# Check password
 	if all(p in data for p in ['currentPasswd', 'newPasswd', 'confirmNewPasswd']):

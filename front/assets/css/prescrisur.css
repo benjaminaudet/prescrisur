@@ -769,7 +769,8 @@
 
 #asso-edit h2,
 #asso-edit h3,
-#asso-list h2 {
+#asso-list h2,
+#user-edit h2 {
     font-family: ErasMedium, Arial, sans-serif;
 }
 
@@ -872,4 +873,11 @@
     right: 0px;
     padding: 10px 12px;
     pointer-events: none;
+}
+
+
+/****************************/
+/*     USER EDIT PROFILE    */
+#user-edit .form-group input {
+    margin-bottom: 5px;
 }

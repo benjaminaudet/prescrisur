@@ -5,7 +5,8 @@
 <div id="content" class="row caduceus">
 	<flash-message duration="4000" show-close="true"></flash-message>
 
-	<form class="form form-horizontal" ng-submit="submit()">
+	<form id="user-edit" class="form form-horizontal" ng-submit="submit()">
+		<h2>Modifier vos données personnelles</h2>
 		<div class="form-group">
 			<label for="name" class="control-label col-md-3">Nom</label>
 			<div class="col-md-9">
@@ -13,7 +14,7 @@
 			</div>
 		</div>
 
-		<h2>Modifier le mot de passe</h2>
+		<h2>Modifier votre mot de passe</h2>
 		<div class="form-group">
 			<label for="current-passwd" class="control-label col-md-3">Mot de passe actuel</label>
 			<div class="col-md-9">
@@ -32,6 +33,11 @@
 			</div>
 		</div>
 
-		<button class="btn btn-primary" ng-disabled="disabled">Enregistrer</button>
+		<button class="btn btn-primary btn-lg col-md-3 col-md-offset-3" ng-disabled="disabled">
+			<span ng-if="disabled">
+				<i class="fa fa-spinner"></i> Enregistrement...
+			</span>
+			<span ng-if="!disabled">Enregistrer</span>
+		</button>
 	</form>
 </div>

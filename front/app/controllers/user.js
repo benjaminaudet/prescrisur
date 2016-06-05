@@ -7,7 +7,9 @@ angular.module('prescrisurApp.controllers')
 	'AuthService',
 
 	function($scope, Flash, AuthService) {
-		$scope.me = {name: $scope.currentUser.name};
+		$scope.$watch('currentUser', function(user) {
+			$scope.me = {name: user.name};
+		});
 
 		$scope.checkPassword = function() {
 			var password = $scope.me.newPasswd;
