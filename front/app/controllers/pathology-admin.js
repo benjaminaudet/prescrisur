@@ -25,6 +25,17 @@ angular.module('prescrisurApp.controllers')
 					Flash.create('danger', 'Un problème est survenu...');
 				});
 			}
+		};
+
+		$scope.unvalidate = function(pathoID) {
+			if(confirm('Voulez-vous invalider cette Pathologie ?')) {
+				PathologyService.unvalidate({ id: pathoID }, function() {
+					Flash.create('success', 'Pathologie invalidée !');
+					$state.go('pathologies', {}, {reload: true});
+				}, function() {
+					Flash.create('danger', 'Un problème est survenu...');
+				});
+			}
 		}
 	}
 ]);

@@ -48,6 +48,17 @@ angular.module('prescrisurApp.controllers')
 			}
 		};
 
+		$scope.unvalidate = function() {
+			if(confirm('Voulez-vous invalider cette Pathologie ?')) {
+				PathologyService.unvalidate({ id: $stateParams.id }, function() {
+					Flash.create('success', 'Pathologie invalidée !');
+					$state.go('pathologies.read', { id: $stateParams.id, draft: true }, { reload: true });
+				}, function() {
+					Flash.create('danger', 'Un problème est survenu...');
+				});
+			}
+		};
+
 		$scope.delete = function() {
 			if(confirm('Voulez-vous supprimer cette Pathologie ?')) {
 				PathologyService.delete({ id: $stateParams.id }, function(data) {

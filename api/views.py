@@ -100,6 +100,19 @@ def validate_pathology(patho_id):
 	return jsonify(data=patho)
 
 
+@api.route('/api/pathologies/<patho_id>/unvalidate', methods=['PUT'])
+@required_role('admin')
+@monitored
+def unvalidate_pathology(patho_id):
+	patho = Pathology.get(patho_id)
+	draft = PathologyDraft(**patho.serialize())
+	saved = draft.save()
+	if not saved.acknowledged:
+		abort(400)
+	Pathology.delete(patho_id)
+	return jsonify(data=draft)
+
+
 @api.route('/api/pathologies/<patho_id>', methods=['DELETE'])
 @required_role('admin')
 @monitored

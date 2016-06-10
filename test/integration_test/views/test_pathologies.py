@@ -396,7 +396,7 @@ def test_search_pathologies_from_substance_not_logged_in_401(collection, client)
 
 def test_validate_pathology(collection, collection_bis, client, admin):
 	# Given
-	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": None, "conclu": "conclu", "updated_at": None}
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
 	collection.insert(patho)
 	PathologyDraft.collection = collection
 	Pathology.collection = collection_bis
@@ -405,8 +405,92 @@ def test_validate_pathology(collection, collection_bis, client, admin):
 	res_no_patho = client.get(url_for('api.pathology', patho_id='patho'))
 	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
 	res_ok_patho = client.get(url_for('api.pathology', patho_id='patho'))
+	res_no_draft = client.get(url_for('api.pathology_draft', patho_id='patho'))
+	data_validate_patho = res_validate_patho.json
+	data_ok_patho = res_ok_patho.json
 
 	# Then
 	assert res_no_patho.status_code == 404
 	assert res_validate_patho.status_code == 200
 	assert res_ok_patho.status_code == 200
+	assert res_no_patho.status_code == 404
+	assert data_validate_patho['data'] == data_ok_patho['data'] == patho
+
+
+def test_validate_pathology_unauthorized_403(collection, collection_bis, client, user):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	PathologyDraft.collection = collection
+	Pathology.collection = collection_bis
+
+	# When
+	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
+
+	# Then
+	assert res_validate_patho.status_code == 403
+
+
+def test_validate_pathology_not_logged_in_401(collection, collection_bis, client):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	PathologyDraft.collection = collection
+	Pathology.collection = collection_bis
+
+	# When
+	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
+
+	# Then
+	assert res_validate_patho.status_code == 401
+
+
+def test_unvalidate_pathology(collection, collection_bis, client, admin):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	Pathology.collection = collection
+	PathologyDraft.collection = collection_bis
+
+	# When
+	res_no_draft = client.get(url_for('api.pathology_draft', patho_id='patho'))
+	res_unvalidate_patho = client.put(url_for('api.unvalidate_pathology', patho_id='patho'))
+	res_ok_draft = client.get(url_for('api.pathology_draft', patho_id='patho'))
+	res_no_patho = client.get(url_for('api.pathology', patho_id='patho'))
+	data_unvalidate_patho = res_unvalidate_patho.json
+	data_ok_draft = res_ok_draft.json
+
+	# Then
+	assert res_no_draft.status_code == 404
+	assert res_unvalidate_patho.status_code == 200
+	assert res_ok_draft.status_code == 200
+	assert res_no_patho.status_code == 404
+	assert data_unvalidate_patho['data'] == data_ok_draft['data'] == patho
+
+
+def test_unvalidate_pathology_unauthorized_404(collection, collection_bis, client, user):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	Pathology.collection = collection
+	PathologyDraft.collection = collection_bis
+
+	# When
+	res_unvalidate_patho = client.put(url_for('api.unvalidate_pathology', patho_id='patho'))
+
+	# Then
+	assert res_unvalidate_patho.status_code == 403
+
+
+def test_unvalidate_pathology_not_logged_in_401(collection, collection_bis, client):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	Pathology.collection = collection
+	PathologyDraft.collection = collection_bis
+
+	# When
+	res_unvalidate_patho = client.put(url_for('api.unvalidate_pathology', patho_id='patho'))
+
+	# Then
+	assert res_unvalidate_patho.status_code == 401
