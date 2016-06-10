@@ -3,8 +3,8 @@
 </div>
 
 <div id="content" class="row caduceus">
-	<div ng-if="draftMode" class="alert alert-info">Cette Pathologie est en mode brouillon.</div>
-	<div ng-if="draftExists" class="alert alert-warning">
+	<div ng-if="pathology && draftMode" class="alert alert-info">Cette Pathologie est en mode brouillon.</div>
+	<div ng-if="pathology && draftExists" class="alert alert-warning">
 		Un Brouillon existe pour cette Pathologie.
 		<a ui-sref="pathologies.read({id: pathology._id, draft: true})">Voir le Brouilon</a>
 	</div>
@@ -29,14 +29,22 @@
 		</div>
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>
-			<div id="print-patho" class="btn btn-default" ng-click="print()">
-				<i class="fa fa-print"></i>
-				Imprimer la Pathologie
-			</div>
-			<div class="btn-group" role="group">
+			<div class="btn-group-vertical" role="group">
+				<a class="btn btn-default" ng-click="print()">
+					<i class="fa fa-print"></i>
+					Imprimer la Pathologie
+				</a>
 				<a ui-sref="pathologies.edit({id: pathology._id, draft: draftMode})" type="button" class="btn btn-default">
 					<i class="fa fa-edit"></i>
 					Modifier
+				</a>
+				<a ng-if="draftMode" ng-click="validate()" type="button" class="btn btn-success">
+					<i class="fa fa-check"></i>
+					Valider
+				</a>
+				<a ng-if="!draftMode" type="button" class="btn btn-warning">
+					<i class="fa fa-times"></i>
+					Invalider
 				</a>
 				<a ng-click="delete()" type="button" class="btn btn-danger">
 					<i class="fa fa-trash"></i>

@@ -2,7 +2,9 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 
 .factory('PathologyService', ['$resource',
 	function($resource){
-		return $resource('/api/pathologies/:id');
+		return $resource('/api/pathologies/:id/:dest', null, {
+			validate: { method: 'PUT', params: { id: '@id', dest: 'validate' } }
+		});
 	}
 ])
 

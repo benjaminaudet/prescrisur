@@ -52,7 +52,7 @@ def delete_pathology_draft(patho_id):
 	remove = PathologyDraft.delete(patho_id)
 	if remove.acknowledged:
 		success = True
-	return jsonify({'success': success})
+	return jsonify(success=success)
 
 
 @api.route('/api/pathologies/draft', methods=['GET'], endpoint='pathologies_drafts')
@@ -86,11 +86,17 @@ def edit_pathology_draft(patho_id=None):
 	return jsonify(data=patho), status_code
 
 
-@api.route('/api/pathologies/<patho_id>/draft/validate', methods=['PUT'])
+@api.route('/api/pathologies/<patho_id>/validate', methods=['PUT'])
+@required_role('admin')
+@monitored
 def validate_pathology(patho_id):
 	draft = PathologyDraft.get(patho_id)
 	patho = Pathology(**draft.serialize())
 	patho.save_therapeutic_classes()
+	saved = patho.save()
+	if not saved.acknowledged:
+		abort(400)
+	PathologyDraft.delete(patho_id)
 	return jsonify(data=patho)
 
 

@@ -57,6 +57,41 @@ def test_get_patho_draft_no_patho_404(collection, client, admin):
 	assert res.status_code == 404
 
 
+def test_patho_has_draft(collection, client, admin):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res_ok = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
+	res_nok = client.get(url_for('api.pathology_has_draft', patho_id="no-patho"))
+	data_ok = res_ok.json
+	data_nok = res_nok.json
+
+	# Then
+	assert res_ok.status_code == 200
+	assert data_ok['exists']
+	assert res_nok.status_code == 200
+	assert not data_nok['exists']
+
+
+def test_patho_has_draft_unauthorized_403(client, user):
+	# When
+	res = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
+
+	# Then
+	assert res.status_code == 403
+
+
+def test_patho_has_draft_not_logged_in_401(client):
+	# When
+	res = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
+
+	# Then
+	assert res.status_code == 401
+
+
 def test_get_patho_draft_unauthorized_403(collection, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
@@ -357,3 +392,21 @@ def test_search_pathologies_from_substance_not_logged_in_401(collection, client)
 
 	# Then
 	assert res.status_code == 401
+
+
+def test_validate_pathology(collection, collection_bis, client, admin):
+	# Given
+	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": None, "conclu": "conclu", "updated_at": None}
+	collection.insert(patho)
+	PathologyDraft.collection = collection
+	Pathology.collection = collection_bis
+
+	# When
+	res_no_patho = client.get(url_for('api.pathology', patho_id='patho'))
+	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
+	res_ok_patho = client.get(url_for('api.pathology', patho_id='patho'))
+
+	# Then
+	assert res_no_patho.status_code == 404
+	assert res_validate_patho.status_code == 200
+	assert res_ok_patho.status_code == 200

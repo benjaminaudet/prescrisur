@@ -19,6 +19,11 @@ def collection(request):
 	return mongomock.MongoClient().db.collection
 
 
+@pytest.fixture(scope='function')
+def collection_bis(request):
+	return mongomock.MongoClient().db.collection_bis
+
+
 @pytest.fixture(scope='session')
 def user_collection(request):
 	return mongomock.MongoClient().db.User

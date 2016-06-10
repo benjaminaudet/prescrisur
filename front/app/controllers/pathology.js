@@ -31,11 +31,22 @@ angular.module('prescrisurApp.controllers')
 			PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
 		}, function() {
 			$scope.pathology = false;
-			Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...", 1500);
+			Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...");
 			$timeout(function() {
 				$state.go('home');
-			}, 1500);
+			}, 4000);
 		});
+
+		$scope.validate = function() {
+			if(confirm('Voulez-vous passer cette Pathologie en mode public ?')) {
+				PathologyService.validate({ id: $stateParams.id }, function() {
+					Flash.create('success', 'Pathologie validée !');
+					$state.go('pathologies.read', { id: $stateParams.id, draft: null }, { reload: true });
+				}, function() {
+					Flash.create('danger', 'Un problème est survenu...');
+				});
+			}
+		};
 
 		$scope.delete = function() {
 			if(confirm('Voulez-vous supprimer cette Pathologie ?')) {
