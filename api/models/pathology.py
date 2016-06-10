@@ -1,9 +1,7 @@
 # coding=utf-8
-import re
 import bleach
 import datetime
 from slugify import slugify
-from pymongo import DESCENDING
 
 from base_model import BaseModel
 from speciality import Speciality

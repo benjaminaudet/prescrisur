@@ -44,22 +44,54 @@ def search_substance():
 		return jsonify(data=Substance.search_by_name(q, {'name': 1, 'status': 1, 'specialities': 1}))
 
 
-@api.route('/api/pathologies/substances/<subst_id>')
-@login_required
-def search_pathologies_from_substance(subst_id):
-	return jsonify(data=Pathology.search_by_substance(subst_id))
-
-
-@api.route('/api/pathologies', methods=['POST'])
-@api.route('/api/pathologies/<patho_id>', methods=['PUT'], endpoint='update_pathology')
+@api.route('/api/pathologies/<patho_id>/draft', methods=['DELETE'])
 @required_role('admin')
 @monitored
-def edit_pathology(patho_id=None):
+def delete_pathology_draft(patho_id):
+	success = False
+	remove = PathologyDraft.delete(patho_id)
+	if remove.acknowledged:
+		success = True
+	return jsonify({'success': success})
+
+
+@api.route('/api/pathologies/draft', methods=['GET'], endpoint='pathologies_drafts')
+@api.route('/api/pathologies/<patho_id>/draft', methods=['GET'])
+@required_role('admin')
+@monitored
+def pathology_draft(patho_id=None):
+	patho = PathologyDraft.get(patho_id)
+	if not patho:
+		abort(404)
+	return jsonify(data=patho)
+
+
+@api.route('/api/pathologies/<patho_id>/draft/exist', methods=['GET'])
+@required_role('admin')
+def pathology_has_draft(patho_id):
+	patho = PathologyDraft.get(patho_id)
+	if patho:
+		return jsonify(exists=True)
+	return jsonify(exists=False)
+
+
+@api.route('/api/pathologies/draft', methods=['POST'])
+@api.route('/api/pathologies/<patho_id>/draft', methods=['PUT'], endpoint='update_pathology_draft')
+@required_role('admin')
+@monitored
+def edit_pathology_draft(patho_id=None):
 	data = request.get_json()
-	patho = Pathology(**data).check().refresh_update_date()
-	patho.save_therapeutic_classes()
+	patho = PathologyDraft(**data).check().refresh_update_date()
 	status_code = patho.save_or_create(patho_id)
 	return jsonify(data=patho), status_code
+
+
+@api.route('/api/pathologies/<patho_id>/draft/validate', methods=['PUT'])
+def validate_pathology(patho_id):
+	draft = PathologyDraft.get(patho_id)
+	patho = Pathology(**draft.serialize())
+	patho.save_therapeutic_classes()
+	return jsonify(data=patho)
 
 
 @api.route('/api/pathologies/<patho_id>', methods=['DELETE'])
@@ -81,6 +113,12 @@ def pathology(patho_id=None):
 	if not patho:
 		abort(404)
 	return jsonify(data=patho)
+
+
+@api.route('/api/pathologies/substances/<subst_id>')
+@login_required
+def search_pathologies_from_substance(subst_id):
+	return jsonify(data=Pathology.search_by_substance(subst_id))
 
 
 @api.route('/api/pathologies/search')

@@ -2,7 +2,7 @@ import json
 from flask import url_for
 from freezegun import freeze_time
 
-from api.models import Pathology
+from api.models import Pathology, PathologyDraft
 
 
 def test_get_patho(collection, client):
@@ -29,6 +29,58 @@ def test_get_patho_no_patho_404(collection, client):
 
 	# Then
 	assert res.status_code == 404
+
+
+def test_get_patho_draft(collection, client, admin):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
+	data = res.json
+
+	# Then
+	assert res.status_code == 200
+	assert data['data'] == obj
+
+
+def test_get_patho_draft_no_patho_404(collection, client, admin):
+	# Given
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
+
+	# Then
+	assert res.status_code == 404
+
+
+def test_get_patho_draft_unauthorized_403(collection, client, user):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
+
+	# Then
+	assert res.status_code == 403
+
+
+def test_get_patho_draft_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
+
+	# Then
+	assert res.status_code == 401
 
 
 def test_get_all_patho(collection, client):
@@ -65,6 +117,40 @@ def test_get_all_patho_no_patho_404(collection, client):
 	assert res.status_code == 404
 
 
+def test_get_all_patho_draft(collection, client, admin):
+	# Given
+	objs = [
+		{"_id": "patho1", "name": "Patho1", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
+		{"_id": "patho2", "name": "Patho2", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
+		{"_id": "patho3", "name": "Patho3", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+	]
+	map(lambda o: collection.insert(o), objs)
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathologies_drafts'))
+	data = res.json
+
+	# Then
+	assert res.status_code == 200
+	assert data['data'] == [
+		{"_id": "patho1", "name": "Patho1", "updated_at": None},
+		{"_id": "patho2", "name": "Patho2", "updated_at": None},
+		{"_id": "patho3", "name": "Patho3", "updated_at": None}
+	]
+
+
+def test_get_all_patho_draft_no_patho_404(collection, client, admin):
+	# Given
+	PathologyDraft.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathologies_drafts'))
+
+	# Then
+	assert res.status_code == 404
+
+
 def test_search_patho(collection, client):
 	# Given
 	objs = [
@@ -88,13 +174,13 @@ def test_search_patho(collection, client):
 
 
 @freeze_time("2015-01-01")
-def test_create_patho(collection, client, admin):
+def test_create_patho_draft(collection, client, admin):
 	# Given
 	obj = {"name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	Pathology.collection = collection
+	PathologyDraft.collection = collection
 
 	# When
-	res = client.post(url_for('api.edit_pathology'), data=json.dumps(obj), content_type='application/json')
+	res = client.post(url_for('api.edit_pathology_draft'), data=json.dumps(obj), content_type='application/json')
 	data = res.json
 
 	assert res.status_code == 201
@@ -106,15 +192,13 @@ def test_create_patho(collection, client, admin):
 
 
 @freeze_time("2015-01-01")
-def test_update_patho(collection, client, admin):
+def test_update_patho_draft(collection, client, admin):
 	# Given
-	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu",
-	       "updated_at": '2014-01-01T00:00:00'}
-	Pathology.collection = collection
+	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
+	PathologyDraft.collection = collection
 
 	# When
-	res = client.put(url_for('api.update_pathology', patho_id='patho-id'), data=json.dumps(obj),
-	                 content_type='application/json')
+	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
 	data = res.json
 
 	assert res.status_code == 200
@@ -125,28 +209,24 @@ def test_update_patho(collection, client, admin):
 	assert data['data']['updated_at'] == '2015-01-01T00:00:00'
 
 
-def test_update_path_unauthorized_403(collection, client, user):
+def test_update_patho_draft_unauthorized_403(collection, client, user):
 	# Given
-	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu",
-	       "updated_at": '2014-01-01T00:00:00'}
-	Pathology.collection = collection
+	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
+	PathologyDraft.collection = collection
 
 	# When
-	res = client.put(url_for('api.update_pathology', patho_id='patho-id'), data=json.dumps(obj),
-	                 content_type='application/json')
+	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
 
 	assert res.status_code == 403
 
 
-def test_update_path_not_logged_in_401(collection, client):
+def test_update_patho_draft_not_logged_in_401(collection, client):
 	# Given
-	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu",
-	       "updated_at": '2014-01-01T00:00:00'}
-	Pathology.collection = collection
+	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
+	PathologyDraft.collection = collection
 
 	# When
-	res = client.put(url_for('api.update_pathology', patho_id='patho-id'), data=json.dumps(obj),
-	                 content_type='application/json')
+	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
 
 	assert res.status_code == 401
 
@@ -189,6 +269,47 @@ def test_delete_patho_not_logged_in_401(collection, client):
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology', patho_id='patho'))
+
+	# Then
+	assert res_del.status_code == 401
+
+
+def test_delete_patho_draft(collection, client, admin):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
+	res_get = client.get(url_for('api.pathology_draft', patho_id='patho'))
+
+	# Then
+	assert res_del.status_code == 200
+	assert res_get.status_code == 404
+
+
+def test_delete_patho_draft_unauthorized_403(collection, client, user):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
+
+	# Then
+	assert res_del.status_code == 403
+
+
+def test_delete_patho_draft_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	PathologyDraft.collection = collection
+
+	# When
+	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res_del.status_code == 401

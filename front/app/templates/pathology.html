@@ -3,6 +3,12 @@
 </div>
 
 <div id="content" class="row caduceus">
+	<div ng-if="draftMode" class="alert alert-info">Cette Pathologie est en mode brouillon.</div>
+	<div ng-if="draftExists" class="alert alert-warning">
+		Un Brouillon existe pour cette Pathologie.
+		<a ui-sref="pathologies.read({id: pathology._id, draft: true})">Voir le Brouilon</a>
+	</div>
+
 	<flash-message duration="4000" show-close="true"></flash-message>
 
 	<div ng-if="!pathology">
@@ -28,7 +34,7 @@
 				Imprimer la Pathologie
 			</div>
 			<div class="btn-group" role="group">
-				<a ui-sref="pathologies.edit({id: pathology._id})" type="button" class="btn btn-default">
+				<a ui-sref="pathologies.edit({id: pathology._id, draft: draftMode})" type="button" class="btn btn-default">
 					<i class="fa fa-edit"></i>
 					Modifier
 				</a>

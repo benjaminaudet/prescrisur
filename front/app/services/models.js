@@ -2,8 +2,15 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 
 .factory('PathologyService', ['$resource',
 	function($resource){
-		return $resource('/api/pathologies/:id', null, {
-			update: { method:'PUT' }
+		return $resource('/api/pathologies/:id');
+	}
+])
+
+.factory('PathologyDraftService', ['$resource',
+	function($resource){
+		return $resource('/api/pathologies/:id/draft', null, {
+			update: { method: 'PUT' },
+			hasDraft: { method: 'GET', url: '/api/pathologies/:id/draft/exist'}
 		});
 	}
 ])
@@ -19,8 +26,6 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 		return $resource('/api/classes/:id');
 	}
 ])
-
-
 
 .factory('SubstanceService', ['$resource',
 	function($resource){

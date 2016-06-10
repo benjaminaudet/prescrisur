@@ -61,8 +61,9 @@
 					<i class="fa fa-chevron-down"></i>
 				</button>
 				<ul class="dropdown-menu" aria-labelledby="user-dropdown">
-					<li><a ui-sref="pathologies-new" ng-if="isAuthorized('admin')">Nouvelle Pathologie</a></li>
+					<li><a ui-sref="pathologies.new" ng-if="isAuthorized('admin')">Nouvelle Pathologie</a></li>
 					<li><a ui-sref="news.new" ng-if="isAuthorized('admin')">Nouvelle News</a></li>
+					<li><a ui-sref="pathologies" ng-if="isAuthorized('admin')">Pathologies</a></li>
 					<li><a ui-sref="associations" ng-if="isAuthorized('admin')">Associations</a></li>
 					<li><a ui-sref="pages" ng-if="isAuthorized('admin')">Pages</a></li>
 					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
@@ -164,6 +165,8 @@
 <script src="front/app/controllers/substance.js"></script>
 <script src="front/app/controllers/association.js"></script>
 <script src="front/app/controllers/pathology.js"></script>
+<script src="front/app/controllers/pathology-edit.js"></script>
+<script src="front/app/controllers/pathology-admin.js"></script>
 <script src="front/app/controllers/therapeutic-class.js"></script>
 <script src="front/app/controllers/user.js"></script>
 <script src="front/app/controllers/page.js"></script>

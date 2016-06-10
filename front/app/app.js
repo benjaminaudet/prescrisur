@@ -31,20 +31,34 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			access: {restricted: false}
 		})
 		// Pathologies
-		.state('pathologies-new', {
-			url: '/pathologies/new',
-			controller: 'PathologyEditController',
-			templateUrl: 'front/app/templates/pathology-edit.html',
+		.state('pathologies', {
+			url: '/pathologies',
+			controller: 'PathologyAdminController',
+			templateUrl: 'front/app/templates/pathology-admin.html',
 			access: {restricted: true, admin: true}
 		})
-		.state('pathologies', {
-			url: '/pathologies/:id',
-			controller: 'PathologyController',
-			templateUrl: 'front/app/templates/pathology.html',
-			access: {restricted: false}
-		})
+			.state('pathologies.new', {
+				url: '/new',
+				views: {
+					'@': {
+						controller: 'PathologyEditController',
+						templateUrl: 'front/app/templates/pathology-edit.html'
+					}
+				},
+				access: {restricted: true, admin: true}
+			})
+			.state('pathologies.read', {
+				url: '/:id?draft',
+				views: {
+					'@': {
+						controller: 'PathologyController',
+						templateUrl: 'front/app/templates/pathology.html'
+					}
+				},
+				access: {restricted: false}
+			})
 			.state('pathologies.edit', {
-				url: '/edit',
+				url: '/:id/edit?draft',
 				views: {
 					'@': {
 						controller: 'PathologyEditController',

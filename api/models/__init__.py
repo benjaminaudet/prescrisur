@@ -1,4 +1,5 @@
 from pathology import *
+from pathology_draft import *
 from speciality import *
 from substance import *
 from association import *

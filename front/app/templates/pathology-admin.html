@@ -1,0 +1,65 @@
+<div class="row" id="page-header">
+	<h1>Administration des Pathologies</h1>
+</div>
+
+<div id="content" class="row caduceus">
+
+	<div class="col-lg-6">
+		<h2>Brouillons en cours</h2>
+		<div class="panel panel-default">
+			<table id="drafts-list" class="table table-condensed table-striped table-bordered"`>
+				<tr>
+					<th>Nom</th>
+					<th>Mise à jour</th>
+					<th>Actions</th>
+				</tr>
+				<tr ng-repeat="draft in drafts">
+					<td>{{ draft.name }}</td>
+					<td>{{ draft.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
+					<td class="actions">
+						<div class="btn-group btn-group-xs">
+							<a class="btn btn-default" ui-sref="pathologies.read({id: draft._id, draft: true})">
+								<i class="fa fa-eye"></i> Voir
+							</a>
+							<a class="btn btn-default" ui-sref="pathologies.edit({id: draft._id, draft: true})">
+								<i class="fa fa-pencil"></i> Modifier
+							</a>
+							<a class="btn btn-success">
+								<i class="fa fa-check"></i> Valider
+							</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-lg-6">
+		<h2>Pathologies Validées</h2>
+		<div class="panel panel-default">
+			<table id="pathologies-list" class="table table-condensed table-striped table-bordered">
+				<tr>
+					<th>Nom</th>
+					<th>Actions</th>
+				</tr>
+				<tr ng-repeat="patho in pathologies">
+					<td>{{ patho.name }}</td>
+					<td class="actions">
+						<div class="btn-group btn-group-xs">
+							<a class="btn btn-default" ui-sref="pathologies.read({id: patho._id})">
+								<i class="fa fa-eye"></i> Voir
+							</a>
+							<a class="btn btn-default" ui-sref="pathologies.edit({id: patho._id})">
+								<i class="fa fa-pencil"></i> Modifier
+							</a>
+							<a class="btn btn-warning">
+								<i class="fa fa-times"></i> Invalider
+							</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
