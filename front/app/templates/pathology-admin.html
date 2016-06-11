@@ -7,14 +7,20 @@
 
 	<div class="col-lg-6">
 		<h2>Brouillons en cours</h2>
+
+		<div class="right-inner-icon">
+			<i class="fa fa-search"></i>
+			<input type="search" class="form-control" ng-model="draftQuery" placeholder="Filtrer par nom"/>
+		</div>
+
 		<div class="panel panel-default">
-			<table id="drafts-list" class="table table-condensed table-striped table-bordered"`>
+			<table id="drafts-list" class="table table-condensed table-striped table-bordered">
 				<tr>
 					<th>Nom</th>
 					<th>Mise à jour</th>
 					<th>Actions</th>
 				</tr>
-				<tr ng-repeat="draft in drafts">
+				<tr ng-repeat="draft in filteredDrafts = (drafts | filter:{name: draftQuery})">
 					<td>{{ draft.name }}</td>
 					<td>{{ draft.updated_at | date:'dd/MM/yyyy HH:mm' }}</td>
 					<td class="actions">
@@ -37,19 +43,30 @@
 						<a ui-sref="pathologies.new">Créer une Pathologie</a>
 					</td>
 				</tr>
+				<tr ng-if="drafts && !filteredDrafts.length">
+					<td colspan="3">
+						Aucun brouillon ne correspond à ces critères.
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
 
 	<div class="col-lg-6">
 		<h2>Pathologies Validées</h2>
+
+		<div class="right-inner-icon">
+			<i class="fa fa-search"></i>
+			<input type="search" class="form-control" ng-model="pathoQuery" placeholder="Filtrer par nom"/>
+		</div>
+
 		<div class="panel panel-default">
 			<table id="pathologies-list" class="table table-condensed table-striped table-bordered">
 				<tr>
 					<th>Nom</th>
 					<th>Actions</th>
 				</tr>
-				<tr ng-repeat="patho in pathologies">
+				<tr ng-repeat="patho in filteredPathologies = (pathologies | filter:{name: pathoQuery})">
 					<td>{{ patho.name }}</td>
 					<td class="actions">
 						<div class="btn-group btn-group-xs">
@@ -63,6 +80,11 @@
 								<i class="fa fa-times"></i> Invalider
 							</a>
 						</div>
+					</td>
+				</tr>
+				<tr ng-if="!filteredPathologies.length">
+					<td colspan="2">
+						Aucune pathologie ne correspond à ces critères.
 					</td>
 				</tr>
 			</table>
