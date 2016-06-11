@@ -15,7 +15,7 @@
 		<h2 class="center"><i class="fa fa-spinner"></i> Chargement de la Pathologie</h2>
 	</div>
 
-	<div id="sidebar" ng-if="pathology" class="col-md-3 col-md-push-9">
+	<div id="sidebar" ng-if="pathology" ng-hide="hide" class="col-md-3 col-md-push-9">
 		<h2>Infos & Médicaments</h2>
 		<div ng-click="toggleShowAll()" type="button" class="btn btn-default" ng-switch="foldAll">
 			<span ng-switch-when="true">
