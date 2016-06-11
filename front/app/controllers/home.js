@@ -25,7 +25,11 @@ angular.module('prescrisurApp.controllers')
 		});
 		
 		$scope.goTo = function($select) {
-			$state.go($scope.searchType, {id: $select.selected._id})
+			var searchType = $scope.searchType;
+			if(searchType == 'pathologies') {
+				searchType += '.read';
+			}
+			$state.go(searchType, {id: $select.selected._id})
 		};
 
 		$scope.search = function($select) {

@@ -12,7 +12,7 @@
 				Aucune pathologie n'est associée à cette substance.
 			</div>
 			<div class="pathology" ng-repeat="patho in pathologies">
-				<a ui-sref="pathologies({id: patho._id})">{{ patho.name }}</a>
+				<a ui-sref="pathologies.read({id: patho._id})">{{ patho.name }}</a>
 			</div>
 		</div>
 	</div>
