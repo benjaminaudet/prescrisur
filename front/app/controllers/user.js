@@ -8,7 +8,7 @@ angular.module('prescrisurApp.controllers')
 
 	function($scope, Flash, AuthService) {
 		$scope.$watch('currentUser', function(user) {
-			$scope.me = {name: user.name};
+			$scope.me = {name: user.name, email: user.email};
 		});
 
 		$scope.checkPassword = function() {
@@ -29,9 +29,13 @@ angular.module('prescrisurApp.controllers')
 			$scope.disabled = true;
 			
 			AuthService.updateUser($scope.me)
-				.then(function () {
+				.then(function (data) {
+					if(data.updated_mail) {
+						Flash.create('info', "Un mail de confirmation vient d'être envoyé à "+ data.updated_mail +" pour valider le changement d'adresse email", 0);
+					}
 					Flash.create('success', 'Profil mis à jour !');
 					$scope.disabled = false;
+					$scope.currentUser = data.user;
 				})
 				.catch(function (error) {
 					var msg = 'Une erreur est survenue...';

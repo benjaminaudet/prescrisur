@@ -316,6 +316,7 @@ def unauthorized_handler():
 
 
 @api.route('/api/register', methods=['POST'])
+@monitored
 def register():
 	data = json.loads(request.data)
 	user = User(**data)
@@ -333,6 +334,7 @@ def send_confirm():
 
 
 @api.route('/api/confirm/<token>')
+@monitored
 def confirm_email(token):
 	try:
 		email = confirm_token(token)
@@ -350,6 +352,7 @@ def confirm_email(token):
 
 
 @api.route('/api/reset/send', methods=['POST'])
+@monitored
 def send_reset_password():
 	email = request.get_json()['email']
 	user = User.get_by_email(email)
@@ -362,6 +365,7 @@ def send_reset_password():
 
 
 @api.route('/api/reset', methods=['POST'])
+@monitored
 def reset_password():
 	data = request.get_json()
 	user = User.get_by_email(data['email'])
@@ -373,6 +377,7 @@ def reset_password():
 
 
 @api.route('/api/reset/<token>')
+@monitored
 def validate_reset_password(token):
 	try:
 		email = confirm_token(token)
@@ -382,6 +387,7 @@ def validate_reset_password(token):
 
 
 @api.route('/api/login', methods=['POST'])
+@monitored
 def login():
 	data = json.loads(request.data)
 	user = User.get_by_email(data['email'])
@@ -397,6 +403,7 @@ def login():
 
 @api.route('/api/logout')
 @login_required
+@monitored
 def logout():
 	logout_user()
 	return jsonify(success=True)
@@ -411,11 +418,16 @@ def get_user_status():
 
 @api.route('/api/me', methods=['PUT'])
 @login_required
+@monitored
 def update_user_profile():
 	data = request.get_json()
 	# Set name
-	# TODO: set email
 	current_user.name = data['name']
+	# Set email
+	updated_mail = False
+	if data['email'] != '' and data['email'] != current_user.email:
+		send_update_email(data['email'], current_user.email)
+		updated_mail = data['email']
 	# Check password
 	if all(p in data for p in ['currentPasswd', 'newPasswd', 'confirmNewPasswd']):
 		if current_user.verify_password(data['currentPasswd']) and data['newPasswd'] == data['confirmNewPasswd']:
@@ -423,7 +435,28 @@ def update_user_profile():
 		else:
 			return jsonify(bad_password=True), 400
 	current_user.save()
-	return jsonify(user=current_user.clean())
+	return jsonify(user=current_user.clean(), updated_mail=updated_mail)
+
+
+@api.route('/api/me/<token>')
+@monitored
+def update_user_email(token):
+	try:
+		key = confirm_token(token)
+	except Exception as e:
+		return 'Lien non valide'
+	split = key.split('+')
+	new_email = split[0]
+	old_email = split[1]
+	user = User.get_by_email(old_email)
+	if not user:
+		abort(404)
+	else:
+		user.email = new_email
+		user.save()
+		logout_user()
+		login_user(user)
+	return redirect('/')
 
 
 # Errors

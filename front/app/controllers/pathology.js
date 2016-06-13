@@ -81,6 +81,12 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.print = function() {
+			var onPrintFinished = function() {
+				$scope.hide = false;
+				showAll($scope.pathology, false);
+			};
+
+			$scope.hide = true;
 			showAll($scope.pathology, true);
 			$timeout(function() {
 				onPrintFinished($window.print())
@@ -108,9 +114,5 @@ angular.module('prescrisurApp.controllers')
 				});
 			}
 		};
-
-		var onPrintFinished = function(printed) {
-			showAll($scope.pathology, false);
-		}
 	}
 ]);

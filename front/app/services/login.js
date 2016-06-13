@@ -210,7 +210,7 @@ function ($q, $timeout, $http) {
 				if(!user) {
 					deferred.reject({});
 				}
-				deferred.resolve(user);
+				deferred.resolve(data);
 			})
 			// handle error
 			.error(function (e) {

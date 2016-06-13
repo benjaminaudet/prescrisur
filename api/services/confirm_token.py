@@ -31,6 +31,15 @@ def send_confirm_email(email):
 	return mail_service.send_from_default(email, subject, email_body)
 
 
+def send_update_email(new_email, old_email):
+	key = '+'.join([new_email, old_email])
+	token = generate_confirmation_token(key)
+	confirm_url = url_for('api.update_user_email', token=token, _external=True)
+	email_body = render_template('update-email.html', confirm_url=confirm_url)
+	subject = "Prescrisur - Changement d'adresse mail"
+	return mail_service.send_from_default(new_email, subject, email_body)
+
+
 def send_reset_password_email(email):
 	token = generate_confirmation_token(email)
 	confirm_url = url_for('api.index', _external=True) + '#/reset/' + token
