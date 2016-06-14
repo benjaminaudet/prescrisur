@@ -270,12 +270,13 @@
 /****************************/
 /*         PAGE HEADER      */
 #page-header {
-    margin: -17px 0 40px 0 !important;
+    margin: -27px 0 40px 0 !important;
     padding: 0 10px;
-    font-family: ErasLight, Arial, sans-serif;
-    color: white;
-    min-height: 50px;
-    background-color: #B60027;
+    font-family: ErasMedium, Arial, sans-serif;
+    min-height: 40px;
+    border-bottom: 2px solid #B60027;
+    /*color: white;*/
+    /*background-color: #B60027;*/
 }
 
 #patho-alerts {
