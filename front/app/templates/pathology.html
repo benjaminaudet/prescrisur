@@ -3,7 +3,7 @@
 </div>
 
 <div id="content" class="row caduceus">
-	<div ng-if="isAuthorized('admin')">
+	<div id="patho-alerts" ng-if="isAuthorized('admin')">
 		<div ng-if="pathology && !draftMode" class="alert alert-success">Cette Pathologie est validée.</div>
 		<div ng-if="pathology && draftMode" class="alert alert-info">Cette Pathologie est en mode brouillon.</div>
 		<div ng-if="pathology && draftExists" class="alert alert-warning">
@@ -11,7 +11,7 @@
 			<a ui-sref="pathologies.read({id: pathology._id, draft: true})">Voir le Brouilon</a>
 		</div>
 	</div>
-	
+
 	<flash-message duration="4000" show-close="true"></flash-message>
 
 	<div ng-if="!pathology">
@@ -19,7 +19,8 @@
 	</div>
 
 	<div id="sidebar" ng-if="pathology" ng-hide="hide" class="col-md-3 col-md-push-9">
-		<h2>Infos & Médicaments</h2>
+		<div id="updated">Mise à jour {{ pathology.updated_at | date:'mediumDate' }}</div>
+		<h2 class="sidebar-title">Infos & Médicaments</h2>
 		<div ng-click="toggleShowAll()" type="button" class="btn btn-default" ng-switch="foldAll">
 			<span ng-switch-when="true">
 				<i class="fa fa-compress"></i>
@@ -55,8 +56,6 @@
 				</a>
 			</div>
 		</div>
-		<h2 id="updated-title">Dernière Mise à Jour</h2>
-		<span class="updated">{{ pathology.updated_at | timeAgo }}</span>
 		<h2>
 			Sommaire
 			<button class="summary-toggle visible-xs-inline" data-toggle="collapse" data-target=".summary-collapse">

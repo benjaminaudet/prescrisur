@@ -278,6 +278,10 @@
     background-color: #B60027;
 }
 
+#patho-alerts {
+    margin-top: -20px;
+}
+
 
 /****************************/
 /*       TEXT ANGULAR       */
@@ -668,7 +672,7 @@
 }
 
 @media (max-width: 768px) {
-    #updated-title {
+    .sidebar-title {
         display: inline-block;
         margin-right: 10px;
     }
@@ -680,6 +684,12 @@
     }
 }
 
+#updated {
+    font-weight: bold;
+    font-style: italic;
+    color: #236892;
+    font-size: 1.1em;
+}
 
 /****************************/
 /*       PAGES              */

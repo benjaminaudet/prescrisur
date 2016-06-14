@@ -4,6 +4,7 @@
 
 <div id="content" class="row">
 	<div id="sidebar" class="col-md-4 col-md-push-8">
+		<span id="updated">Mise à jour {{ therapeuticClass.pathology.updated_at | date:'mediumDate' }}</span>
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>
 			<div ng-click="delete()" type="button" class="btn btn-danger">
@@ -15,8 +16,6 @@
 		<a ui-sref="pathologies.read({id: therapeuticClass.pathology._id})">
 			{{ therapeuticClass.pathology.name }}
 		</a>
-		<h2 id="updated-title">Dernière Mise à Jour</h2>
-		<span class="updated">{{ therapeuticClass.pathology.updated_at | timeAgo }}</span>
 	</div>
 
 	<div id="pathology" class="col-md-8 col-md-pull-4">

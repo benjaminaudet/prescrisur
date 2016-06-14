@@ -4,7 +4,6 @@ var app = angular.module('prescrisurApp', [
 	'ui.bootstrap',
 	'ngFlash',
 	'colorpicker.module',
-	'yaru22.angular-timeago',
 	'textAngular',
 	'ngSanitize',
 	'prescrisurApp.commonsServices',
