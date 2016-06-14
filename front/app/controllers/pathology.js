@@ -17,15 +17,17 @@ angular.module('prescrisurApp.controllers')
 		$scope.foldAll = false;
 
 		var pathoService = PathologyService;
-		if($stateParams.draft) {
-			$scope.draftMode = true;
-			pathoService = PathologyDraftService;
-		} else {
-			PathologyDraftService.hasDraft({ id: $stateParams.id }, function(data) {
-				$scope.draftExists = data.exists;
-			});
+		if($scope.isAuthorized('admin')) {
+			if($stateParams.draft) {
+				$scope.draftMode = true;
+				pathoService = PathologyDraftService;
+			} else {
+				PathologyDraftService.hasDraft({ id: $stateParams.id }, function(data) {
+					$scope.draftExists = data.exists;
+				});
+			}
 		}
-
+		
 		pathoService.get({ id: $stateParams.id }, function(data) {
 			$scope.pathology = data.data;
 			PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
