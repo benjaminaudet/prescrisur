@@ -285,6 +285,13 @@
 
 /****************************/
 /*       TEXT ANGULAR       */
+.editor-area {
+    padding: 10px;
+    background-color: rgba(10, 10, 10, 0.05);
+    border: 1px solid #CCC;
+    border-radius: 6px;
+}
+
 .pathology-editor .ta-editor {
     min-height: 150px;
     height: 150px;

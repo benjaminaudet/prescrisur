@@ -72,7 +72,9 @@
 	</div>
 	<!-- Level Text -->
 	<div class="form-group">
-		<text-angular ng-model="data.text" class="pathology-editor"></text-angular>
+		<div class="editor-area">
+			<text-angular ng-model="data.text" class="pathology-editor"></text-angular>
+		</div>
 		<!-- Level Class Checkbox -->
 		<input type="checkbox" ng-model="data.is_class" ng-click="checkChildren(data)" />
 		<label class="control-label">Classe Pharmaco-Thérapeutique</label>
