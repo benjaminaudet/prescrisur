@@ -671,7 +671,7 @@
     font-size: 18pt;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .sidebar-title {
         display: inline-block;
         margin-right: 10px;
