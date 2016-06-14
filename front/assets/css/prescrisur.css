@@ -527,6 +527,11 @@
     margin-bottom: 10px;
 }
 
+.close-spec-list {
+    margin-top: 7px;
+    margin-bottom: 4px;
+}
+
 /****************************/
 /*       DISPLAY            */
 #pathology h2 {
