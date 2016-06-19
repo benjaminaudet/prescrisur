@@ -684,6 +684,11 @@
     width: auto;
 }
 
+#sidebar-search .ui-select-toggle,
+#sidebar-search .ui-select-search {
+    border-radius: 50px;
+}
+
 /****************************/
 /*       ADMIN              */
 #pathologies-list .actions,
