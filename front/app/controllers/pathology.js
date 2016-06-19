@@ -9,10 +9,11 @@ angular.module('prescrisurApp.controllers')
 	'$stateParams',
 	'Flash',
 	'PageTitleService',
+	'SearchService',
 	'PathologyService',
 	'PathologyDraftService',
 
-	function($scope, $state, $window, $timeout, $location, $stateParams, Flash, PageTitleService, PathologyService, PathologyDraftService) {
+	function($scope, $state, $window, $timeout, $location, $stateParams, Flash, PageTitleService, SearchService, PathologyService, PathologyDraftService) {
 		$scope.pathology = null;
 		$scope.foldAll = false;
 
@@ -38,6 +39,24 @@ angular.module('prescrisurApp.controllers')
 				$state.go('home');
 			}, 4000);
 		});
+
+		$scope.search = function($select) {
+			var search = '';
+			if($select) {
+				search = $select.search;
+			}
+			$scope.results = searchMessage('Recherche en cours...');
+			SearchService.get({q: search, searchType: 'pathologies'}, function(data) {
+				$scope.results = data.data;
+				if ($scope.results.length == 0) {
+					$scope.results = searchMessage('Aucun résultat');
+				}
+			});
+		};
+
+		$scope.goTo = function($select) {
+			$state.go('pathologies.read', {id: $select.selected._id});
+		};
 
 		$scope.validate = function() {
 			if(confirm('Voulez-vous passer cette Pathologie en mode public ?')) {
@@ -115,6 +134,13 @@ angular.module('prescrisurApp.controllers')
 					}
 				});
 			}
+		};
+
+		var searchMessage = function(msg) {
+			return [{
+				_id: null,
+				name: msg
+			}];
 		};
 	}
 ]);

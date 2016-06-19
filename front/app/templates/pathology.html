@@ -20,18 +20,29 @@
 
 	<div id="sidebar" ng-if="pathology" ng-hide="hide" class="col-md-3 col-md-push-9">
 		<div id="updated">Mise à jour {{ pathology.updated_at | date:'mediumDate' }}</div>
-		<div class="hidden-xs">
-			<h2 class="sidebar-title">Infos & Médicaments</h2>
-			<div ng-click="toggleShowAll()" type="button" class="btn btn-default" ng-switch="foldAll">
-			<span ng-switch-when="true">
-				<i class="fa fa-compress"></i>
-				Tout Replier
-			</span>
-			<span ng-switch-default>
-				<i class="fa fa-expand"></i>
-				Tout Déplier
-			</span>
+		<div class="hidden-sm">
+
+			<h2>Rechercher</h2>
+			<ui-select ng-model="selected.value" on-select="goTo($select)">
+				<ui-select-match placeholder="Rechercher une Pathologie...">
+					<span ng-bind="$select.selected.name"></span>
+				</ui-select-match>
+				<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
+					{{ r.name }}
+				</ui-select-choices>
+			</ui-select>
+
+			<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default col-md-12" ng-switch="foldAll">
+				<span ng-switch-when="true">
+					<i class="fa fa-compress"></i>
+					Replier la Pathologie
+				</span>
+				<span ng-switch-default>
+					<i class="fa fa-expand"></i>
+					Déplier la Pathologie
+				</span>
 			</div>
+
 		</div>
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>

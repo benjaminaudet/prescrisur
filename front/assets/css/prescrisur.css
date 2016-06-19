@@ -87,6 +87,10 @@
     display: inline;
 }
 
+.no-padding {
+    padding: 0;
+}
+
 .hover-dropdown:hover > .dropdown-menu {
     display: block;
 }
@@ -668,6 +672,10 @@
 
 #pathology-summary ul {
     padding-left: 10px;
+}
+
+#fold-patho {
+    margin: 10px 0 20px 0;
 }
 
 /****************************/

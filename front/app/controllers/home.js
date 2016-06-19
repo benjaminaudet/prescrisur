@@ -29,7 +29,7 @@ angular.module('prescrisurApp.controllers')
 			if(searchType == 'pathologies') {
 				searchType += '.read';
 			}
-			$state.go(searchType, {id: $select.selected._id})
+			$state.go(searchType, {id: $select.selected._id});
 		};
 
 		$scope.search = function($select) {
