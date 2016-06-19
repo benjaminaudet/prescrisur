@@ -32,6 +32,7 @@
 				</ui-select-choices>
 			</ui-select>
 
+			<h2>Pathologie</h2>
 			<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default col-md-12" ng-switch="foldAll">
 				<span ng-switch-when="true">
 					<i class="fa fa-compress"></i>
@@ -111,7 +112,7 @@
 			<td class="product">
 				{{ entry.product.name }} <span class="spec-status">{{ entry.product.status }}</span>
 			</td>
-			<td class="more-info" ng-switch="entry.type" colspan="{{ entryColspan(entry) }}">
+			<td class="more-info" ng-class="entry.info ? 'has-info' : 'no-info'" ng-switch="entry.type" colspan="{{ entryColspan(entry) }}">
 				<div ng-switch-when="specialities">
 					<a ui-sref="specialities({id: entry.product._id})" target="_blank">RCP ANSM/EMEA</a>
 				</div>

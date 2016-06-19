@@ -287,6 +287,10 @@
     margin-top: -20px;
 }
 
+#register-btn {
+    margin-right: 10px;
+}
+
 
 /****************************/
 /*       TEXT ANGULAR       */
@@ -635,12 +639,15 @@
     width: 60%;
 }
 
-#pathology .entries .more-info {
-    width: 30%
+#pathology .entries .more-info.no-info {
+    width: 35%
+}
+#pathology .entries .more-info.has-info {
+    width: 27%
 }
 
 #pathology .entries .info-button {
-    width: 5%
+    width: 8%
 }
 
 #pathology .info-button {
@@ -672,21 +679,6 @@
 
 #pathology-summary ul {
     padding-left: 10px;
-}
-
-#fold-patho {
-    margin: 10px 0 20px 0;
-}
-
-#sidebar-search .ui-select-dropdown {
-    right: 0;
-    left: auto;
-    width: auto;
-}
-
-#sidebar-search .ui-select-toggle,
-#sidebar-search .ui-select-search {
-    border-radius: 50px;
 }
 
 /****************************/
@@ -721,6 +713,21 @@
     font-style: italic;
     color: #236892;
     font-size: 1.1em;
+}
+
+#fold-patho {
+    margin: 0 0 20px 0;
+}
+
+#sidebar-search .ui-select-dropdown {
+    right: 0;
+    left: auto;
+    width: auto;
+}
+
+#sidebar-search .ui-select-toggle,
+#sidebar-search .ui-select-search {
+    border-radius: 50px;
 }
 
 /****************************/
