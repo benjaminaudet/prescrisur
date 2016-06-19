@@ -678,6 +678,12 @@
     margin: 10px 0 20px 0;
 }
 
+#sidebar-search .ui-select-dropdown {
+    right: 0;
+    left: auto;
+    width: auto;
+}
+
 /****************************/
 /*       ADMIN              */
 #pathologies-list .actions,

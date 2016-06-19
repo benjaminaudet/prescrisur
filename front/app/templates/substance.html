@@ -17,12 +17,13 @@
 		</div>
 		<div class="hidden-sm">
 			<h2>Rechercher</h2>
-			<ui-select ng-model="selected.value" on-select="goTo($select)">
+			<ui-select id="sidebar-search" ng-model="selected.value" on-select="goTo($select)">
 				<ui-select-match placeholder="Rechercher une Substance...">
 					<span ng-bind="$select.selected.name"></span>
 				</ui-select-match>
 				<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
 					{{ r.name }}
+					<span class="spec-status" ng-if="r.status">{{ r.status }}</span>
 				</ui-select-choices>
 			</ui-select>
 		</div>
