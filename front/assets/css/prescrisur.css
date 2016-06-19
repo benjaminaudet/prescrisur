@@ -548,6 +548,21 @@
     margin-bottom: 4px;
 }
 
+#pathology-form .level-number {
+    width: 10%;
+    text-align: left;
+}
+
+#pathology-form .level-name {
+    width: 73%;
+    display: inline-block;
+}
+
+#pathology-form .level-actions {
+    width: 15%;
+    padding-left: 15px;
+}
+
 /****************************/
 /*       DISPLAY            */
 #pathology h2 {

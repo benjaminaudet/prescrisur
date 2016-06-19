@@ -22,7 +22,7 @@
 		</div>
 		<!-- Pathology Tree -->
 		<div class="pathology-tree">
-			<div ng-repeat="data in pathology.levels" ng-include="'patho-edit-tree.html'" class="level" depth="1"></div>
+			<div ng-repeat="data in pathology.levels" ng-include="'patho-edit-tree.html'" class="level"></div>
 		</div>
 
 		<!-- Conclusion text -->
@@ -43,15 +43,15 @@
 <script type="text/ng-template"  id="patho-edit-tree.html">
 	<!-- Level Name -->
 	<div class="form-group level-header">
-		<label class="level-name col-xs-2 control-label">
+		<label class="level-number control-label">
 			<i class="fa fa-arrow-up" ng-if="$index > 0" ng-click="goUp(data, $index)"></i>
 			<i class="fa fa-arrow-down" ng-if="!$last" ng-click="goDown(data, $index)"></i>
 			{{ data.rank }}{{ $index + 1 }}.
 		</label>
-		<div class="col-xs-8">
+		<div class="level-name">
 			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
 		</div>
-		<div class="btn-group-vertical level-actions col-xs-2" role="group">
+		<div class="btn-group-vertical level-actions" role="group">
 			<div class="btn btn-xs" ng-click="addRootLevel()" ng-show="canAddRootLevel(data, $index)">
 				<i class="fa fa-plus"></i>
 				Niveau
@@ -81,7 +81,7 @@
 	</div>
 	<!-- Level subTree -->
 	<div ng-if="data.levels && data.levels.length > 0">
-		<div ng-repeat="data in data.levels" ng-include="'patho-edit-tree.html'" class="level" depth="{{ data.depth }}"></div>
+		<div ng-repeat="data in data.levels" ng-include="'patho-edit-tree.html'" class="level" depth="1"></div>
 	</div>
 	<!-- Level entries -->
 	<table class="table entries-edit" ng-if="data.entries && data.entries.length > 0">
