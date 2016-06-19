@@ -15,6 +15,17 @@
 				<a ui-sref="pathologies.read({id: patho._id})">{{ patho.name }}</a>
 			</div>
 		</div>
+		<div class="hidden-sm">
+			<h2>Rechercher</h2>
+			<ui-select ng-model="selected.value" on-select="goTo($select)">
+				<ui-select-match placeholder="Rechercher une Substance...">
+					<span ng-bind="$select.selected.name"></span>
+				</ui-select-match>
+				<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
+					{{ r.name }}
+				</ui-select-choices>
+			</ui-select>
+		</div>
 	</div>
 
 	<div id="specialities" ng-if="substance" class="col-md-8 col-md-pull-4">
