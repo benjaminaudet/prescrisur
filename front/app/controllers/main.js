@@ -21,6 +21,10 @@ angular.module('prescrisurApp.controllers')
 			}
 			return false;
 		};
+		
+		$scope.isState = function(state) {
+			return $state.current.name == state;
+		};
 
 		$scope.checkPageInfoState = function() {
 			if($state.current.name == 'pages') {
