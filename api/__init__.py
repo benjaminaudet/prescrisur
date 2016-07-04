@@ -23,7 +23,7 @@ def create_app(config_module):
 
 	# Init plugins
 	mail.init_app(app_)
-	cors.init_app(app_)
+	cors.init_app(app_, support_credentials=True, methods=['GET'])
 	login_manager.init_app(app_)
 	return app_
 
