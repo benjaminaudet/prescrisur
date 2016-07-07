@@ -2,7 +2,7 @@ from slugify import slugify
 from pymongo import ASCENDING
 from flask import current_app
 from passlib.hash import pbkdf2_sha256
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
+from itsdangerous import TimedJSONWebSignatureSerializer as URLSafeSerializer, BadSignature, SignatureExpired
 
 from base_model import BaseModel
 
@@ -63,16 +63,14 @@ class User(BaseModel):
 		return pbkdf2_sha256.verify(password, self.password_hash)
 
 	def generate_auth_token(self):
-		s = Serializer(current_app.config['SECRET_KEY'], expires_in=None)
+		s = URLSafeSerializer(current_app.config['SECRET_KEY'], expires_in=3153600000)
 		self.token = s.dumps(self.email, salt=current_app.config['SECURITY_PASSWORD_SALT'])
 
 	@staticmethod
 	def verify_auth_token(token):
-		s = Serializer(current_app.config['SECRET_KEY'])
+		s = URLSafeSerializer(current_app.config['SECRET_KEY'])
 		try:
 			email = s.loads(token, salt=current_app.config['SECURITY_PASSWORD_SALT'])
-		except SignatureExpired:
-			return None # valid token, but expired
 		except BadSignature:
 			return None # invalid token
 		return User.get_by_email(email)
