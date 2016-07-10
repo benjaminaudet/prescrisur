@@ -54,7 +54,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 						templateUrl: 'front/app/templates/pathology.html'
 					}
 				},
-				access: {restricted: false}
+				access: {restricted: true}
 			})
 			.state('pathologies.edit', {
 				url: '/:id/edit?draft',
