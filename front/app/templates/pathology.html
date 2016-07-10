@@ -1,5 +1,15 @@
 <div class="row" id="page-header">
-	<h1>{{ pathology.name }}</h1>
+	<h1 class="inline-block">{{ pathology.name }}</h1>
+	<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default btn-xs inline-block" ng-switch="foldAll">
+				<span ng-switch-when="true">
+					<i class="fa fa-compress"></i>
+					Replier la Pathologie
+				</span>
+				<span ng-switch-default>
+					<i class="fa fa-expand"></i>
+					Déplier la Pathologie
+				</span>
+	</div>
 </div>
 
 <div id="content" class="row caduceus">
@@ -31,18 +41,6 @@
 					{{ r.name }}
 				</ui-select-choices>
 			</ui-select>
-
-			<h2>Pathologie</h2>
-			<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default col-md-12" ng-switch="foldAll">
-				<span ng-switch-when="true">
-					<i class="fa fa-compress"></i>
-					Replier la Pathologie
-				</span>
-				<span ng-switch-default>
-					<i class="fa fa-expand"></i>
-					Déplier la Pathologie
-				</span>
-			</div>
 
 		</div>
 		<div ng-if="isAuthorized('admin')">
