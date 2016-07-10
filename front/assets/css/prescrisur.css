@@ -56,12 +56,13 @@
 }
 
 .btn.btn-primary {
-    background-color: #3283bf;
+    border: 1px solid #777;
+    background-color: #aaa;
 }
 
 .btn.btn-primary.active,
 .btn.btn-primary:hover {
-    background-color: #236892;
+    background-color: #888;
 }
 
 /****************************/
