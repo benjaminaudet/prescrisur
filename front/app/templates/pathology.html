@@ -95,7 +95,7 @@
 	<div class="level-header" id="{{ data.rank }}{{ $index + 1 }}.">
 		<level-title title="{{ data.name }}" rank="{{ data.rank }}{{ $index + 1 }}." depth="{{ data.depth }}"></level-title>
 	</div>
-	<div class="text level-text" ng-if="data.text" ng-bind-html="data.text | gradify"></div>
+	<div class="text level-text" ng-if="data.text" ng-bind-html-compile="data.text | gradify"></div>
 
 	<div ng-if="data.levels && data.levels.length > 0">
 		<div ng-repeat="data in data.levels" ng-include="'patho-tree.html'" class="level" depth="{{ data.depth }}"></div>
