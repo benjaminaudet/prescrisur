@@ -357,7 +357,7 @@
 
 .jumbotron h1 {
     font-family: ErasMedium, Arial, sans-serif;
-    font-size: 3em;
+    font-size: 3em !important;
 }
 
 .jumbotron .btn-group .btn {
@@ -442,6 +442,30 @@
     margin: 0 10px;
     padding: 30px;
     border: 1px solid #ccc;
+}
+
+#home-info .text-box {
+    border: 1px solid #ddd;
+    /*background-color: rgba(240, 240, 240, 0.2);*/
+    border-radius: 10px;
+    padding: 0 15px 15px 15px;
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 991px) {
+    #home-info.row {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #home-info.row > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /****************************/

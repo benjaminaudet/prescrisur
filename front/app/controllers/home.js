@@ -6,18 +6,18 @@ angular.module('prescrisurApp.controllers')
 	'$stateParams',
 	'PageTitleService',
 	'SearchService',
-	'NewsService',
+	'PageService',
 	'PathologyService',
 
-	function($scope, $state, $stateParams, PageTitleService, SearchService, NewsService, PathologyService) {
+	function($scope, $state, $stateParams, PageTitleService, SearchService, PageService, PathologyService) {
 		PageTitleService.setTitle("Outil d'aide à la Prescription");
 
 		$scope.q = null;
 		$scope.searchType = 'pathologies';
 		$scope.results = [];
-		
-		NewsService.get(function(data) {
-			$scope.news = data.data;
+
+		PageService.get({id: 'bienvenue'}, function(data) {
+			$scope.welcome = data.data;
 		});
 		
 		PathologyService.get(function(data) {
