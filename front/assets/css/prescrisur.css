@@ -221,8 +221,7 @@
 }
 
 #navbar li.active a,
-#navbar li a:hover,
-#navbar li.active-parent a.parent-menu{
+#navbar li.active-parent a.parent-menu {
     background-color: #6E0018;
 }
 
@@ -244,7 +243,7 @@
     border: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .navbar-collapse {
         margin-top: 50px;
     }
@@ -258,6 +257,11 @@
         background-color: #B60027;
         visibility: visible;
     }
+
+    .navbar-nav li.open a.parent-menu {
+        border: 1px solid #6E0018;
+        background-color: #E30E3C !important;
+    }
 }
 
 .navbar-nav .subnav li a {
@@ -267,6 +271,10 @@
 @media (min-width: 768px) {
     .navbar-nav .subnav li a {
         color: #333 !important;
+    }
+
+    #navbar li a:hover {
+        background-color: #6E0018;
     }
 }
 
