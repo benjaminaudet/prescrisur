@@ -113,8 +113,8 @@ class Pathology(BaseModel):
 		assert 'reco' in entry
 		entry['reco'] = self._check_entry_reco(entry['reco'])
 		# Check info
-		if 'info' in entry:
-			entry['info'] = entry['info']
+		if 'info' in entry and entry['info'] == "":
+			del entry['info']
 		return entry
 
 	def _check_entry_reco(self, reco):

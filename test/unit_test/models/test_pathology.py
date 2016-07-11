@@ -142,6 +142,11 @@ class TestCheckEntry:
 		with pytest.raises(AssertionError):
 			pathology._check_entry({'type': 'substances', 'product': {'_id': 'lol', 'name': 'ok'}})
 
+	def test_delete_info_if_empty_string(self, pathology):
+		entry = {'type': 'specialities', 'product': {'_id': 'lol', 'name': 'ok'}, 'reco': {'_id': 'ok'}, 'info': ''}
+		checked_entry = pathology._check_entry(entry)
+		assert 'info' not in checked_entry
+
 	def test_association_product(self, pathology):
 		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'substances': [], 'displayOptions': True}
 		checked_product = pathology._check_entry_product(product, 'associations')
