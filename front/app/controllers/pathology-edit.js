@@ -31,6 +31,7 @@ angular.module('prescrisurApp.controllers')
 		if($stateParams.id) {
 			pathoService.get({ id: $stateParams.id }, function(data) {
 				$scope.pathology = data.data;
+				$scope.displayAllInfo = true;
 				PageTitleService.setTitle('Modifier une Pathologie');
 			});
 		}
@@ -178,10 +179,6 @@ angular.module('prescrisurApp.controllers')
 			data.entries.push({reco: {_id: 'none'}, type: 'substances'});
 		};
 
-		$scope.addInfo = function(entry) {
-			entry.info = 'Info';
-		};
-
 		$scope.addRootLevel = function() {
 			$scope.pathology.levels.push({rank: '', depth: 1});
 		};
@@ -262,6 +259,10 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.isSubstanceOrSpeciality = function(entry) {
 			return (entry.type == 'substances' || entry.type == 'specialities') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
+		};
+
+		$scope.showInfo = function(entry) {
+			return entry.displayInfo || ($scope.displayAllInfo && entry.info);
 		};
 	}
 ]);

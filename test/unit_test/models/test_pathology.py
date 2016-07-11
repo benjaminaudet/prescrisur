@@ -147,6 +147,11 @@ class TestCheckEntry:
 		checked_entry = pathology._check_entry(entry)
 		assert 'info' not in checked_entry
 
+	def test_do_not_save_display_info_attr(self, pathology):
+		entry = {'type': 'specialities', 'product': {'_id': 'lol', 'name': 'ok'}, 'reco': {'_id': 'ok'}, 'info': 'hello', 'displayInfo': True}
+		checked_entry = pathology._check_entry(entry)
+		assert 'displayInfo' not in checked_entry
+
 	def test_association_product(self, pathology):
 		product = {'_id': 'lol', 'name': 'ok', 'specialities': [], 'substances': [], 'displayOptions': True}
 		checked_product = pathology._check_entry_product(product, 'associations')

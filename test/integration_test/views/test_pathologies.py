@@ -5,7 +5,7 @@ from freezegun import freeze_time
 from api.models import Pathology, PathologyDraft
 
 
-def test_get_patho(collection, client):
+def test_get_patho(collection, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
 	collection.insert(obj)
@@ -20,7 +20,20 @@ def test_get_patho(collection, client):
 	assert data['data'] == obj
 
 
-def test_get_patho_no_patho_404(collection, client):
+def test_get_patho_not_logged_in_401(collection, client):
+	# Given
+	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
+	collection.insert(obj)
+	Pathology.collection = collection
+
+	# When
+	res = client.get(url_for('api.pathology', patho_id='patho'))
+
+	# Then
+	assert res.status_code == 401
+
+
+def test_get_patho_no_patho_404(collection, client, user):
 	# Given
 	Pathology.collection = collection
 
@@ -118,7 +131,7 @@ def test_get_patho_draft_not_logged_in_401(collection, client):
 	assert res.status_code == 401
 
 
-def test_get_all_patho(collection, client):
+def test_get_all_patho(collection, client, user):
 	# Given
 	objs = [
 		{"_id": "patho1", "name": "Patho1", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
@@ -141,7 +154,7 @@ def test_get_all_patho(collection, client):
 	]
 
 
-def test_get_all_patho_no_patho_404(collection, client):
+def test_get_all_patho_no_patho_404(collection, client, user):
 	# Given
 	Pathology.collection = collection
 

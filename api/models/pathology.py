@@ -104,6 +104,7 @@ class Pathology(BaseModel):
 		return level
 
 	def _check_entry(self, entry):
+		clean_entry = {}
 		# Check type
 		assert entry['type'] in self.AUTHORIZED_TYPES
 		# Check product
@@ -115,6 +116,8 @@ class Pathology(BaseModel):
 		# Check info
 		if 'info' in entry and entry['info'] == "":
 			del entry['info']
+		if 'displayInfo' in entry:
+			del entry['displayInfo']
 		return entry
 
 	def _check_entry_reco(self, reco):

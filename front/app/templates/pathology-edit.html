@@ -131,7 +131,7 @@
 				<span class="btn btn-default" ng-show="isSubstanceOrAsso(entry)" ng-click="displaySpecialities(entry.product.specialities)" ng-model="entry.product.displayOptions" uib-btn-checkbox>
 					Plus
 				</span>
-				<span class="btn btn-default" ng-click="addInfo(entry)">Info</span>
+				<span class="btn btn-default" ng-model="entry.displayInfo" uib-btn-checkbox>Info</span>
 				<span class="btn remove-entry pull-right" ng-click="removeEntry(data, $index)"><i class="fa fa-remove"></i></span>
 			</td>
 		</tr>
@@ -155,7 +155,7 @@
 				<div class="close-spec-list btn btn-primary btn-sm" ng-model="entry.product.displayOptions" uib-btn-checkbox>Fermer la liste des spécialités</div>
 			</td>
 		</tr>
-		<tr ng-show="entry.info" ng-repeat-end>
+		<tr ng-show="showInfo(entry)" ng-repeat-end>
 			<td colspan="5">
 				<text-angular ng-model="entry.info" class="info-editor"></text-angular>
 			</td>
