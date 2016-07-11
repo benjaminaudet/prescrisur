@@ -65,9 +65,35 @@
     background-color: #888;
 }
 
+@media (min-width: 451px) and (max-width: 768px) {
+    #main h1 {
+        font-size: 20pt !important;
+    }
+}
+
 @media (max-width: 450px) {
     #content {
         font-size: 12px;
+    }
+
+    #main h1 {
+        font-size: 18pt !important;
+    }
+
+    #content h2 {
+        font-size: 13pt !important;
+    }
+
+    #content h3 {
+        font-size: 12pt !important;
+    }
+
+    #content h4 {
+        font-size: 11pt !important;
+    }
+
+    #content h5 {
+        font-size: 10pt !important;
     }
 }
 
@@ -305,6 +331,12 @@
     border-bottom: 2px solid #B60027;
     /*color: white;*/
     /*background-color: #B60027;*/
+}
+
+@media (max-width: 768px) {
+    #page-header {
+        margin-bottom: 15px !important;
+    }
 }
 
 #patho-alerts {
@@ -608,6 +640,11 @@
 
 /****************************/
 /*       DISPLAY            */
+#patho-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
 #pathology h2 {
     font-size: 16pt;
     line-height: 1.2;
@@ -641,7 +678,7 @@
 }
 
 @media (max-width: 450px) {
-    #pathology .text ul:first-child {
+    #pathology .text ul {
         padding-left: 20px;
     }
 }
@@ -780,6 +817,10 @@
     font-size: 1.1em;
 }
 
+#updated-mobile {
+    margin-left: 3px;
+}
+
 #fold-patho {
     margin: 0 0 10px 5px;
 }
@@ -791,7 +832,9 @@
 }
 
 #sidebar-search .ui-select-toggle,
-#sidebar-search .ui-select-search {
+#sidebar-search-mobile .ui-select-toggle,
+#sidebar-search .ui-select-search,
+#sidebar-search-mobile .ui-select-search {
     border-radius: 50px;
 }
 

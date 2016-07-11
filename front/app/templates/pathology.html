@@ -1,14 +1,19 @@
 <div class="row" id="page-header">
-	<h1 class="inline-block">{{ pathology.name }}</h1>
-	<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default btn-xs inline-block" ng-switch="foldAll">
-				<span ng-switch-when="true">
-					<i class="fa fa-compress"></i>
-					Replier la Pathologie
-				</span>
-				<span ng-switch-default>
-					<i class="fa fa-expand"></i>
-					Déplier la Pathologie
-				</span>
+	<div id="patho-title">
+		<h1 class="inline">{{ pathology.name }}</h1>
+		<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default btn-xs inline hidden-xs hidden-sm" ng-switch="foldAll">
+		<span ng-switch-when="true">
+			<i class="fa fa-compress"></i>
+			Replier la Pathologie
+		</span>
+		<span ng-switch-default>
+			<i class="fa fa-expand"></i>
+			Déplier la Pathologie
+		</span>
+		</div>
+		<div id="updated-mobile" class="visible-xs-inline visible-sm-inline">
+			(Mise à jour {{ pathology.updated_at | date:'mediumDate' }})
+		</div>
 	</div>
 </div>
 
@@ -25,13 +30,24 @@
 	<flash-message duration="4000" show-close="true"></flash-message>
 
 	<div ng-if="!pathology">
-		<h2 class="center"><i class="fa fa-spinner"></i> Chargement de la Pathologie</h2>
+		<h2 class="center"><i class="fa fa-spinner"></i>Chargement de la Pathologie</h2>
 	</div>
 
 	<div id="sidebar" ng-if="pathology" ng-hide="hide" class="col-md-3 col-md-push-9">
-		<div id="updated">Mise à jour {{ pathology.updated_at | date:'mediumDate' }}</div>
-		<div class="hidden-sm">
+		<!-- Search bar for mobile devices -->
+		<ui-select class="visible-xs visible-sm" id="sidebar-search-mobile" ng-model="selected.value" on-select="goTo($select)">
+			<ui-select-match placeholder="Rechercher une nouvelle Pathologie...">
+				<span ng-bind="$select.selected.name"></span>
+			</ui-select-match>
+			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
+				{{ r.name }}
+			</ui-select-choices>
+		</ui-select>
 
+		<div id="updated" class="hidden-xs hidden-sm">Mise à jour {{ pathology.updated_at | date:'mediumDate' }}</div>
+
+		<!-- Search bar for desktops-->
+		<div class="hidden-xs hidden-sm">
 			<h2>Rechercher</h2>
 			<ui-select id="sidebar-search" ng-model="selected.value" on-select="goTo($select)">
 				<ui-select-match placeholder="Rechercher une Pathologie...">
@@ -41,8 +57,8 @@
 					{{ r.name }}
 				</ui-select-choices>
 			</ui-select>
-
 		</div>
+
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>
 			<div class="btn-group-vertical" role="group">
@@ -115,7 +131,10 @@
 					<a ui-sref="specialities({id: entry.product._id})" target="_blank">RCP ANSM/EMEA</a>
 				</div>
 				<div ng-switch-default="">
-					<a ng-model="entry.displaySpecialities" uib-btn-checkbox>Liste des médicaments</a>
+					<a ng-model="entry.displaySpecialities" uib-btn-checkbox>
+						<span class="hidden-xs">Liste des médicaments</span>
+						<span class="visible-xs">Médicaments</span>
+					</a>
 				</div>
 			</td>
 			<td ng-if="entry.info" class="info-button" ng-class="{'active':entry.displayInfo}">
