@@ -65,6 +65,12 @@
     background-color: #888;
 }
 
+@media (max-width: 450px) {
+    #content {
+        font-size: 12px;
+    }
+}
+
 /****************************/
 /*     CLASSES USUELLES     */
 .red {
@@ -631,6 +637,13 @@
     border-radius: 4px;
     padding: 15px 10px 5px 10px;
     margin-botton: 2px;
+    text-align: justify;
+}
+
+@media (max-width: 450px) {
+    #pathology .text ul:first-child {
+        padding-left: 20px;
+    }
 }
 
 #pathology .text p {
