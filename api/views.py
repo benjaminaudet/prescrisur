@@ -124,12 +124,19 @@ def delete_pathology(patho_id):
 	return jsonify({'success': success})
 
 
-@api.route('/api/pathologies', methods=['GET'], endpoint='pathologies')
 @api.route('/api/pathologies/<patho_id>', methods=['GET'])
 @login_required
 @monitored
 def pathology(patho_id=None):
 	patho = Pathology.get(patho_id)
+	if not patho:
+		abort(404)
+	return jsonify(data=patho)
+
+
+@api.route('/api/pathologies', methods=['GET'])
+def pathologies():
+	patho = Pathology.all()
 	if not patho:
 		abort(404)
 	return jsonify(data=patho)
