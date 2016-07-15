@@ -32,8 +32,8 @@ function ($q, $timeout, $http) {
 		return deferred.promise;
 
 	}
-	
-	function confirm(email) {
+
+	function sendConfirmEmail(email) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
 
@@ -54,9 +54,59 @@ function ($q, $timeout, $http) {
 
 		// return promise object
 		return deferred.promise;
-		
+
 	}
-	
+
+	function confirmEmail(token) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.get('/api/confirm/'+token)
+		// handle success
+			.success(function (data, status) {
+				if(status === 200){
+					deferred.resolve(data);
+				} else {
+					deferred.reject(data);
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+
+	}
+
+
+	function updateEmail(token) {
+		// create a new instance of deferred
+		var deferred = $q.defer();
+
+		// send a post request to the server
+		$http.get('/api/update-email/'+token)
+		// handle success
+			.success(function (data, status) {
+				if(status === 200){
+					deferred.resolve(data);
+				} else {
+					deferred.reject(data);
+				}
+			})
+			// handle error
+			.error(function (data) {
+				deferred.reject(data);
+			});
+
+		// return promise object
+		return deferred.promise;
+
+	}
+
+
 	function sendPasswordResetMail(email) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
@@ -78,10 +128,10 @@ function ($q, $timeout, $http) {
 
 		// return promise object
 		return deferred.promise;
-		
+
 	}
-	
-	
+
+
 	function resetPassword(email, passwd) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
@@ -227,7 +277,9 @@ function ($q, $timeout, $http) {
 		login: login,
 		logout: logout,
 		register: register,
-		confirm: confirm,
+		sendConfirmEmail: sendConfirmEmail,
+		confirmEmail: confirmEmail,
+		updateEmail: updateEmail,
 		sendPasswordResetMail: sendPasswordResetMail,
 		checkResetPassword: checkResetPassword,
 		resetPassword: resetPassword,

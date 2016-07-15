@@ -17,6 +17,11 @@
 			<text-angular ng-model="page.text" class="page-editor"></text-angular>
 		</div>
 
-		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">Enregistrer</button>
+		<button type="submit" class="btn btn-primary btn-lg col-md-3" ng-disabled="disabled">
+			<span ng-if="disabled">
+				<i class="fa fa-spinner"></i> Enregistrement...
+			</span>
+			<span ng-if="!disabled">Enregistrer</span>
+		</button>
 	</form>
 </div>

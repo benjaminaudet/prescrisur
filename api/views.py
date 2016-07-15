@@ -344,12 +344,10 @@ def confirm_email(token):
 	user = User.get_by_email(email)
 	if not user:
 		abort(404)
-	if user.confirmed:
-		return 'Votre compte est déjà confirmé !'
-	else:
+	if not user.confirmed:
 		user.confirm()
-		login_user(user)
-	return redirect('/')
+	login_user(user)
+	return jsonify(user=user.clean(), confirmed_email=True)
 
 
 @api.route('/api/reset/send', methods=['POST'])
@@ -393,7 +391,7 @@ def login():
 	data = json.loads(request.data)
 	user = User.get_by_email(data['email'])
 	if not user:
-		abort(401)
+		return jsonify(no_user=True), 401
 	if not user.verify_password(data['passwd']):
 		return jsonify(bad_password=True), 400
 	elif not user.confirmed:
@@ -439,7 +437,7 @@ def update_user_profile():
 	return jsonify(user=current_user.clean(), updated_mail=updated_mail)
 
 
-@api.route('/api/me/<token>')
+@api.route('/api/update-email/<token>')
 @monitored
 def update_user_email(token):
 	try:
@@ -457,7 +455,7 @@ def update_user_email(token):
 		user.save()
 		logout_user()
 		login_user(user)
-	return redirect('/')
+	return jsonify(user=user.clean(), updated_email=True)
 
 
 # Errors

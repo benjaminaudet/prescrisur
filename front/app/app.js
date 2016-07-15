@@ -26,7 +26,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url: '/',
 			controller : 'HomeController',
 			templateUrl: 'front/app/templates/home.html',
-			params: {msg: null},
 			access: {restricted: false}
 		})
 		// Pathologies
@@ -126,6 +125,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			controller: 'LogoutController',
 			template: '',
 			access: {restricted: true}
+		})
+		.state('confirm-email', {
+			url: '/confirm/:token',
+			controller : 'HomeController',
+			templateUrl: 'front/app/templates/home.html',
+			access: {restricted: false},
+			params: {confirm: true}
+		})
+		.state('update-email', {
+			url: '/update-email/:token',
+			controller : 'HomeController',
+			templateUrl: 'front/app/templates/home.html',
+			access: {restricted: false},
+			params: {updateEmail: true}
 		})
 		.state('reset-password', {
 			url: '/reset/:token',

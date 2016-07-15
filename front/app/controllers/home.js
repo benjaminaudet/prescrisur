@@ -4,12 +4,14 @@ angular.module('prescrisurApp.controllers')
 	'$scope',
 	'$state',
 	'$stateParams',
+	'Flash',
 	'PageTitleService',
 	'SearchService',
 	'PageService',
+	'AuthService',
 	'PathologyService',
 
-	function($scope, $state, $stateParams, PageTitleService, SearchService, PageService, PathologyService) {
+	function($scope, $state, $stateParams, Flash, PageTitleService, SearchService, PageService, AuthService, PathologyService) {
 		PageTitleService.setTitle("Outil d'aide à la Prescription");
 
 		$scope.q = null;
@@ -23,6 +25,25 @@ angular.module('prescrisurApp.controllers')
 		PathologyService.get(function(data) {
 			$scope.pathologies = data.data;
 		});
+		
+		if($stateParams.confirm) {
+			AuthService.confirmEmail($stateParams.token)
+				.then(function(data) {
+					Flash.create('success', 'Votre compte est confirmé ! Connexion en cours...');
+					$state.go('home', {}, {reload: true});
+				})
+				.catch(function() {
+					Flash.create('danger', 'Une erreur est survenue, merci de réessayer.');
+				});
+		} else if($stateParams.updateEmail) {
+			AuthService.updateEmail($stateParams.token)
+				.then(function(data) {
+					Flash.create('success', 'Votre email a été mis à jour !');
+				})
+				.catch(function() {
+					Flash.create('danger', 'Une erreur est survenue, merci de réessayer.');
+				});
+		}
 		
 		$scope.goTo = function($select) {
 			var searchType = $scope.searchType;

@@ -25,7 +25,7 @@ def confirm_token(token, expiration=3600):
 
 def send_confirm_email(email):
 	token = generate_confirmation_token(email)
-	confirm_url = url_for('api.confirm_email', token=token, _external=True)
+	confirm_url = current_app.config['APP_URL'] + '#/confirm/' + token
 	email_body = render_template('confirm-email.html', confirm_url=confirm_url)
 	subject = "Prescrisur - Activation"
 	return mail_service.send_from_default(email, subject, email_body)
@@ -34,7 +34,7 @@ def send_confirm_email(email):
 def send_update_email(new_email, old_email):
 	key = '+'.join([new_email, old_email])
 	token = generate_confirmation_token(key)
-	confirm_url = url_for('api.update_user_email', token=token, _external=True)
+	confirm_url = current_app.config['APP_URL'] + '#/update-email/' + token
 	email_body = render_template('update-email.html', confirm_url=confirm_url)
 	subject = "Prescrisur - Changement d'adresse mail"
 	return mail_service.send_from_default(new_email, subject, email_body)
@@ -42,7 +42,7 @@ def send_update_email(new_email, old_email):
 
 def send_reset_password_email(email):
 	token = generate_confirmation_token(email)
-	confirm_url = url_for('api.index', _external=True) + '#/reset/' + token
+	confirm_url = current_app.config['APP_URL'] + '#/reset/' + token
 	email_body = render_template('reset-password.html', confirm_url=confirm_url)
 	subject = "Prescrisur - Réinitialisation du mot de passe"
 	return mail_service.send_from_default(email, subject, email_body)

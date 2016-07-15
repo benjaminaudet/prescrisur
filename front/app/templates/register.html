@@ -37,7 +37,14 @@
 					</div>
 				</div>
 				<div class="submit">
-					<button type="submit" class="btn btn-primary btn-lg" ng-disabled="disabled">S'inscrire</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-disabled="disabled">
+						<span ng-if="disabled">
+							<i class="fa fa-spinner"></i> Inscription...
+						</span>
+						<span ng-if="!disabled">
+							<i class="fa fa-spinner"></i> S'inscrire
+						</span>
+					</button>
 				</div>
 			</form>
 		</div>

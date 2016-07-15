@@ -37,7 +37,7 @@ angular.module('prescrisurApp.controllers')
 		}
 		
 		$scope.sendConfirmation = function() {
-			AuthService.confirm($scope.loginForm.email)
+			AuthService.sendConfirmEmail($scope.loginForm.email)
 				.then(function() {
 					var msg = 'Un mail vient de vous êtes envoyé. Confirmez votre adresse email : '+ $scope.loginForm.email +', puis <a ui-sref="login">Connectez-vous</a>';
 					Flash.create('success', msg, 0);
@@ -63,9 +63,11 @@ angular.module('prescrisurApp.controllers')
 				})
 				// handle error
 				.catch(function (error) {
-					var msg;
+					var msg = 'Echec de la connexion. Réessayez.';
 					if(error.error) {
 						msg = error.error;
+					} else if (error.no_user) {
+						msg = 'Aucun utilisateur ne correspond à cette adresse mail !';
 					} else if (error.bad_password) {
 						msg = 'Mauvais login/mot de passe !';
 					} else if (error.not_confirmed) {
