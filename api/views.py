@@ -396,6 +396,7 @@ def validate_reset_password(token):
 @monitored
 def login():
 	data = json.loads(request.data)
+	remember = data['remember'] if 'remember' in data else False
 	user = User.get_by_email(data['email'])
 	if not user:
 		return jsonify(no_user=True), 401
@@ -403,7 +404,7 @@ def login():
 		return jsonify(bad_password=True), 400
 	elif not user.confirmed:
 		return jsonify(not_confirmed=True), 400
-	login_user(user)
+	login_user(user, remember=remember)
 	return jsonify(data=user.clean())
 
 

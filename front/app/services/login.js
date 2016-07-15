@@ -182,12 +182,12 @@ function ($q, $timeout, $http) {
 	}
 	
 
-	function login(email, passwd) {
+	function login(loginForm) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
 
 		// send a post request to the server
-		$http.post('/api/login', {email: email, passwd: passwd})
+		$http.post('/api/login', loginForm)
 			// handle success
 			.success(function (data, status) {
 				if(status === 200 && data.data){

@@ -25,7 +25,7 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $state, $stateParams, Flash, PageTitleService, AuthService) {
 		PageTitleService.setTitle('Connexion');
 
-		$scope.loginForm = {};
+		$scope.loginForm = {remember: true};
 
 		if($stateParams.needLogin) {
 			Flash.create('danger', 'Vous devez vous connecter pour accéder à cette page !', 10000);
@@ -55,7 +55,7 @@ angular.module('prescrisurApp.controllers')
 			$scope.disabled = true;
 
 			// call login from service
-			AuthService.login($scope.loginForm.email, $scope.loginForm.passwd)
+			AuthService.login($scope.loginForm)
 				// handle success
 				.then(function (user) {
 					Flash.create('success', 'Connecté !');
