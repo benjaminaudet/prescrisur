@@ -8,16 +8,16 @@ angular.module('prescrisurApp.filters', [])
 			var matches = regxABC.exec(input);
 
 			var labels = {
-				"Grade A": "preuve scientifique établie",
-				"Grade B": "présomption scientifique",
-				"Grade C": "faible niveau de preuve scientifique",
-				"AE": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail",
-				"Accords d'experts": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
+				"grade a": "preuve scientifique établie",
+				"grade b": "présomption scientifique",
+				"grade c": "faible niveau de preuve scientifique",
+				"ae": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail",
+				"accords d'experts": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
 			};
 			var link = "pages.read({id: 'presentation'})";
 
 			if (matches) {
-				input = input.replace(regxABC, '<a uib-tooltip="'+labels[matches[1]]+'" class="grade" ui-sref="'+link+'">$1</a>');
+				input = input.replace(regxABC, '<a uib-tooltip="'+labels[matches[1].toLowerCase()]+'" class="grade" ui-sref="'+link+'">$1</a>');
 			}
 
 			// Grade X..
