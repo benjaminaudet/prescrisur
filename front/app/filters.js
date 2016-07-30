@@ -8,11 +8,11 @@ angular.module('prescrisurApp.filters', [])
 			var matches = regxABC.exec(input);
 
 			var labels = {
-				"grade a": "preuve scientifique établie",
-				"grade b": "présomption scientifique",
-				"grade c": "faible niveau de preuve scientifique",
-				"ae": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail",
-				"accords d'experts": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
+				"grade a": "Preuve scientifique établie",
+				"grade b": "Présomption scientifique",
+				"grade c": "Faible niveau de preuve scientifique",
+				"ae": "Approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail",
+				"accords d'experts": "Approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
 			};
 
 			if (matches) {
