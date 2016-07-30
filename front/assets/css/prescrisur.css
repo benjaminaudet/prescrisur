@@ -497,7 +497,7 @@
 
 #home-info .text-box {
     border: 1px solid #ddd;
-    /*background-color: rgba(240, 240, 240, 0.2);*/
+    background-color: rgba(240, 240, 240, 0.2);
     border-radius: 10px;
     padding: 0 15px 15px 15px;
     height: 100%;
