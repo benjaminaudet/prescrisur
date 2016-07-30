@@ -14,10 +14,10 @@ angular.module('prescrisurApp.filters', [])
 				"ae": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail",
 				"accords d'experts": "approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
 			};
-			var link = "pages.read({id: 'presentation'})";
+			var tooltip = labels[matches[1].toLowerCase()];
 
 			if (matches) {
-				input = input.replace(regxABC, '<a uib-tooltip="'+labels[matches[1].toLowerCase()]+'" class="grade" ui-sref="'+link+'">$1</a>');
+				input = input.replace(regxABC, '<a uib-tooltip="'+tooltip+'" class="grade" href="#/pages/presentation">$1</a>');
 			}
 
 			// Grade X..
