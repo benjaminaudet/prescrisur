@@ -96,11 +96,11 @@
 	</div>
 
 	<div id="pathology" ng-if="pathology" class="col-md-9 col-md-pull-3">
-		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html="pathology.intro | gradify"></div>
+		<div id="intro" class="text" ng-if="pathology.intro" ng-bind-html-compile="pathology.intro | gradify"></div>
 		<div class="pathology-tree">
 			<div ng-repeat="data in pathology.levels" ng-include="'patho-tree.html'" class="level" depth="1"></div>
 		</div>
-		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html="pathology.conclu | gradify"></div>
+		<div id="conclu" class="text" ng-if="pathology.conclu" ng-bind-html-compile="pathology.conclu | gradify"></div>
 	</div>
 </div>
 
