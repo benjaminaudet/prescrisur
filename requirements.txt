@@ -19,3 +19,4 @@ gunicorn==19.5.0
 gevent==1.1.1
 sentinels==0.0.6
 mock==0.8.0
+setuptools==25.1.1
