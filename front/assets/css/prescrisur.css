@@ -678,7 +678,7 @@
     border-radius: 4px;
     padding: 15px 10px 5px 10px;
     margin-botton: 2px;
-    text-align: justify;
+    /*text-align: justify;*/
 }
 
 @media (max-width: 450px) {
