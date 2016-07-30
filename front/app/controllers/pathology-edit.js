@@ -38,6 +38,7 @@ angular.module('prescrisurApp.controllers')
 		else {
 			$scope.pathology = {
 				name: null,
+				conclu: '<p><strong>Pour en savoir plus :</strong></p>',
 				levels: [
 					{rank: '', depth: 1}
 				]
