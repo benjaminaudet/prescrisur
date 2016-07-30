@@ -4,7 +4,7 @@ angular.module('prescrisurApp.filters', [])
 	function($state, $sce) {
 		return function(input) {
 			// Grade A/B/C + Accord d'experts
-			var regxABC = /(Grade (?:A|B|C)|(?:\s|\()AE|Accords d'experts)/gi;
+			var regxABC = /(Grade (?:A|B|C|D)|(?:\s|\()AE|Accords d'experts)/gi;
 			var matches = regxABC.exec(input);
 
 			var labels = {
@@ -21,8 +21,8 @@ angular.module('prescrisurApp.filters', [])
 				input = input.replace(regxABC, '<a uib-tooltip="'+tooltip+'" class="grade" ui-sref="'+link+'">$1</a>');
 			}
 
-			// Grade X..
-			var regxX = /(Grade X[a-z0-9]{2})/gi;
+			// Grade D/X..
+			var regxX = /(Grade (?:D|X[a-z0-9]{2}))/gi;
 			input = input.replace(regxX, '<a class="grade">$1</a>');
 
 			return $sce.trustAsHtml(input);
