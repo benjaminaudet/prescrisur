@@ -56,17 +56,20 @@
 }
 
 .btn.btn-primary {
-    border: 1px solid #777;
-    background-color: #aaa;
+    border: 1px solid #b2b2b2;
+    background-color: rgb(220, 220, 220);
+    color: black;
 }
 
 .btn.btn-primary.active,
 .btn.btn-primary:hover {
-    background-color: #888;
+    background-color: #aaa;
+    color: white;
 }
 
-.btn.btn-primary.disblaed {
+.btn.btn-primary.disabled {
     background-color: #c8c8c8;
+    color: #3c3c3c;
 }
 
 @media (min-width: 451px) and (max-width: 768px) {
