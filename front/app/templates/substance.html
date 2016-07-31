@@ -23,7 +23,7 @@
 				</ui-select-match>
 				<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
 					{{ r.name }}
-					<span class="spec-status" ng-if="r.status">{{ r.status }}</span>
+					<spec-status status="{{ r.status }}"></spec-status>
 				</ui-select-choices>
 			</ui-select>
 		</div>
@@ -42,7 +42,7 @@
 				<tr class="speciality" ng-repeat="spec in filteredSpecialities = (substance.specialities | filter:query)">
 					<td>
 						<a ui-sref="specialities({id: spec._id})" target="_blank">{{ spec.name }}</a>
-						<span class="spec-status">{{ spec.status }}</span>
+						<spec-status status="{{ spec.status }}"></spec-status>
 					</td>
 				</tr>
 				<tr ng-if="filteredSpecialities.length == 0">
