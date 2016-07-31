@@ -1,4 +1,4 @@
-<div class="row" id="page-header">
+<div class="row" id="page-header" ng-if="pathology">
 	<div id="patho-title">
 		<h1 class="inline">{{ pathology.name }}</h1>
 		<div ng-click="toggleShowAll()" type="button" id="fold-patho" class="btn btn-default btn-xs inline hidden-xs hidden-sm" ng-switch="foldAll">
