@@ -407,6 +407,7 @@ def test_search_pathologies_from_substance_not_logged_in_401(collection, client)
 	assert res.status_code == 401
 
 
+@freeze_time("2015-01-01")
 def test_validate_pathology(collection, collection_bis, client, admin):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
@@ -427,7 +428,8 @@ def test_validate_pathology(collection, collection_bis, client, admin):
 	assert res_validate_patho.status_code == 200
 	assert res_ok_patho.status_code == 200
 	assert res_no_patho.status_code == 404
-	assert data_validate_patho['data'] == data_ok_patho['data'] == patho
+	assert data_validate_patho['data']['name'] == patho['name']
+	assert data_validate_patho['data']['updated_at'] == '2015-01-01T00:00:00'
 
 
 def test_validate_pathology_unauthorized_403(collection, collection_bis, client, user):

@@ -92,6 +92,7 @@ def edit_pathology_draft(patho_id=None):
 def validate_pathology(patho_id):
 	draft = PathologyDraft.get(patho_id)
 	patho = Pathology(**draft.serialize())
+	patho.refresh_update_date()
 	patho.save_therapeutic_classes()
 	saved = patho.save()
 	if not saved.acknowledged:
