@@ -47,8 +47,7 @@
 		<div id="updated" class="hidden-xs hidden-sm">Mise à jour {{ pathology.updated_at | date:'mediumDate' }}</div>
 
 		<!-- Search bar for desktops-->
-		<div class="hidden-xs hidden-sm">
-			<h2>Rechercher</h2>
+		<div id="sidebar-search-container" class="hidden-xs hidden-sm">
 			<ui-select id="sidebar-search" ng-model="selected.value" on-select="goTo($select)">
 				<ui-select-match placeholder="Rechercher une Pathologie...">
 					<span ng-bind="$select.selected.name"></span>

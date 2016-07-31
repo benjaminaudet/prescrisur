@@ -836,6 +836,12 @@
     margin: 0 0 10px 5px;
 }
 
+#sidebar-search-container {
+    margin-top: 20px;
+    margin-left: -10px;
+    width: 110%;
+}
+
 #sidebar-search .ui-select-dropdown {
     right: 0;
     left: auto;
