@@ -18,9 +18,9 @@ class Pathology(BaseModel):
 	AUTHORIZED_TYPES = ['specialities', 'substances', 'associations']
 	RECO_LABELS = {
 		'none': None,
-		'alert': 'Molécule sous surveillance particulière',
-		'middle': 'Molécule recommandée sous surveillance particulière',
-		'ok': 'Molécule Recommandée (voir RCP)'
+		'alert': 'Substance sous surveillance particulière',
+		'middle': 'Substance recommandée sous surveillance particulière',
+		'ok': 'Substance Recommandée'
 	}
 
 	def __init__(self, name, _id=None, levels=None, intro=None, conclu=None, updated_at=None, **kwargs):

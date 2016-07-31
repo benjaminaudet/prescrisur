@@ -184,5 +184,7 @@ class TestCheckEntry:
 			pathology._check_entry_reco({'_id': 'coucou'})
 
 	def test_add_reco_label(self, pathology):
-		checked_reco = pathology._check_entry_reco({'_id': 'ok'})
-		assert checked_reco['name'] == 'Molécule Recommandée (voir RCP)'
+		assert not pathology._check_entry_reco({'_id': 'none'})['name']
+		assert pathology._check_entry_reco({'_id': 'alert'})['name'] == 'Substance sous surveillance particulière'
+		assert pathology._check_entry_reco({'_id': 'middle'})['name'] == 'Substance recommandée sous surveillance particulière'
+		assert pathology._check_entry_reco({'_id': 'ok'})['name'] == 'Substance Recommandée'

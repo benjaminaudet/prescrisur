@@ -119,7 +119,7 @@
 		<tr ng-repeat-start="entry in data.entries">
 			<td class="reco" ng-switch="entry.reco._id">
 				<div class="pill" ng-switch-when="none"></div>
-				<div class="pill" ng-switch-default="" uib-tooltip="{{ entry.reco.name }}">
+				<div class="pill" ng-switch-default="" uib-tooltip="{{ recoLabels[entry.reco._id] }}">
 					<img ng-src="front/assets/img/gelule_{{ entry.reco._id }}_mini.png" alt="{{ entry.reco._id }}" />
 				</div>
 			</td>

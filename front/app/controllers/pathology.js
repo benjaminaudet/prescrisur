@@ -16,6 +16,11 @@ angular.module('prescrisurApp.controllers')
 	function($scope, $state, $window, $timeout, $location, $stateParams, Flash, PageTitleService, SearchService, PathologyService, PathologyDraftService) {
 		$scope.pathology = null;
 		$scope.foldAll = false;
+		$scope.recoLabels = {
+			alert: 'Substance sous surveillance particulière',
+			middle: 'Substance recommandée sous surveillance particulière',
+			ok: 'Substance Recommandée'
+		};
 
 		var pathoService = PathologyService;
 		if($scope.isAuthorized('admin')) {
