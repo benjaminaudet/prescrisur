@@ -3,7 +3,6 @@ var app = angular.module('prescrisurApp', [
 	'ui.select',
 	'ui.bootstrap',
 	'ngFlash',
-	'colorpicker.module',
 	'textAngular',
 	'ngSanitize',
 	'prescrisurApp.commonsServices',
@@ -279,10 +278,10 @@ app.config(['$provide', function($provide){
 		taOptions.toolbar = [
 			['undo', 'redo'],
 			['h2', 'h3', 'h4'],
-			['bold', 'italics', 'underline', 'fontColor', 'clear'],
+			['bold', 'italics', 'underline', 'colorPicker', 'clear'],
 			['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
 			['ul', 'indent', 'outdent'],
-			['insertImage', 'insertLink']
+			['imagePicker', 'insertImage', 'insertLink']
 		];
 		taOptions.classes = {
 			focussed: 'focussed',
@@ -297,28 +296,38 @@ app.config(['$provide', function($provide){
 		return taOptions; // whatever you return will be the taOptions
 	}]);
 
-	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
-		// $delegate is the taOptions we are decorating
-		// register the tool with textAngular
-		taRegisterTool('fontColor', {
-			display: "<button colorpicker type='button' class='btn btn-default ng-scope'  title='Font Color'  colorpicker-close-on-select colorpicker-position='bottom' ng-model='fontColor' style='color: {{fontColor}}'><i class='fa fa-font '></i></button>",
-			action: function (deferred) {
+	$provide.decorator('taOptions', ['$rootScope', 'taRegisterTool', '$delegate', function($rootScope, taRegisterTool, taOptions){
+		taRegisterTool('colorPicker', {
+			display: "<color-picker></color-picker>",
+			action: function(deferred){
 				var self = this;
-				if (typeof self.listener == 'undefined') {
-					self.listener = self.$watch('fontColor', function (newValue) {
-						self.$editor().wrapSelection('foreColor', newValue);
+
+				if(!self.$$listenerCount['color-picked']) {
+					self.$on('color-picked', function (event, color) {
+						self.$editor().wrapSelection('foreColor', color);
+						deferred.resolve();
 					});
 				}
-				self.$on('colorpicker-selected', function () {
-					deferred.resolve();
-				});
-				self.$on('colorpicker-closed', function () {
-					deferred.resolve();
-				});
+
 				return false;
 			}
 		});
-		//taOptions.toolbar[1].push('fontColor');
+
+		taRegisterTool('imagePicker', {
+			display: "<image-picker></image-picker>",
+			action: function(deferred){
+				var self = this;
+
+				if(!self.$$listenerCount['image-picked']) {
+					self.$on('image-picked', function (event, img) {
+						self.$editor().wrapSelection('insertimage', img);
+						deferred.resolve();
+					});
+				}
+
+				return false;
+			}
+		});
 
 		taOptions.setup.textEditorSetup=function($element) {
 			$element.attr('ui-codemirror', '');

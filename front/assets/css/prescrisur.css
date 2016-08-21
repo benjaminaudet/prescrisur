@@ -106,9 +106,10 @@
 
 /****************************/
 /*     CLASSES USUELLES     */
-.red {
-    color: red;
-}
+.red { color: red; }
+.blue { color: blue; }
+.green { color: green; }
+.yellow { color: yellow; }
 
 .bold {
     font-weight: bold;
@@ -403,6 +404,50 @@
 .page-editor .ta-scroll-window > .ta-bind {
     min-height: 300px;
 }
+
+color-picker,
+image-picker {
+    padding: 0 !important;
+}
+
+color-picker .picker-icon {
+    padding: 9px 12px;
+}
+
+image-picker .picker-icon {
+    padding: 5px 14px 6px;
+}
+
+color-picker .dropdown-menu {
+    width: 90px !important;
+    height: 41px;
+    padding: 5px;
+}
+
+color-picker .color-button {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    padding-top: 2px;
+    text-align: center;
+}
+
+color-picker .color-button:hover,
+image-picker .image-button:hover {
+    background-color: #ddd;
+}
+
+image-picker .dropdown-menu {
+    width: 90px !important;
+    padding: 5px;
+}
+
+image-picker .image-button {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+}
+
 
 /****************************/
 /*           HOME           */

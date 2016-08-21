@@ -43,4 +43,35 @@ angular.module('prescrisurApp.directives', [])
 			})
 		}
 	};
+})
+
+.directive("colorPicker", function($compile, $sce){
+	return {
+		restrict: "E",
+		templateUrl: 'front/app/templates/partials/color-picker.html',
+		link: function(scope, element){
+			var colorButton = element.find('.color-button');
+
+			colorButton.on('click', function(evt) {
+				scope.$emit('color-picked', evt.target.attributes.value.value);
+			});
+		}
+	};
+})
+
+.directive("imagePicker", function(){
+	return {
+		restrict: "E",
+		templateUrl: 'front/app/templates/partials/image-picker.html',
+		link: function(scope, element){
+			var imgButton = element.find('.image-button');
+
+			imgButton.on('click', function(evt) {
+				var src = evt.target.src;
+				var domainRgx = /http:\/\/[^\/]+/;
+				src = src.replace('.png', '_mini.png').replace(domainRgx, '');
+				scope.$emit('image-picked', src);
+			});
+		}
+	};
 });
