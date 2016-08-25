@@ -112,11 +112,9 @@ angular.module('prescrisurApp.controllers')
 
 		$scope.print = function() {
 			var onPrintFinished = function() {
-				$scope.hide = false;
 				showAll($scope.pathology, false);
 			};
 
-			$scope.hide = true;
 			showAll($scope.pathology, true);
 			$timeout(function() {
 				onPrintFinished($window.print())
