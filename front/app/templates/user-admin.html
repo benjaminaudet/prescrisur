@@ -30,7 +30,7 @@
 				<tr class="user" ng-repeat="user in users | filter:query">
 					<td>{{ user.name }}</td>
 					<td>
-						<a href="mailto:{{ user._id }}">{{ user._id }}</a>
+						<a href="mailto:{{ user.email }}">{{ user.email }}</a>
 					</td>
 					<td class="icon">
 						<div class="ok" ng-if="hasRole('admin', user.roles)">
