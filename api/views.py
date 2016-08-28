@@ -267,7 +267,7 @@ def associations():
 @api.route('/api/associations/search')
 def search_association():
 	q = request.args.get('q')
-	return jsonify(data=Association.search_by_name(q, proj={'name': 1, 'specialities': 1}))
+	return jsonify(data=Association.search_by_name(q, proj={'name': 1, 'status': 1, 'specialities': 1}))
 
 
 @api.route('/api/users', methods=['GET'])

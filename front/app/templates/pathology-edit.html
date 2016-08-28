@@ -118,12 +118,12 @@
 						<span class="spec-status" ng-if="$select.selected.status">{{ $select.selected.status }}</span>
 					</ui-select-match>
 					<ui-select-choices ui-disable-choice="!r._id" refresh="search($select, entry.type)" refresh-delay="100" repeat="filterResults(r) as r in results | limitTo: 50">
-						{{ r.name }}  <span class="spec-status" ng-if="r.status">{{ r.status }}</span>
+						{{ r.name }}  <spec-status status="{{ r.status }}"></spec-status>
 					</ui-select-choices>
 				</ui-select>
 			</td>
 			<td class="col-md-3">
-				<span class="btn" ng-class="(entry.product.status=='G') ? 'btn-success' : 'btn-danger'" ng-click="setStatus(entry.product)" ng-show="isSubstanceOrSpeciality(entry)">
+				<span class="btn" ng-class="(entry.product.status=='G') ? 'btn-success' : 'btn-danger'" ng-click="setStatus(entry.product)">
 					<i class="fa fa-times" ng-if="entry.product.status!='G'"></i>
 					<i class="fa fa-check" ng-if="entry.product.status=='G'"></i>
 					G

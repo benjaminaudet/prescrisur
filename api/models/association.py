@@ -6,8 +6,6 @@ from substance import Substance
 
 
 class Association(BaseModel):
-	PROJECTION = {'name': 1}
-
 	def __init__(self, name, _id=None, status=None, substances=None, specialities=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name

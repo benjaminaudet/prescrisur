@@ -258,10 +258,6 @@ angular.module('prescrisurApp.controllers')
 			return (entry.type == 'substances' || entry.type == 'associations') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
 		};
 
-		$scope.isSubstanceOrSpeciality = function(entry) {
-			return (entry.type == 'substances' || entry.type == 'specialities') && entry.hasOwnProperty('product') && entry.product._id && entry.product._id != '';
-		};
-
 		$scope.showInfo = function(entry) {
 			return entry.displayInfo || ($scope.displayAllInfo && entry.info);
 		};
