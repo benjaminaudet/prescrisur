@@ -235,6 +235,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		})
 });
 
+
 // On route change
 app.run(function ($rootScope, $state, $window, ConfirmQuitService, AuthService) {
 	var postLoginState, postLoginParams;
@@ -267,3 +268,12 @@ app.run(function ($rootScope, $state, $window, ConfirmQuitService, AuthService) 
 				});
 		});
 });
+
+
+app.config(['$uibTooltipProvider', function ($uibTooltipProvider) {
+	if('ontouchstart' in window) {
+		$uibTooltipProvider.options({
+			trigger: 'none'
+		});
+	}
+}]);
