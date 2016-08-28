@@ -110,6 +110,10 @@ angular.module('prescrisurApp.controllers')
 			return 2;
 		};
 
+		$scope.visitorMode = function() {
+			$scope.currentUser.visitorMode = true;
+		};
+
 		$scope.print = function() {
 			var onPrintFinished = function() {
 				showAll($scope.pathology, false);

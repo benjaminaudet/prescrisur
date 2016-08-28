@@ -61,6 +61,10 @@
 		<div ng-if="isAuthorized('admin')">
 			<h2>Admin</h2>
 			<div class="btn-group-vertical" role="group">
+				<a class="btn btn-info" ng-click="visitorMode()">
+					<i class="fa fa-eye"></i>
+					Voir en tant que visiteur
+				</a>
 				<a class="btn btn-default" ng-click="print()">
 					<i class="fa fa-print"></i>
 					Imprimer la Pathologie
