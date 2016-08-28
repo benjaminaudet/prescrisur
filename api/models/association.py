@@ -8,11 +8,12 @@ from substance import Substance
 class Association(BaseModel):
 	PROJECTION = {'name': 1}
 
-	def __init__(self, name, _id=None, substances=None, specialities=None, **kwargs):
+	def __init__(self, name, _id=None, status=None, substances=None, specialities=None, **kwargs):
 		self._id = _id if _id else slugify(name)
 		self.name = name
 		self.substances = self.add_substances(substances) if substances else []
 		self.specialities = specialities if specialities else self.add_specialities(self.substances)
+		self.status = status if status else self.get_status(self.substances)
 
 	@staticmethod
 	def add_substances(substances):
@@ -30,3 +31,10 @@ class Association(BaseModel):
 			specs += subst.specialities
 		specs.sort(key=lambda x: x.name)
 		return specs
+
+	@staticmethod
+	def get_status(substances):
+		for subst in substances:
+			if subst.status == 'G':
+				return 'G'
+		return None

@@ -92,8 +92,8 @@ def test_search_asso(collection, client):
 
 def test_create_asso(collection, client, admin):
 	# Given
-	obj = {"name": "SuperAsso", "substances": [{"_id": "1", "name": "Substance"}], "specialities": None}
-	subst = {"_id": "1", "name": "Substance", "specialities": [{"_id": "1", "name": "Speciality"}]}
+	obj = {"name": "SuperAsso", "substances": [{"_id": "1", "name": "Substance", "status": "G"}], "specialities": None}
+	subst = {"_id": "1", "name": "Substance", "status": "G", "specialities": [{"_id": "1", "name": "Speciality"}]}
 	collection.insert(subst)
 	Association.collection = collection
 	Substance.collection = collection
@@ -105,7 +105,8 @@ def test_create_asso(collection, client, admin):
 	assert res.status_code == 201
 	assert data['data']['name'] == 'SuperAsso'
 	assert data['data']['_id'] == 'superasso'
-	assert data['data']['substances'] == [{"_id": "1", "name": "Substance", "specialities": [], "status": None}]
+	assert data['data']['status'] == 'G'
+	assert data['data']['substances'] == [{"_id": "1", "name": "Substance", "specialities": [], "status": 'G'}]
 	assert data['data']['specialities'] == [{'status': None, 'name': 'Speciality', 'short_name': None, 'enabled': True, 'treatment_type': None, 'spec_type': None, '_id': '1', 'dosage': None}]
 
 

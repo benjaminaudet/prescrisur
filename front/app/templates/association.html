@@ -50,7 +50,10 @@
 		<div class="panel panel-default">
 			<table class="table table-condensed table-striped table-bordered">
 				<tr ng-repeat-start="asso in associations">
-					<td class="name col-xs-6 col-md-8">{{ asso.name }}</td>
+					<td class="name col-xs-6 col-md-8">
+						{{ asso.name }}
+						<spec-status status="{{ asso.status }}"></spec-status>
+					</td>
 					<td class="actions col-xs-6 col-md-4">
 						<div class="btn-group btn-group-xs" role="group">
 							<div type="button" class="btn btn-default" ng-model="asso.showSubstances" uib-btn-checkbox>
