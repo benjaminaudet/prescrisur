@@ -9,6 +9,7 @@ from api.models import *
 from api.decorators import required_role, monitored
 from api.services import mail as mail_service
 from api.services.confirm_token import *
+from api.update import SpecialityUpdater, SubstanceUpdater
 
 api = Blueprint('api', __name__)
 
@@ -465,6 +466,16 @@ def update_user_email(token):
 		logout_user()
 		login_user(user)
 	return jsonify(user=user.clean(), updated_email=True)
+
+
+# ANSM Update
+@required_role('admin')
+@api.route('/api/update/ansm', methods=['POST'])
+@monitored
+def update_ansm():
+	SpecialityUpdater().execute()
+	SubstanceUpdater().execute()
+	return jsonify(success=True)
 
 
 # Errors
