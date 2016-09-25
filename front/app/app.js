@@ -5,6 +5,7 @@ var app = angular.module('prescrisurApp', [
 	'ngFlash',
 	'textAngular',
 	'ngSanitize',
+	'slugifier',
 	'prescrisurApp.textEditor',
 	'prescrisurApp.commonsServices',
 	'prescrisurApp.modelServices',

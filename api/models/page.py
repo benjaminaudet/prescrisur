@@ -7,7 +7,8 @@ from base_model import BaseModel
 bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u', 'font']
 bleach.ALLOWED_ATTRIBUTES.update({
 	'a': ['href', 'title', 'target'],
-	'img': ['src', 'alt', 'title']
+	'img': ['src', 'alt', 'title'],
+	'span': ['id', 'class']
 })
 
 

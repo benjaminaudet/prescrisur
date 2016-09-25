@@ -839,7 +839,8 @@ image-picker .image-button {
     color: #d80000;
 }
 
-#pathology .text a.grade:hover {
+#pathology .text a.grade:hover,
+.highlighted {
     color: white;
     background-color: #d80000;
     text-decoration: none;

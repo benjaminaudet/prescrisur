@@ -3,6 +3,7 @@ angular.module('prescrisurApp.controllers')
 .controller("PageController", [
 	'$scope',
 	'$window',
+	'$location',
 	'$state',
 	'$stateParams',
 	'$timeout',
@@ -10,8 +11,24 @@ angular.module('prescrisurApp.controllers')
 	'PageTitleService',
 	'PageService',
 
-	function($scope, $window, $state, $stateParams, $timeout, Flash, PageTitleService, PageService) {
+	function($scope, $window, $location, $state, $stateParams, $timeout, Flash, PageTitleService, PageService) {
 		$scope.page = null;
+
+		// Highlight element if anchor is given
+		var hash = $location.hash();
+		var textLoaded = false;
+		if(hash) {
+			$scope.$watch(
+				function () { return angular.element('#'+hash); },
+				function (newValue, oldValue) {
+					if(newValue.length && !textLoaded) {
+						newValue.addClass('highlighted');
+						textLoaded = true;
+					}
+				}
+			);
+		}
+
 
 		if ($stateParams.id) {
 			PageService.get({ id: $stateParams.id }, function(data) {

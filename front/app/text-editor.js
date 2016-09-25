@@ -14,7 +14,7 @@ angular.module('prescrisurApp.textEditor', [])
 			['bold', 'italics', 'underline', 'colorPicker', 'clear'],
 			['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
 			['ul', 'indent', 'outdent'],
-			['imagePicker', 'insertImage', 'insertLink']
+			['imagePicker', 'insertImage', 'insertLink', 'html']
 		];
 		taOptions.classes = {
 			focussed: 'focussed',
