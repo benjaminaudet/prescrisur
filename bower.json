@@ -18,6 +18,7 @@
     "textAngular": "1.5.0",
     "angular-timeago": "~0.2.6",
     "angular-flash-alert": "~2.3.0",
-    "angular-locale_fr-fr": "*"
+    "angular-locale_fr-fr": "*",
+    "angular-slugify": "1.0.1"
   }
 }
