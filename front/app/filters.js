@@ -23,7 +23,7 @@ angular.module('prescrisurApp.filters', [])
 
 			// Grade D/X..
 			var regxX = /(Grade (?:D|X[a-z0-9]{2}))/gi;
-			input = input.replace(regxX, '<a class="grade">$1</a>');
+			input = input.replace(regxX, '<a class="grade">[$1]</a>');
 
 			return $sce.trustAsHtml(input);
 		};
