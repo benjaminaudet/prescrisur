@@ -10,7 +10,7 @@ angular.module('prescrisurApp.filters', [])
 			var labels = {
 				"grade-a": "Preuve scientifique établie",
 				"grade-b": "Présomption scientifique",
-				"gradec": "Faible niveau de preuve scientifique",
+				"grade-c": "Faible niveau de preuve scientifique",
 				"accords-d-experts": "Approbation, en l’absence de données scientifiques disponibles, d’au moins 80 % des membres du groupe de travail"
 			};
 
