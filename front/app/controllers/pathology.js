@@ -43,6 +43,9 @@ angular.module('prescrisurApp.controllers')
 				return;
 			}
 			$scope.pathology = false;
+			if($scope.draftExists) {
+				$state.go('pathology.read', {id: $stateParams.id, draft: true});
+			}
 			Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...");
 			$timeout(function() {
 				$state.go('home');
