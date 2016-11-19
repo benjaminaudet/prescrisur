@@ -124,6 +124,7 @@ angular.module('prescrisurApp.controllers')
 			levelToGo[$index] = levelToGo[$index - 1];
 			levelToGo[$index - 1] = data;
 			changeRank(data, $index - 1);
+			changeRank(levelToGo[$index], $index);
 		};
 
 		$scope.goDown = function(data, $index) {
@@ -131,6 +132,7 @@ angular.module('prescrisurApp.controllers')
 			levelToGo[$index] = levelToGo[$index + 1];
 			levelToGo[$index + 1] = data;
 			changeRank(data, $index + 1);
+			changeRank(levelToGo[$index], $index);
 		};
 
 		$scope.removeLevel= function(data, $index) {
