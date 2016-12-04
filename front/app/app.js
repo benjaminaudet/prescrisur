@@ -227,6 +227,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				},
 				access: {restricted: true, admin: true}
 			})
+		.state('ansm-diff', {
+			url: '/ansm-diff',
+			controller : 'ANSMDiffController',
+			templateUrl: 'front/app/templates/ansm-diff.html',
+			access: {restricted: true, admin: true}
+		})
 		.state('error', {
 			url: '/error',
 			controller : 'ErrorController',

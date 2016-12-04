@@ -1,7 +1,7 @@
 from functools import wraps
 from datetime import datetime
 from flask import jsonify, abort
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from api.services.logger import Logger
 

@@ -1,9 +1,8 @@
 import re
 import jsonpickle
-from pymongo import MongoClient, ASCENDING, DESCENDING
+from pymongo import ASCENDING
 
-client = MongoClient()
-db = client.Prescrisur
+from api.db import DB
 
 
 class classproperty(object):
@@ -14,13 +13,13 @@ class classproperty(object):
 		return self.fget(owner_cls)
 
 
-class BaseModel(object):
+class BaseModel(DB):
 	PROJECTION = {'name': 1, 'status': 1}
 	ORDER_BY = [('_id', ASCENDING)]
 
 	@classproperty
 	def collection(cls):
-		return db[cls.__name__]
+		return cls.db[cls.__name__]
 
 	@classmethod
 	def get(cls, obj_id=None):

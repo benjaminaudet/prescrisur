@@ -1,18 +1,19 @@
 import json
+import pytest
 from flask import url_for
 
 from api.models import Association, Substance
 
 
-def test_get_all_asso(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_get_all_asso(mock_model, client, admin):
 	# Given
 	objs = [
 		{"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None},
 		{"_id": "02039", "name": "Asso", "substances": None, "specialities": None},
 		{"_id": "02301", "name": "Super", "substances": None, "specialities": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Association.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.associations'))
@@ -23,10 +24,8 @@ def test_get_all_asso(collection, client, admin):
 	assert data['data'] == objs
 
 
-def test_get_all_asso_no_asso_404(collection, client, admin):
-	# Given
-	Association.collection = collection
-
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_get_all_asso_no_asso_404(mock_model, client, admin):
 	# When
 	res = client.get(url_for('api.associations'))
 
@@ -34,15 +33,15 @@ def test_get_all_asso_no_asso_404(collection, client, admin):
 	assert res.status_code == 404
 
 
-def test_get_all_asso_not_authorized_403(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_get_all_asso_not_authorized_403(mock_model, client, user):
 	# Given
 	objs = [
 		{"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None},
 		{"_id": "02039", "name": "Asso", "substances": None, "specialities": None},
 		{"_id": "02301", "name": "Super", "substances": None, "specialities": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Association.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.associations'))
@@ -51,15 +50,15 @@ def test_get_all_asso_not_authorized_403(collection, client, user):
 	assert res.status_code == 403
 
 
-def test_get_all_asso_not_logged_in_401(collection, client):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_get_all_asso_not_logged_in_401(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None},
 		{"_id": "02039", "name": "Asso", "substances": None, "specialities": None},
 		{"_id": "02301", "name": "Super", "substances": None, "specialities": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Association.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.associations'))
@@ -68,15 +67,15 @@ def test_get_all_asso_not_logged_in_401(collection, client):
 	assert res.status_code == 401
 
 
-def test_search_asso(collection, client):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_search_asso(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None},
 		{"_id": "02039", "name": "Asso", "substances": None, "specialities": None},
 		{"_id": "02301", "name": "Super", "substances": None, "specialities": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Association.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.search_association'), query_string={'q': 'asso'})
@@ -90,13 +89,13 @@ def test_search_asso(collection, client):
 	]
 
 
-def test_create_asso(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Association'])
+@pytest.mark.parametrize('collection_name_bis', ['Substance'])
+def test_create_asso(mock_model, mock_model_bis, client, admin):
 	# Given
 	obj = {"name": "SuperAsso", "substances": [{"_id": "1", "name": "Substance", "status": "G"}], "specialities": None}
 	subst = {"_id": "1", "name": "Substance", "status": "G", "specialities": [{"_id": "1", "name": "Speciality"}]}
-	collection.insert(subst)
-	Association.collection = collection
-	Substance.collection = collection
+	mock_model_bis.collection.insert(subst)
 
 	# When
 	res = client.post(url_for('api.edit_association'), data=json.dumps(obj), content_type='application/json')
@@ -106,14 +105,14 @@ def test_create_asso(collection, client, admin):
 	assert data['data']['name'] == 'SuperAsso'
 	assert data['data']['_id'] == 'superasso'
 	assert data['data']['status'] == 'G'
-	assert data['data']['substances'] == [{"_id": "1", "name": "Substance", "specialities": [], "status": 'G'}]
-	assert data['data']['specialities'] == [{'status': None, 'name': 'Speciality', 'short_name': None, 'enabled': True, 'treatment_type': None, 'spec_type': None, '_id': '1', 'dosage': None}]
+	assert data['data']['substances'] == [{"_id": "1", "name": "Substance", "specialities": [], "status": 'G', 'created_at': None, 'updated_at': None, 'deleted_at': None}]
+	assert data['data']['specialities'] == [{'status': None, 'name': 'Speciality', 'short_name': None, 'enabled': True, 'treatment_type': None, 'spec_type': None, '_id': '1', 'dosage': None, 'created_at': None, 'updated_at': None, 'deleted_at': None}]
 
 
-def test_update_asso(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_update_asso(mock_model, client, admin):
 	# Given
 	obj = {"_id": "1", "name": "SuperAsso", "substances": None, "specialities": None}
-	Association.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_association', asso_id='1'), data=json.dumps(obj), content_type='application/json')
@@ -124,10 +123,10 @@ def test_update_asso(collection, client, admin):
 	assert data['data']['_id'] == '1'
 
 
-def test_update_asso_not_authorized_403(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_update_asso_not_authorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "1", "name": "SuperAsso", "substances": None, "specialities": None}
-	Association.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_association', asso_id='1'), data=json.dumps(obj), content_type='application/json')
@@ -135,10 +134,10 @@ def test_update_asso_not_authorized_403(collection, client, user):
 	assert res.status_code == 403
 
 
-def test_update_asso_not_logged_in_401(collection, client):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_update_asso_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "1", "name": "SuperAsso", "substances": None, "specialities": None}
-	Association.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_association', asso_id='1'), data=json.dumps(obj), content_type='application/json')
@@ -146,11 +145,11 @@ def test_update_asso_not_logged_in_401(collection, client):
 	assert res.status_code == 401
 
 
-def test_delete_asso(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_delete_asso(mock_model, client, admin):
 	# Given
 	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
-	collection.insert(obj)
-	Association.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))
@@ -161,11 +160,11 @@ def test_delete_asso(collection, client, admin):
 	assert res_get.status_code == 404
 
 
-def test_delete_asso_unauthorized_403(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_delete_asso_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
-	collection.insert(obj)
-	Association.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))
@@ -174,11 +173,11 @@ def test_delete_asso_unauthorized_403(collection, client, user):
 	assert res_del.status_code == 403
 
 
-def test_delete_asso_not_logged_in_401(collection, client):
+@pytest.mark.parametrize('collection_name', ['Association'])
+def test_delete_asso_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "02032", "name": "SuperAsso", "substances": None, "specialities": None}
-	collection.insert(obj)
-	Association.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_association', asso_id='02032'))

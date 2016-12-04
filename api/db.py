@@ -1,8 +1,18 @@
 from pymongo import MongoClient
 
 
-class DB(MongoClient):
-	def __init__(self, collection=None):
-		MongoClient.__init__(self)
-		self.db = self.Prescrisur
-		self.collection = self.db[collection]
+class classproperty(object):
+	def __init__(self, fget):
+		self.fget = fget
+
+	def __get__(self, owner_self, owner_cls):
+		return self.fget(owner_cls)
+
+
+class DB(object):
+	DB_NAME = 'Prescrisur'
+	client = MongoClient()
+
+	@classproperty
+	def db(cls):
+		return cls.client[cls.DB_NAME]

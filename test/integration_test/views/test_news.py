@@ -1,4 +1,5 @@
 import json
+import pytest
 import dateutil.parser
 from flask import url_for
 from freezegun import freeze_time
@@ -6,11 +7,11 @@ from freezegun import freeze_time
 from api.models import News
 
 
-def test_get_news(collection, client):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_get_news(mock_model, client):
 	# Given
 	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
-	collection.insert(obj)
-	News.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.news', news_id='02039'))
@@ -21,10 +22,8 @@ def test_get_news(collection, client):
 	assert data['data'] == obj
 
 
-def test_get_news_no_news_404(collection, client, user):
-	# Given
-	News.collection = collection
-
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_get_news_no_news_404(mock_model, client, user):
 	# When
 	res = client.get(url_for('api.news', news_id='02039'))
 
@@ -32,14 +31,14 @@ def test_get_news_no_news_404(collection, client, user):
 	assert res.status_code == 404
 
 
-def test_get_all_news(collection, client):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_get_all_news(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02039", "name": "News1", "text": "coucou1"},
 		{"_id": "02040", "name": "News2", "text": "coucou2"}
 	]
-	map(lambda o: collection.insert(o), objs)
-	News.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.news'))
@@ -49,11 +48,12 @@ def test_get_all_news(collection, client):
 	assert data['data'] == objs
 
 
+
+@pytest.mark.parametrize('collection_name', ['News'])
 @freeze_time("2015-01-01")
-def test_create_news(collection, client, admin):
+def test_create_news(mock_model, client, admin):
 	# Given
 	obj = {"name": "Super News", "text": "<b>coucou</b>"}
-	News.collection = collection
 
 	# When
 	res = client.post(url_for('api.edit_news'), data=json.dumps(obj), content_type='application/json')
@@ -68,9 +68,9 @@ def test_create_news(collection, client, admin):
 	assert data['data']['created_at'] == data['data']['updated_at']
 
 
-def test_update_news(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_update_news(mock_model, client, admin):
 	# Given
-	News.collection = collection
 	news = News(name='News', text='coucou')
 	news.create()
 
@@ -87,7 +87,8 @@ def test_update_news(collection, client, admin):
 	assert dateutil.parser.parse(data['data']['created_at']) < dateutil.parser.parse(data['data']['updated_at'])
 
 
-def test_update_news_not_allowed(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_update_news_not_allowed(mock_model, client, user):
 	# Given
 	update_obj = {"_id": "news", "name": "Super News", "text": "<b>coucou</b> <script>lol()</script>"}
 
@@ -97,7 +98,8 @@ def test_update_news_not_allowed(collection, client, user):
 	assert res.status_code == 403
 
 
-def test_update_news_not_logged_in(collection, client):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_update_news_not_logged_in(mock_model, client):
 	# Given
 	update_obj = {"_id": "news", "name": "Super News", "text": "<b>coucou</b> <script>lol()</script>"}
 
@@ -107,11 +109,11 @@ def test_update_news_not_logged_in(collection, client):
 	assert res.status_code == 401
 
 
-def test_delete_news(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_delete_news(mock_model, client, admin):
 	# Given
 	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
-	collection.insert(obj)
-	News.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
@@ -122,11 +124,11 @@ def test_delete_news(collection, client, admin):
 	assert res_get.status_code == 404
 
 
-def test_delete_news_unauthorized_403(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_delete_news_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
-	collection.insert(obj)
-	News.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_news', news_id='02039'))
@@ -137,11 +139,11 @@ def test_delete_news_unauthorized_403(collection, client, user):
 	assert res_get.status_code == 200
 
 
-def test_delete_news_not_logged_in_401(collection, client):
+@pytest.mark.parametrize('collection_name', ['News'])
+def test_delete_news_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "02039", "name": "News", "text": "coucou", "author": None, "created_at": "blabla", "updated_at": None}
-	collection.insert(obj)
-	News.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_news', news_id='02039'))

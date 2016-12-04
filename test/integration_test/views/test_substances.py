@@ -1,13 +1,14 @@
+import pytest
 from flask import url_for
 
 from api.models import Substance
 
 
-def test_get_substance(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Substance'])
+def test_get_substance(mock_model, client, user):
 	# Given
-	obj = {"_id": "02039", "status": None, "name": "MAGNESIA", "specialities":  []}
-	collection.insert(obj)
-	Substance.collection = collection
+	obj = {"_id": "02039", "status": None, "name": "MAGNESIA", "specialities":  [], 'created_at': None, 'updated_at': None, 'deleted_at': None}
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.substance', subst_id='02039'))
@@ -18,10 +19,8 @@ def test_get_substance(collection, client, user):
 	assert data['data'] == obj
 
 
-def test_get_substance_no_subst_404(collection, client, user):
-	# Given
-	Substance.collection = collection
-
+@pytest.mark.parametrize('collection_name', ['Substance'])
+def test_get_substance_no_subst_404(mock_model, client, user):
 	# When
 	res = client.get(url_for('api.substance', subst_id='02039'))
 
@@ -29,11 +28,11 @@ def test_get_substance_no_subst_404(collection, client, user):
 	assert res.status_code == 404
 
 
-def test_get_substance_not_logged_in_401(collection, client):
+@pytest.mark.parametrize('collection_name', ['Substance'])
+def test_get_substance_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "02039", "status": None, "name": "MAGNESIA", "specialities":  []}
-	collection.insert(obj)
-	Substance.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.substance', subst_id='02039'))
@@ -42,15 +41,15 @@ def test_get_substance_not_logged_in_401(collection, client):
 	assert res.status_code == 401
 
 
-def test_search_substance(collection, client):
+@pytest.mark.parametrize('collection_name', ['Substance'])
+def test_search_substance(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02039", "status": None, "name": "SUBSTANCE", "specialities": []},
 		{"_id": "02032", "status": None, "name": "SUPERSUBSTANCE", "specialities": []},
 		{"_id": "02301", "status": None, "name": "SUPER"}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Substance.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.search_substance'), query_string={'q': 'subst'})
@@ -64,15 +63,15 @@ def test_search_substance(collection, client):
 	]
 
 
-def test_search_substance_with_spec(collection, client):
+@pytest.mark.parametrize('collection_name', ['Substance'])
+def test_search_substance_with_spec(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02039", "status": None, "name": "SUBSTANCE", "specialities": []},
 		{"_id": "02032", "status": None, "name": "SUPERSUBSTANCE", "specialities": []},
 		{"_id": "02301", "status": None, "name": "SUPER"}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Substance.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.search_substance'), query_string={'q': 'subst', 'specialities': True})

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_mail import Mail
-from flask.ext.cors import CORS
-from flask.ext.login import LoginManager
+from flask_cors import CORS
+from flask_login import LoginManager
 
 from api.config import *
 from api.services.json_encoder import ModelJSONEncoder

@@ -1,5 +1,5 @@
 # coding=utf-8
-import urllib2
+import requests
 
 from api.models import Substance
 
@@ -10,9 +10,14 @@ class SubstanceUpdater(object):
 
 	def execute(self):
 		substances = {}
-		req = urllib2.urlopen(SUBSTANCE_URI)
-		for line in req.readlines():
+		# Flag every substance as deleted to update others and flag the non-updated as deleted in the end
+		Substance.flag_all_as_deleted()
+		# Then read the update file
+		req = requests.get(SUBSTANCE_URI, stream=True)
+		for line in req.iter_lines():
 			line = line.decode('ISO-8859-1').encode('UTF8').split('\t')
+			if not line or len(line) < 4:
+				continue
 			subst_id = line[2]
 			if subst_id not in substances:
 				substances[subst_id] = self.create_substance(line)
@@ -22,7 +27,9 @@ class SubstanceUpdater(object):
 	@staticmethod
 	def save_if_has_specialities(subst):
 		if len(subst.specialities) > 0:
-			return subst.sort_specialities().save()
+			saved_subst = subst.sort_specialities().save()
+			if saved_subst.upserted_id:
+				subst.save(new=True)
 		return False
 
 	@staticmethod

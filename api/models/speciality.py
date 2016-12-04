@@ -1,13 +1,15 @@
 # coding=utf-8
 from pymongo import ASCENDING
 
-from base_model import BaseModel
+from ANSM import ANSMObject
 
 
-class Speciality(BaseModel):
+class Speciality(ANSMObject):
 	ORDER_BY = [('name', ASCENDING)]
 
-	def __init__(self, _id=None, short_name=None, name=None, dosage=None, spec_type=None, treatment_type=None, status=None, enabled=True, **kwargs):
+	def __init__(self, _id=None, short_name=None, name=None, dosage=None, spec_type=None, treatment_type=None, status=None, enabled=True, created_at=None, updated_at=None, deleted_at=None, **kwargs):
+		super(Speciality, self).__init__(created_at, updated_at, deleted_at)
+
 		self._id = _id
 		self.short_name = short_name
 		self.name = name

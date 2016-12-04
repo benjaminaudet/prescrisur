@@ -36,6 +36,12 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 	}
 ])
 
+.factory('SpecialityService', ['$resource',
+	function($resource){
+		return $resource('/api/specialities');
+	}
+])
+
 .factory('AssociationService', ['$resource',
 	function($resource){
 		return $resource('/api/associations/:id', null, {

@@ -1,14 +1,15 @@
 import json
+import pytest
 from flask import url_for
 
 from api.models import Page
 
 
-def test_get_page(collection, client):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_get_page(mock_model, client):
 	# Given
 	obj = {"_id": "02039", "name": "Page", "text": "coucou"}
-	collection.insert(obj)
-	Page.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.page', page_id='02039'))
@@ -19,10 +20,8 @@ def test_get_page(collection, client):
 	assert data['data'] == obj
 
 
-def test_get_page_no_page_404(collection, client, user):
-	# Given
-	Page.collection = collection
-
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_get_page_no_page_404(mock_model, client, user):
 	# When
 	res = client.get(url_for('api.page', page_id='02039'))
 
@@ -30,14 +29,14 @@ def test_get_page_no_page_404(collection, client, user):
 	assert res.status_code == 404
 
 
-def test_get_all_pages(collection, client):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_get_all_pages(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "02039", "name": "Page1", "text": "coucou1"},
 		{"_id": "02040", "name": "Page2", "text": "coucou2"}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Page.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.page'))
@@ -47,10 +46,10 @@ def test_get_all_pages(collection, client):
 	assert data['data'] == objs
 
 
-def test_create_page(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_create_page(mock_model, client, admin):
 	# Given
 	obj = {"name": "Page", "text": "<b>coucou</b>"}
-	Page.collection = collection
 
 	# When
 	res = client.post(url_for('api.edit_page'), data=json.dumps(obj), content_type='application/json')
@@ -62,9 +61,9 @@ def test_create_page(collection, client, admin):
 	assert data['data']['text'] == '<b>coucou</b>'
 
 
-def test_update_page(collection, client, admin):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_update_page(mock_model, client, admin):
 	# Given
-	Page.collection = collection
 	page = Page(name='Page', text='coucou')
 	page.create()
 
@@ -80,7 +79,8 @@ def test_update_page(collection, client, admin):
 	assert data['data']['text'] == '<b>coucou</b> &lt;script&gt;lol()&lt;/script&gt;'
 
 
-def test_update_page_not_allowed(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_update_page_not_allowed(mock_model, client, user):
 	# Given
 	update_obj = {"_id": "page", "name": "Super Page", "text": "<b>coucou</b> <script>lol()</script>"}
 
@@ -90,7 +90,8 @@ def test_update_page_not_allowed(collection, client, user):
 	assert res.status_code == 403
 
 
-def test_update_page_not_logged_in(collection, client):
+@pytest.mark.parametrize('collection_name', ['Page'])
+def test_update_page_not_logged_in(mock_model, client):
 	# Given
 	update_obj = {"_id": "page", "name": "Super Page", "text": "<b>coucou</b> <script>lol()</script>"}
 

@@ -1,14 +1,16 @@
 # coding=utf-8
 from pymongo import ASCENDING
 
-from base_model import BaseModel
+from ANSM import ANSMObject
 from speciality import Speciality
 
 
-class Substance(BaseModel):
+class Substance(ANSMObject):
 	ORDER_BY = [('name', ASCENDING)]
 
-	def __init__(self, _id, name, status=None, specialities=None, **kwargs):
+	def __init__(self, _id, name, status=None, specialities=None, created_at=None, updated_at=None, deleted_at=None, **kwargs):
+		super(Substance, self).__init__(created_at, updated_at, deleted_at)
+
 		self._id = _id
 		self.name = name
 		self.status = status

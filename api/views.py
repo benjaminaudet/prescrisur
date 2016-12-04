@@ -1,7 +1,6 @@
 # coding=utf-8
-import base64
 from flask import *
-from flask.ext.login import login_required, login_user, logout_user, current_user
+from flask_login import login_required, login_user, logout_user, current_user
 from pymongo.errors import DuplicateKeyError
 
 from api import login_manager
@@ -17,6 +16,12 @@ api = Blueprint('api', __name__)
 @api.route('/')
 def index():
 	return current_app.send_static_file('index.html')
+
+
+@api.route('/api/specialities')
+@monitored
+def get_all_specialities():
+	return jsonify(data=Speciality.all())
 
 
 @api.route('/api/specialities/search')

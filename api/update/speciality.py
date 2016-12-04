@@ -1,6 +1,7 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import re
 import urllib2
+import requests
 
 from api.models import Speciality
 
@@ -13,12 +14,17 @@ REG_TYPE = r" et\s?"
 class SpecialityUpdater(object):
 
 	def execute(self):
-		req = urllib2.urlopen(SPECIALITIES_URI)
-		for line in req.readlines():
+		# Flag every speciality as deleted to update others and flag the non-updated as deleted in the end
+		Speciality.flag_all_as_deleted()
+		# Then read the update file
+		req = requests.get(SPECIALITIES_URI, stream=True)
+		for line in req.iter_lines():
 			line = line.decode('ISO-8859-1').encode('UTF8').split('\t')
-			if not self.is_valid(line[4], line[6]):
+			if not line or len(line) < 5 or not self.is_valid(line[4], line[6]):
 				continue
-			self.update_one(line)
+			spec, saved_spec = self.update_one(line)
+			if saved_spec.upserted_id:
+				spec.save(new=True)
 		return self.update_spec_status()
 
 	def update_spec_status(self):
@@ -36,7 +42,7 @@ class SpecialityUpdater(object):
 		spec_type = self.get_spec_type(line[2])
 		treatment_type = self.get_treatment_type(line[3])
 		full_name = self.get_full_name(name, dosage, spec_type)
-		return Speciality(
+		spec = Speciality(
 			_id=line[0],
 			short_name=name,
 			name=full_name,
@@ -44,11 +50,12 @@ class SpecialityUpdater(object):
 			spec_type=spec_type,
 			treatment_type=treatment_type,
 			status=None
-		).save()
+		)
+		return spec, spec.save()
 
 	@staticmethod
 	def is_valid(authorization, marketing):
-		if authorization == 'Autorisation active' and marketing == 'Commercialisée':
+		if authorization == 'Autorisation active' and 'non comm' not in marketing:
 			return True
 		return False
 

@@ -67,6 +67,7 @@
 					<li><a ui-sref="pathologies" ng-if="isAuthorized('admin')">Pathologies</a></li>
 					<li><a ui-sref="associations" ng-if="isAuthorized('admin')">Associations</a></li>
 					<li><a ui-sref="pages" ng-if="isAuthorized('admin')">Pages</a></li>
+					<li><a ui-sref="ansm-diff" ng-if="isAuthorized('admin')">Mise à jour ANSM</a></li>
 					<li><a ui-sref="users" ng-if="isAuthorized('admin')">Gérer les Utilisateurs</a></li>
 					<li role="separator" class="divider" ng-if="isAuthorized('admin')"></li>
 					<li><a ui-sref="profile">Modifier mon Profil</a></li>
@@ -180,6 +181,7 @@
 <script src="front/app/controllers/pathology-edit.js"></script>
 <script src="front/app/controllers/pathology-admin.js"></script>
 <script src="front/app/controllers/therapeutic-class.js"></script>
+<script src="front/app/controllers/ansm-diff.js"></script>
 <script src="front/app/controllers/user.js"></script>
 <script src="front/app/controllers/page.js"></script>
 <script src="front/app/controllers/contact.js"></script>

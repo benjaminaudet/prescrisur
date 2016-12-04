@@ -16,10 +16,7 @@ angular.module('prescrisurApp.controllers')
 		};
 
 		$scope.isAuthorized = function(role) {
-			if($scope.currentUser && $scope.currentUser.roles.indexOf(role) > -1 && !$scope.currentUser.visitorMode) {
-				return true;
-			}
-			return false;
+			return !!($scope.currentUser && $scope.currentUser.roles.indexOf(role) > -1 && !$scope.currentUser.visitorMode);
 		};
 		
 		$scope.isState = function(state) {

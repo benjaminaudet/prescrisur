@@ -28,4 +28,18 @@ angular.module('prescrisurApp.filters', [])
 			return $sce.trustAsHtml(input);
 		};
 	}
-]);
+])
+
+.filter("dateFromFilter", function() {
+	return function(items, attr, from) {
+		var df = from;
+		var result = [];
+		for (var i=0; i<items.length; i++){
+			var tf = new Date(items[i][attr]);
+			if (tf > df)  {
+				result.push(items[i]);
+			}
+		}
+		return result;
+	};
+});

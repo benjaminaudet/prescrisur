@@ -1,15 +1,16 @@
 import json
+import pytest
 from flask import url_for
 from freezegun import freeze_time
 
 from api.models import Pathology, PathologyDraft
 
 
-def test_get_patho(collection, client, user):
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho(mock_model, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	Pathology.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.pathology', patho_id='patho'))
@@ -18,37 +19,35 @@ def test_get_patho(collection, client, user):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == obj
-
-
-def test_get_patho_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	Pathology.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.pathology', patho_id='patho'))
 
 	# Then
 	assert res.status_code == 401
-
-
-def test_get_patho_no_patho_404(collection, client, user):
-	# Given
-	Pathology.collection = collection
-
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_no_patho_404(mock_model, client, user):
 	# When
 	res = client.get(url_for('api.pathology', patho_id='patho'))
 
 	# Then
 	assert res.status_code == 404
-
-
-def test_get_patho_draft(collection, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_draft(mock_model, client, admin):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
@@ -57,24 +56,22 @@ def test_get_patho_draft(collection, client, admin):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == obj
-
-
-def test_get_patho_draft_no_patho_404(collection, client, admin):
-	# Given
-	PathologyDraft.collection = collection
-
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_draft_no_patho_404(mock_model, client, admin):
 	# When
 	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res.status_code == 404
-
-
-def test_patho_has_draft(collection, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_patho_has_draft(mock_model, client, admin):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_ok = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
@@ -87,59 +84,59 @@ def test_patho_has_draft(collection, client, admin):
 	assert data_ok['exists']
 	assert res_nok.status_code == 200
 	assert not data_nok['exists']
-
-
+	
+	
 def test_patho_has_draft_unauthorized_403(client, user):
 	# When
 	res = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
 
 	# Then
 	assert res.status_code == 403
-
-
+	
+	
 def test_patho_has_draft_not_logged_in_401(client):
 	# When
 	res = client.get(url_for('api.pathology_has_draft', patho_id="patho"))
 
 	# Then
 	assert res.status_code == 401
-
-
-def test_get_patho_draft_unauthorized_403(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_draft_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res.status_code == 403
-
-
-def test_get_patho_draft_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_patho_draft_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": [], "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res = client.get(url_for('api.pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res.status_code == 401
-
-
-def test_get_all_patho(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_all_patho(mock_model, client, user):
 	# Given
 	objs = [
 		{"_id": "patho1", "name": "Patho1", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
 		{"_id": "patho2", "name": "Patho2", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
 		{"_id": "patho3", "name": "Patho3", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Pathology.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.pathologies'))
@@ -152,28 +149,26 @@ def test_get_all_patho(collection, client, user):
 		{"_id": "patho2", "name": "Patho2", "updated_at": None},
 		{"_id": "patho3", "name": "Patho3", "updated_at": None}
 	]
-
-
-def test_get_all_patho_no_patho_404(collection, client, user):
-	# Given
-	Pathology.collection = collection
-
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_all_patho_no_patho_404(mock_model, client, user):
 	# When
 	res = client.get(url_for('api.pathologies'))
 
 	# Then
 	assert res.status_code == 404
-
-
-def test_get_all_patho_draft(collection, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_all_patho_draft(mock_model, client, admin):
 	# Given
 	objs = [
 		{"_id": "patho1", "name": "Patho1", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
 		{"_id": "patho2", "name": "Patho2", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None},
 		{"_id": "patho3", "name": "Patho3", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
 	]
-	map(lambda o: collection.insert(o), objs)
-	PathologyDraft.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.pathologies_drafts'))
@@ -186,28 +181,26 @@ def test_get_all_patho_draft(collection, client, admin):
 		{"_id": "patho2", "name": "Patho2", "updated_at": None},
 		{"_id": "patho3", "name": "Patho3", "updated_at": None}
 	]
-
-
-def test_get_all_patho_draft_no_patho_404(collection, client, admin):
-	# Given
-	PathologyDraft.collection = collection
-
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_get_all_patho_draft_no_patho_404(mock_model, client, admin):
 	# When
 	res = client.get(url_for('api.pathologies_drafts'))
 
 	# Then
 	assert res.status_code == 404
-
-
-def test_search_patho(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_search_patho(mock_model, client):
 	# Given
 	objs = [
 		{"_id": "patho1", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"},
 		{"_id": "patho2", "name": "SuperPatho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"},
 		{"_id": "super", "name": "Super", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": "2015-12-12 00:00:00"}
 	]
-	map(lambda o: collection.insert(o), objs)
-	Pathology.collection = collection
+	map(lambda o: mock_model.collection.insert(o), objs)
 
 	# When
 	res = client.get(url_for('api.search_pathology'), query_string={'q': 'patho'})
@@ -221,11 +214,12 @@ def test_search_patho(collection, client):
 	]
 
 
+
+@pytest.mark.parametrize('collection_name', ['Pathology'])
 @freeze_time("2015-01-01")
-def test_create_patho_draft(collection, client, admin):
+def test_create_patho_draft(mock_model, client, admin):
 	# Given
 	obj = {"name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	PathologyDraft.collection = collection
 
 	# When
 	res = client.post(url_for('api.edit_pathology_draft'), data=json.dumps(obj), content_type='application/json')
@@ -239,11 +233,12 @@ def test_create_patho_draft(collection, client, admin):
 	assert data['data']['updated_at'] == '2015-01-01T00:00:00'
 
 
+
+@pytest.mark.parametrize('collection_name', ['Pathology'])
 @freeze_time("2015-01-01")
-def test_update_patho_draft(collection, client, admin):
+def test_update_patho_draft(mock_model, client, admin):
 	# Given
 	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
-	PathologyDraft.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
@@ -255,35 +250,35 @@ def test_update_patho_draft(collection, client, admin):
 	assert data['data']['intro'] == 'intro'
 	assert data['data']['conclu'] == 'conclu'
 	assert data['data']['updated_at'] == '2015-01-01T00:00:00'
-
-
-def test_update_patho_draft_unauthorized_403(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_update_patho_draft_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
-	PathologyDraft.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
 
 	assert res.status_code == 403
-
-
-def test_update_patho_draft_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_update_patho_draft_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "patho-id", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": '2014-01-01T00:00:00'}
-	PathologyDraft.collection = collection
 
 	# When
 	res = client.put(url_for('api.update_pathology_draft', patho_id='patho-id'), data=json.dumps(obj), content_type='application/json')
 
 	assert res.status_code == 401
-
-
-def test_delete_patho(collection, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho(mock_model, client, admin):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	Pathology.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology', patho_id='patho'))
@@ -292,13 +287,13 @@ def test_delete_patho(collection, client, admin):
 	# Then
 	assert res_del.status_code == 200
 	assert res_get.status_code == 404
-
-
-def test_delete_patho_unauthorized_403(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	Pathology.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology', patho_id='patho'))
@@ -307,26 +302,26 @@ def test_delete_patho_unauthorized_403(collection, client, user):
 	# Then
 	assert res_del.status_code == 403
 	assert res_get.status_code == 200
-
-
-def test_delete_patho_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	Pathology.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology', patho_id='patho'))
 
 	# Then
 	assert res_del.status_code == 401
-
-
-def test_delete_patho_draft(collection, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho_draft(mock_model, client, admin):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
@@ -335,37 +330,38 @@ def test_delete_patho_draft(collection, client, admin):
 	# Then
 	assert res_del.status_code == 200
 	assert res_get.status_code == 404
-
-
-def test_delete_patho_draft_unauthorized_403(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho_draft_unauthorized_403(mock_model, client, user):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res_del.status_code == 403
-
-
-def test_delete_patho_draft_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_delete_patho_draft_not_logged_in_401(mock_model, client):
 	# Given
 	obj = {"_id": "patho", "name": "Patho", "levels": None, "intro": "intro", "conclu": "conclu", "updated_at": None}
-	collection.insert(obj)
-	PathologyDraft.collection = collection
+	mock_model.collection.insert(obj)
 
 	# When
 	res_del = client.delete(url_for('api.delete_pathology_draft', patho_id='patho'))
 
 	# Then
 	assert res_del.status_code == 401
-
-
-def test_search_pathologies_from_substance(collection, client, user):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_search_pathologies_from_substance(mock_model, client, user):
 	subst = {"_id": "subst", "status": None, "name": "MAGNESIA", "specialities": []}
-	collection.insert(subst)
+	mock_model.collection.insert(subst)
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro",
 	         "levels": [
 		         {
@@ -382,8 +378,7 @@ def test_search_pathologies_from_substance(collection, client, user):
 		         }
 	         ],
 	         "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	Pathology.collection = collection
+	mock_model.collection.insert(patho)
 
 	# When
 	res = client.get(url_for('api.search_pathologies_from_substance', subst_id='subst'))
@@ -393,12 +388,12 @@ def test_search_pathologies_from_substance(collection, client, user):
 	assert res.status_code == 200
 	assert len(data['data']) == 1
 	assert data['data'][0]['_id'] == 'patho'
-
-
-def test_search_pathologies_from_substance_not_logged_in_401(collection, client):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+def test_search_pathologies_from_substance_not_logged_in_401(mock_model, client):
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": None, "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	Pathology.collection = collection
+	mock_model.collection.insert(patho)
 
 	# When
 	res = client.get(url_for('api.search_pathologies_from_substance', subst_id='subst'))
@@ -407,13 +402,13 @@ def test_search_pathologies_from_substance_not_logged_in_401(collection, client)
 	assert res.status_code == 401
 
 
+@pytest.mark.parametrize('collection_name', ['PathologyDraft'])
+@pytest.mark.parametrize('collection_name_bis', ['Pathology'])
 @freeze_time("2015-01-01")
-def test_validate_pathology(collection, collection_bis, client, admin):
+def test_validate_pathology(mock_model, mock_model_bis, client, admin):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	PathologyDraft.collection = collection
-	Pathology.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_no_patho = client.get(url_for('api.pathology', patho_id='patho'))
@@ -432,12 +427,12 @@ def test_validate_pathology(collection, collection_bis, client, admin):
 	assert data_validate_patho['data']['updated_at'] == '2015-01-01T00:00:00'
 
 
-def test_validate_pathology_unauthorized_403(collection, collection_bis, client, user):
+@pytest.mark.parametrize('collection_name', ['PathologyDraft'])
+@pytest.mark.parametrize('collection_name_bis', ['Pathology'])
+def test_validate_pathology_unauthorized_403(mock_model, mock_model_bis, client, user):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	PathologyDraft.collection = collection
-	Pathology.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
@@ -446,26 +441,26 @@ def test_validate_pathology_unauthorized_403(collection, collection_bis, client,
 	assert res_validate_patho.status_code == 403
 
 
-def test_validate_pathology_not_logged_in_401(collection, collection_bis, client):
+@pytest.mark.parametrize('collection_name', ['PathologyDraft'])
+@pytest.mark.parametrize('collection_name_bis', ['Pathology'])
+def test_validate_pathology_not_logged_in_401(mock_model, mock_model_bis, client):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	PathologyDraft.collection = collection
-	Pathology.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_validate_patho = client.put(url_for('api.validate_pathology', patho_id='patho'))
 
 	# Then
 	assert res_validate_patho.status_code == 401
-
-
-def test_unvalidate_pathology(collection, collection_bis, client, admin):
+	
+	
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+@pytest.mark.parametrize('collection_name_bis', ['PathologyDraft'])
+def test_unvalidate_pathology(mock_model, mock_model_bis, client, admin):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	Pathology.collection = collection
-	PathologyDraft.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_no_draft = client.get(url_for('api.pathology_draft', patho_id='patho'))
@@ -483,12 +478,12 @@ def test_unvalidate_pathology(collection, collection_bis, client, admin):
 	assert data_unvalidate_patho['data'] == data_ok_draft['data'] == patho
 
 
-def test_unvalidate_pathology_unauthorized_404(collection, collection_bis, client, user):
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+@pytest.mark.parametrize('collection_name_bis', ['PathologyDraft'])
+def test_unvalidate_pathology_unauthorized_404(mock_model, mock_model_bis, client, user):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	Pathology.collection = collection
-	PathologyDraft.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_unvalidate_patho = client.put(url_for('api.unvalidate_pathology', patho_id='patho'))
@@ -497,12 +492,12 @@ def test_unvalidate_pathology_unauthorized_404(collection, collection_bis, clien
 	assert res_unvalidate_patho.status_code == 403
 
 
-def test_unvalidate_pathology_not_logged_in_401(collection, collection_bis, client):
+@pytest.mark.parametrize('collection_name', ['Pathology'])
+@pytest.mark.parametrize('collection_name_bis', ['PathologyDraft'])
+def test_unvalidate_pathology_not_logged_in_401(mock_model, mock_model_bis, client):
 	# Given
 	patho = {"_id": "patho", "name": "Patho", "intro": "intro", "levels": [], "conclu": "conclu", "updated_at": None}
-	collection.insert(patho)
-	Pathology.collection = collection
-	PathologyDraft.collection = collection_bis
+	mock_model.collection.insert(patho)
 
 	# When
 	res_unvalidate_patho = client.put(url_for('api.unvalidate_pathology', patho_id='patho'))
