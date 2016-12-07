@@ -9,6 +9,7 @@ from api.services.json_encoder import ModelJSONEncoder
 mail = Mail()
 cors = CORS()
 login_manager = LoginManager()
+# login_manager.session_protection = 'strong'
 
 
 def create_app(config_module):

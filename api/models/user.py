@@ -8,7 +8,7 @@ from base_model import BaseModel
 
 
 class User(BaseModel):
-	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None, confirmed=False, token=None):
+	def __init__(self, _id=None, email=None, password=None, password_hash=None, name=None, roles=None, confirmed=False, token=None, **kwargs):
 		self._id = _id if _id else slugify(email)
 		self.email = email
 		self.password_hash = self.hash_password(password, password_hash)

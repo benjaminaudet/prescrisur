@@ -12,9 +12,10 @@ class ANSMObject(BaseModel):
 
 	def save(self, new=False, upsert=True):
 		now = datetime.datetime.now().isoformat()
-		if new:
-			self.created_at = now
+		self.created_at = now
 		self.updated_at = now
+		if not new:
+			delattr(self, 'created_at')
 		return super(ANSMObject, self).save(upsert=upsert)
 
 	@classmethod

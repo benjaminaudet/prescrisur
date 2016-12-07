@@ -19,6 +19,7 @@ def index():
 
 
 @api.route('/api/specialities')
+@required_role('admin')
 @monitored
 def get_all_specialities():
 	return jsonify(data=Speciality.all())
@@ -30,7 +31,13 @@ def search_speciality():
 	return jsonify(data=Speciality.search_by_name(q))
 
 
-@api.route('/api/substances/', endpoint='substances')
+@api.route('/api/substances')
+@required_role('admin')
+@monitored
+def substances():
+	return jsonify(data=Substance.all(proj={'name': 1, 'created_at': 1, 'updated_at': 1, 'deleted_at': 1}))
+
+
 @api.route('/api/substances/<subst_id>')
 @login_required
 @monitored
@@ -475,8 +482,8 @@ def update_user_email(token):
 
 
 # ANSM Update
-@required_role('admin')
 @api.route('/api/update/ansm', methods=['POST'])
+@required_role('admin')
 @monitored
 def update_ansm():
 	SpecialityUpdater().execute()

@@ -33,7 +33,7 @@ angular.module('prescrisurApp.filters', [])
 .filter("dateFromFilter", function() {
 	return function(items, attr, from) {
 		if(!items) return [];
-		
+
 		var df = from;
 		var result = [];
 		for (var i=0; i<items.length; i++){
