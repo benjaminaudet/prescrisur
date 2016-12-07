@@ -22,7 +22,7 @@ def index():
 @required_role('admin')
 @monitored
 def get_all_specialities():
-	return jsonify(data=Speciality.all())
+	return jsonify(data=Speciality.all(proj={'name': 1, 'created_at': 1, 'updated_at': 1, 'deleted_at': 1}))
 
 
 @api.route('/api/specialities/search')
