@@ -30,10 +30,11 @@ def search_speciality():
 	return jsonify(data=Speciality.search_by_name(q))
 
 
+@api.route('/api/substances/', endpoint='substances')
 @api.route('/api/substances/<subst_id>')
 @login_required
 @monitored
-def substance(subst_id):
+def substance(subst_id=None):
 	subst = Substance.get(subst_id)
 	if not subst:
 		abort(404)
