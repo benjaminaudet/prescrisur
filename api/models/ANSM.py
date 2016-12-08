@@ -21,7 +21,7 @@ class ANSMObject(BaseModel):
 	@classmethod
 	def flag_all_as_deleted(cls):
 		now = datetime.datetime.now().isoformat()
-		return cls.collection.update_many({}, {'$set': {'deleted_at': now}})
+		return cls.collection.update_many({'deleted_at': None}, {'$set': {'deleted_at': now}})
 
 	@classmethod
 	def search_by_name(cls, name, proj='default', search_within_deleted=False):

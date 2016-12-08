@@ -6,6 +6,7 @@ from api.models import Substance
 SUBSTANCE_URI = 'http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_COMPO_bdpm.txt'
 
 
+# TODO: Return better KPIs
 class SubstanceUpdater(object):
 
 	def execute(self):

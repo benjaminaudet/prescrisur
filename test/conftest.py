@@ -96,3 +96,11 @@ def subst2(mock_model_bis):
 	subst = Substance(_id='86571', name='Subst2')
 	subst.save()
 	return subst
+
+
+@pytest.fixture(scope='function')
+@pytest.mark.parametrize('collection_name_bis', ['Substance'])
+def deleted_subst(mock_model_bis):
+	subst = Substance(_id='33333', name='Deleted Subst', deleted_at='2015-10-10')
+	subst.save()
+	return subst
