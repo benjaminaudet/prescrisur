@@ -15,7 +15,7 @@ angular.module('prescrisurApp.controllers')
 		$scope.showSubsts = true;
 
 		$scope.dateFrom = new Date();
-		$scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
+		$scope.dateFrom.setDate($scope.dateFrom.getDate() - 7);
 
 		SpecialityService.get(function(data) {
 			$scope.specLoaded = true;
