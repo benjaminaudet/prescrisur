@@ -94,6 +94,11 @@
         font-size: 18pt !important;
     }
 
+    #main h2 {
+        font-size: 16pt !important;
+        color: #B60027;
+    }
+
     #content h2 {
         font-size: 13pt !important;
     }
@@ -541,6 +546,10 @@ image-picker .image-button {
         display: block;
         border-radius: 0;
     }
+
+    .jumbotron {
+        margin-bottom: 0 !important;
+    }
 }
 
 
@@ -586,6 +595,10 @@ image-picker .image-button {
 
 #home-info ul {
     padding-left: 10px;
+}
+
+#home-info .updates ul {
+    list-style: none;
 }
 
 #home-info li {
