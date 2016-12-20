@@ -55,7 +55,7 @@ class SpecialityUpdater(object):
 
 	@staticmethod
 	def is_valid(authorization, marketing):
-		if authorization == 'Autorisation active' and 'non comm' not in marketing:
+		if authorization == 'Autorisation active' and 'non comm' not in marketing.lower():
 			return True
 		return False
 
