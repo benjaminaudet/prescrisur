@@ -986,13 +986,11 @@ image-picker .image-button {
 }
 
 #page-header.news .info {
-    margin-top: 20px;
+    margin-top: 26px;
 }
 
 .news-list {
-    border: 1px solid rgba(230,103,135,0.2);
-    border-radius: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     margin-right: 3%;
     margin-left: 3%;
     padding: 0 5% 2% 5%;
@@ -1009,8 +1007,8 @@ image-picker .image-button {
 }
 
 .news-list .title h2 {
-    font-family: ErasLight, Arial, sans-serif;
-    font-size: 1.7em;
+    font-family: ErasDemi, Arial, sans-serif !important;
+    font-size: 1.5em;
 }
 
 .news-list .title .action-buttons {
