@@ -1,28 +1,30 @@
 angular.module('prescrisurApp.controllers')
 
-	.controller("ANSMDiffController", [
-		'$scope',
-		'PageTitleService',
-		'SpecialityService',
-		'SubstanceService',
+.controller("ANSMDiffController", [
+	'$scope',
+	'PageTitleService',
+	'SpecialityService',
+	'SubstanceService',
 
-		function($scope, PageTitleService, SpecialityService, SubstanceService) {
-			PageTitleService.setTitle('Différentiel ANSM');
+	function($scope, PageTitleService, SpecialityService, SubstanceService) {
+		PageTitleService.setTitle('Différentiel ANSM');
 
-			$scope.showSpecs = true;
-			$scope.showSubsts = true;
+		$scope.filterQuery = '';
 
-			$scope.dateFrom = new Date();
-			$scope.dateFrom.setDate($scope.dateFrom.getDate() - 7);
+		$scope.showSpecs = true;
+		$scope.showSubsts = true;
 
-			SpecialityService.get(function(data) {
-				$scope.specLoaded = true;
-				$scope.specialities = data.data;
-			});
+		$scope.dateFrom = new Date();
+		$scope.dateFrom.setDate($scope.dateFrom.getDate() - 30);
 
-			SubstanceService.get(function(data) {
-				$scope.substLoaded = true;
-				$scope.substances = data.data;
-			});
-		}
-	]);
+		SpecialityService.get(function(data) {
+			$scope.specLoaded = true;
+			$scope.specialities = data.data;
+		});
+
+		SubstanceService.get(function(data) {
+			$scope.substLoaded = true;
+			$scope.substances = data.data;
+		});
+	}
+]);

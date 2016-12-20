@@ -17,10 +17,10 @@
 		Denière mise à jour ANSM : <span class="bold">{{ ::specialities[0].created_at | date:'mediumDate' }}</span>
 	</div>-->
 
-	<form class="form" ng-if="specLoaded || substLoaded">
-		<div class="form-group right-inner-icon">
+	<form class="form">
+		<div class="right-inner-icon">
 			<i class="fa fa-search"></i>
-			<input type="search" class="form-control" ng-model="query" placeholder="Filtrer par substance, spécialité"/>
+			<input type="search" class="form-control" ng-model="filterQuery" placeholder="Filtrer par nom, email, role"/>
 		</div>
 		<div class="form-group right-inner-icon left-placeholder">
 			<span class="placeholder">Filtrer à partir du</span>
@@ -37,7 +37,7 @@
 		<div ng-if="showSpecs" class="specialities row">
 			<div class="col-md-6">
 				<h3>Nouvelles Spécialités</h3> <!-- TODO: Order by date not datetime -->
-				<div ng-repeat="spec in newSpecs = (specialities | filter: { deleted_at: null, created_at: '', name: query } | dateFromFilter:'created_at':dateFrom | orderBy:'-created_at')">
+				<div ng-repeat="spec in newSpecs = (specialities | filter: { deleted_at:null, created_at:'', name: filterQuery } | dateFromFilter:'created_at':dateFrom | orderBy:'-created_at')">
 					<span class="date">{{ ::spec.created_at | date:'dd/MM/yyyy' }}</span>
 					<a ui-sref="specialities({id: spec._id})">{{ ::spec.name }}</a>
 				</div>
@@ -48,7 +48,7 @@
 
 			<div class="col-md-6">
 				<h3>Spécialités Supprimées</h3>
-				<div ng-repeat="spec in deletedSpecs = (specialities | filter: { deleted_at: '', name: query } | dateFromFilter:'deleted_at':dateFrom | orderBy:'-deleted_at')">
+				<div ng-repeat="spec in deletedSpecs = (specialities | filter: { deleted_at: '', name: filterQuery } | dateFromFilter:'deleted_at':dateFrom | orderBy:'-deleted_at')">
 					<span class="date">{{ ::spec.deleted_at | date:'dd/MM/yyyy' }}</span>
 					<a ui-sref="specialities({id: spec._id})">{{ ::spec.name }}</a>
 				</div>
@@ -67,7 +67,7 @@
 		<div ng-if="showSubsts" class="substances row">
 			<div class="col-md-6">
 				<h3>Nouvelles Substances</h3>
-				<div ng-repeat="subst in newSubsts = (substances | filter: { deleted_at: null, created_at: '', name: query } | dateFromFilter:'created_at':dateFrom | orderBy:'-created_at')">
+				<div ng-repeat="subst in newSubsts = (substances | filter: { deleted_at: null, created_at: '', name: filterQuery } | dateFromFilter:'created_at':dateFrom | orderBy:'-created_at')">
 					<span class="date">{{ ::subst.created_at | date:'dd/MM/yyyy' }}</span>
 					<a ui-sref="substances({id: spec._id})">{{ ::subst.name }}</a>
 				</div>
@@ -78,7 +78,7 @@
 
 			<div class="col-md-6">
 				<h3>Substances Supprimées</h3>
-				<div ng-repeat="subst in deletedSubsts = (substances | filter: { deleted_at: '', name: query } | dateFromFilter:'deleted_at':dateFrom | orderBy:'-deleted_at')">
+				<div ng-repeat="subst in deletedSubsts = (substances | filter: { deleted_at: '', name: filterQuery } | dateFromFilter:'deleted_at':dateFrom | orderBy:'-deleted_at')">
 					<span class="date">{{ ::subst.deleted_at | date:'dd/MM/yyyy' }}</span>
 					<a ui-sref="substances({id: spec._id})">{{ ::subst.name }}</a>
 				</div>
