@@ -25,6 +25,29 @@ def test_create_substance(substance_updater):
 	assert substance.specialities == []
 
 
+@pytest.mark.parametrize('collection_name', ['Speciality'])
+def test_add_speciality_from_cis(substance, spec1):
+	# When
+	substance.add_speciality_from_cis(spec1._id)
+
+	# Then
+	assert len(substance.specialities) == 1
+	assert substance.specialities[0] == spec1
+
+
+@pytest.mark.parametrize('collection_name', ['Speciality'])
+def test_add_speciality_from_cis_with_doublon(substance, spec1):
+	# Given
+	substance.add_speciality_from_cis(spec1._id)
+
+	# When
+	substance.add_speciality_from_cis(spec1._id)
+
+	# Then
+	assert len(substance.specialities) == 1
+	assert substance.specialities[0] == spec1
+
+
 def test_save_if_has_specialities_ok(substance_updater, substance):
 	# Given
 	substance.specialities = [Speciality(_id='1', name='spec')]

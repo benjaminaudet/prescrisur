@@ -18,3 +18,6 @@ class Speciality(ANSMObject):
 		self.treatment_type = treatment_type
 		self.status = status
 		self.enabled = enabled
+
+	def __eq__(self, other):
+		return self._id == other._id

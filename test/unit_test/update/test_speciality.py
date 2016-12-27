@@ -1,7 +1,9 @@
 # coding=utf-8
 import pytest
+from mock import patch
 
-from api.update import Speciality, SpecialityUpdater
+import api.models
+from api.update import SpecialityUpdater
 
 
 @pytest.fixture(autouse=True)
@@ -89,7 +91,8 @@ def test_get_spec_status(speciality_updater):
 	assert speciality_updater.get_spec_status('4') == 'G'
 
 
-def test_valid_line(speciality_updater):
+@patch('api.models.Speciality.save')
+def test_valid_line(mock_save, speciality_updater):
 	def check_save(s):
 		assert s._id == '64743867'
 		assert s.name == 'ACICLOVIR RPG, 5 % (poudre/crème)'
@@ -99,8 +102,7 @@ def test_valid_line(speciality_updater):
 		assert s.treatment_type == ['cutanée']
 		assert not s.status
 
-	Speciality.save = check_save
-
+	mock_save = check_save
 	speciality_updater.update_one([
 		'64743867',
 		'ACICLOVIR RPG 5 %, cr\xc3\xa8me',

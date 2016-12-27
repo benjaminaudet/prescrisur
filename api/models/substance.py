@@ -18,6 +18,9 @@ class Substance(ANSMObject):
 		if specialities:
 			self.add_specialities(specialities)
 
+	def __eq__(self, other):
+		return self._id == other._id
+
 	def add_specialities(self, specs):
 		for s in specs:
 			self.specialities.append(Speciality(**s))
@@ -27,7 +30,8 @@ class Substance(ANSMObject):
 		if spec:
 			if spec.status == 'R':
 				self.status = 'G'
-			return self.specialities.append(spec)
+			if spec not in self.specialities:
+				self.specialities.append(spec)
 
 	def sort_specialities(self):
 		self.specialities.sort(key=lambda s: s.name)
