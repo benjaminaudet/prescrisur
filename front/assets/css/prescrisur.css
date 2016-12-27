@@ -136,27 +136,27 @@
     }
 
     #content {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     #main h1 {
-        font-size: 24pt !important;
+        font-size: 22pt !important;
     }
 
     #content h2 {
-        font-size: 20pt !important;
-    }
-
-    #content h3 {
         font-size: 18pt !important;
     }
 
+    #content h3 {
+        font-size: 16pt !important;
+    }
+
     #content h4 {
-        font-size: 17pt !important;
+        font-size: 15pt !important;
     }
 
     #content h5 {
-        font-size: 16pt !important;
+        font-size: 14pt !important;
     }
 }
 
