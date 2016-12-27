@@ -1038,8 +1038,12 @@ image-picker .image-button {
     .news-list .info {
         display: block;
         width: 100%;
-        margin-top: -10px;
+        margin-top: 0;
         margin-bottom: 10px;
+    }
+
+    .news-list .title .action-buttons {
+        float: right;
     }
 }
 
