@@ -49,7 +49,7 @@
 			{{ data.rank }}{{ $index + 1 }}.
 		</label>
 		<div class="level-name">
-			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau" required/>
+			<input class="form-control" type="text" ng-model="data.name" placeholder="Titre du Niveau"/>
 		</div>
 		<div class="btn-group-vertical level-actions" role="group">
 			<div class="btn btn-xs" ng-click="addRootLevel()" ng-show="canAddRootLevel(data, $index)">

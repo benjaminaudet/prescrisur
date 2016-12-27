@@ -85,9 +85,14 @@ class Pathology(BaseModel):
 		self.intro = bleach.clean(self.intro)
 		self.conclu = bleach.clean(self.conclu)
 		self.levels = map(lambda l: self._check_level(l), self.levels)
+		# FIXME: see if it can be done better (in edition there will not be a "level" option)
+		if self.levels == [None]:
+			self.levels = None
 		return self
 
 	def _check_level(self, level):
+		if 'name' not in level:
+			return None
 		level['name'] = bleach.clean(level['name'])
 		if 'text' in level:
 			level['text'] = bleach.clean(level['text'])
@@ -140,5 +145,3 @@ class Pathology(BaseModel):
 	def refresh_update_date(self):
 		self.updated_at = datetime.datetime.now().isoformat()
 		return self
-
-
