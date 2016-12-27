@@ -23,38 +23,41 @@ angular.module('prescrisurApp.controllers')
 			ok: 'Substance Recommandée'
 		};
 
-		var pathoService = PathologyService;
+		var getPathology = function(pathoService) {
+			pathoService.get({ id: $stateParams.id }, function(data) {
+				$scope.pathology = data.data;
+				PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
+				// Show all specs if on mobile
+				if($scope.mobileView) {
+					$scope.toggleShowAll();
+				}
+			}, function(e) {
+				if(e.status != 404) {
+					return;
+				}
+				$scope.pathology = false;
+				if($scope.draftExists) {
+					$state.go('pathologies.read', {id: $stateParams.id, draft: true});
+				} else {
+					Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...");
+					$timeout(function() {
+						$state.go('home');
+					}, 4000);
+				}
+			});
+		};
+
 		if($scope.isAuthorized('admin')) {
 			if($stateParams.draft) {
 				$scope.draftMode = true;
-				pathoService = PathologyDraftService;
+				getPathology(PathologyDraftService);
 			} else {
 				PathologyDraftService.hasDraft({ id: $stateParams.id }, function(data) {
 					$scope.draftExists = data.exists;
+					getPathology(PathologyService);
 				});
 			}
 		}
-		
-		pathoService.get({ id: $stateParams.id }, function(data) {
-			$scope.pathology = data.data;
-			PageTitleService.setTitle('Traitement de ' + $scope.pathology.name);
-			// Show all specs if on mobile
-			if($scope.mobileView) {
-				$scope.toggleShowAll();
-			}
-		}, function(e) {
-			if(e.status != 404) {
-				return;
-			}
-			$scope.pathology = false;
-			if($scope.draftExists) {
-				$state.go('pathology.read', {id: $stateParams.id, draft: true});
-			}
-			Flash.create('danger', "Cette Pathologie n'existe pas ! Redirection...");
-			$timeout(function() {
-				$state.go('home');
-			}, 4000);
-		});
 
 		$scope.search = function($select) {
 			var search = '';
