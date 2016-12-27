@@ -23,16 +23,27 @@ angular.module('prescrisurApp.controllers')
 			{_id: 'associations', name: 'Association'}
 		];
 
+		var getPathology = function(pathoService) {
+			pathoService.get({ id: $stateParams.id }, function(data) {
+				$scope.pathology = data.data;
+				$scope.displayAllInfo = true;
+				PageTitleService.setTitle('Modifier une Pathologie');
+			});
+		};
+
 		var pathoService = PathologyService;
 		if($stateParams.draft) {
 			pathoService = PathologyDraftService;
 		}
 
+
+
 		if($stateParams.id) {
-			pathoService.get({ id: $stateParams.id }, function(data) {
-				$scope.pathology = data.data;
-				$scope.displayAllInfo = true;
-				PageTitleService.setTitle('Modifier une Pathologie');
+			PathologyDraftService.hasDraft({ id: $stateParams.id }, function(data) {
+				if(data.exists) {
+					pathoService = PathologyDraftService;
+				}
+				getPathology(pathoService);
 			});
 		}
 		else {
