@@ -4,7 +4,6 @@ from pymongo import DESCENDING
 
 from page import Page
 
-
 class News(Page):
 	PROJECTION = {'name': 1, 'created_at': 1}
 	ORDER_BY = [('created_at', DESCENDING)]

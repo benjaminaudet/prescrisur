@@ -3,6 +3,7 @@ import bleach
 from slugify import slugify
 
 from base_model import BaseModel
+from api.services import commons
 
 bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 'u', 'font']
 bleach.ALLOWED_ATTRIBUTES.update({
@@ -23,5 +24,5 @@ class Page(BaseModel):
 
 	def check(self):
 		self.name = bleach.clean(self.name)
-		self.text = bleach.clean(self.text)
+		self.text = commons.remove_blank_br(bleach.clean(self.text))
 		return self

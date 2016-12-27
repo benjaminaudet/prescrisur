@@ -3,6 +3,7 @@ import bleach
 import datetime
 from slugify import slugify
 
+from api.services import commons
 from base_model import BaseModel
 from speciality import Speciality
 from substance import Substance
@@ -82,8 +83,8 @@ class Pathology(BaseModel):
 
 	def check(self):
 		self.name = bleach.clean(self.name)
-		self.intro = bleach.clean(self.intro)
-		self.conclu = bleach.clean(self.conclu)
+		self.intro = commons.remove_blank_br(bleach.clean(self.intro))
+		self.conclu = commons.remove_blank_br(bleach.clean(self.conclu))
 		self.levels = map(lambda l: self._check_level(l), self.levels)
 		# FIXME: see if it can be done better (in edition there will not be a "level" option)
 		if self.levels == [None]:
@@ -95,7 +96,7 @@ class Pathology(BaseModel):
 			return None
 		level['name'] = bleach.clean(level['name'])
 		if 'text' in level:
-			level['text'] = bleach.clean(level['text'])
+			level['text'] = commons.remove_blank_br(bleach.clean(level['text']))
 		if 'levels' in level:
 			if len(level['levels']) == 0:
 				del level['levels']
@@ -119,8 +120,11 @@ class Pathology(BaseModel):
 		assert 'reco' in entry
 		entry['reco'] = self._check_entry_reco(entry['reco'])
 		# Check info
-		if 'info' in entry and entry['info'] == "":
-			del entry['info']
+		if 'info' in entry:
+			if entry['info'] == "":
+				del entry['info']
+			else:
+				entry['info'] = commons.remove_blank_br(bleach.clean(entry['info']))
 		if 'displayInfo' in entry:
 			del entry['displayInfo']
 		return entry
