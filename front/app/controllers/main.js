@@ -31,7 +31,10 @@ angular.module('prescrisurApp.controllers')
 				}
 			}
 			return false;
-		}
+		};
+
+		// Check if user is on mobile view
+		$scope.mobileView = Boolean('ontouchstart' in window);
 	}
 ])
 

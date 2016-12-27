@@ -129,23 +129,22 @@
 			<td class="product">
 				{{ ::entry.product.name }} <spec-status status="{{ ::entry.product.status }}"></spec-status>
 			</td>
-			<td class="more-info" ng-class="entry.info ? 'has-info' : 'no-info'" ng-switch="entry.type" colspan="{{ ::entryColspan(entry) }}">
+			<td ng-if="!mobileView" class="more-info" ng-class="entry.info ? 'has-info' : 'no-info'" ng-switch="entry.type" colspan="{{ ::entryColspan(entry) }}">
 				<div ng-switch-when="specialities">
 					<a ui-sref="specialities({id: entry.product._id})" target="_blank">RCP ANSM/EMEA</a>
 				</div>
 				<div ng-switch-default="">
 					<a ng-model="entry.displaySpecialities" uib-btn-checkbox>
-						<span class="hidden-xs">Liste des médicaments</span>
-						<span class="visible-xs">Médicaments</span>
+						Liste des médicaments
 					</a>
 				</div>
 			</td>
-			<td ng-if="entry.info" class="info-button" ng-class="{'active':entry.displayInfo}">
+			<td ng-if="entry.info && !mobileView" class="info-button" ng-class="{'active':entry.displayInfo}">
 				<div ng-model="entry.displayInfo" uib-btn-checkbox>Info*</div>
 			</td>
 		</tr>
 		<tr ng-if="entry.displayInfo">
-			<td colspan="5">
+			<td class="italic" colspan="5">
 				<span class="bold">Info:</span>
 				<span ng-bind-html="entry.info"></span>
 			</td>

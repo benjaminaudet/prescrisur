@@ -172,6 +172,10 @@
     font-weight: bold;
 }
 
+.italic {
+    font-style: italic;
+}
+
 .invalid {
     border-color: red;
     outline-color: red;
