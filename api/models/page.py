@@ -8,7 +8,8 @@ bleach.ALLOWED_TAGS += ['h2', 'h3', 'h4', 'p', 'br', 'span', 'div', 'img', 'i', 
 bleach.ALLOWED_ATTRIBUTES.update({
 	'a': ['href', 'title', 'target'],
 	'img': ['src', 'alt', 'title'],
-	'span': ['id', 'class']
+	'span': ['id', 'class'],
+	'font': ['color']
 })
 
 
