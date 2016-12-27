@@ -95,7 +95,7 @@
     }
 
     #main h2 {
-        font-size: 16pt !important;
+        font-size: 15pt !important;
         color: #B60027;
     }
 
@@ -291,6 +291,12 @@
     text-align: center;
 }
 
+@media (max-width: 500px) {
+    .footer {
+        margin-top: 10px;
+    }
+}
+
 .footer a,
 .footer a:hover {
     color: #696969;
@@ -388,6 +394,11 @@
 #navbar .user-profile {
     color: white;
     margin: 13px;
+}
+
+#navbar .user-profile.btn {
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 /****************************/
@@ -552,6 +563,14 @@ image-picker .image-button {
     }
 }
 
+
+@media (max-width: 500px) {
+    .jumbotron {
+        padding-top: 0px;
+        padding-bottom: 5px;
+        background: none;
+    }
+}
 
 .btn-xs-text {
     width: 17% !important;

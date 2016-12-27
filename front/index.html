@@ -49,7 +49,10 @@
 	<!-- The justified navigation menu is meant for single line per list item.
 			 Multiple lines will require custom code not provided by Bootstrap. -->
 	<div class="masthead">
-		<div id="logo" ui-sref="home">Outil d'aide à la prescription</div>
+		<div id="logo" ui-sref="home">
+			Outil d'aide à la prescription <br />
+			<span class="visible-xs">Indépendant & Gratuit</span>
+		</div>
 		<div id="logo-print"><img src="front/assets/img/logo-header.png" /></div>
 
 		<div id="user-info" class="hidden-xs pull-right">
@@ -90,9 +93,14 @@
 		</div>
 
 		<nav id="navbar" class="navbar navbar-default" role="navigation">
+			<!-- Logged In User profile -->
 			<div ng-if="currentUser" class="user-profile pull-left visible-xs">
 				<i class="fa fa-user"></i>
 				{{ currentUser.name }}
+			</div>
+			<!-- Anonymous User -->
+			<div ng-if="!currentUser" ui-sref="login" class="btn user-profile pull-left visible-xs">
+				<i class="fa fa-sign-in"></i> Connexion
 			</div>
 			<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<i class="fa fa-align-justify"></i>
@@ -124,10 +132,8 @@
 					<li ui-sref-active="active"><a ui-sref="pages.read({id: 'sources-d-informations'})">Sources</a></li>
 					<li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
 					<li id="user-info-xs" class="visible-xs">
-						<!-- Logged In User profile -->
+						<!-- Logged In User logout -->
 						<a ui-sref="logout" ng-if="currentUser">Déconnexion</a>
-						<!-- Anonymous User -->
-						<a ui-sref="login" ng-if="!currentUser">Connexion</a>
 					</li>
 				</ul>
 			</div>
@@ -141,7 +147,7 @@
 	<!-- Site footer -->
 	<footer class="footer">
 		<p>
-			Prescrisur© 2016, site indépendant. Tous droits réservés |
+			Prescrisur© 2017, site indépendant. Tous droits réservés |
 			<a ui-sref="pages.read({id: 'mentions-legales'})">Mentions Légales</a> |
 			<a ui-sref="contact">Contact</a>
 		</p>

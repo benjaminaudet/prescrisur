@@ -2,8 +2,8 @@
 
 <!-- Jumbotron -->
 <div class="jumbotron">
-	<h1>Aide à la Prescription en un clic!</h1>
-	<p class="lead">
+	<h1 class="hidden-xs">Aide à la Prescription en un clic!</h1>
+	<p class="lead hidden-xs">
 		4 entrées pour accéder à l'information <small>(voir le <a ui-sref="pages.read({id: 'mode-d-emploi'})">mode d'emploi</a>)</small>
 	</p>
 	<div id="search-buttons" class="form-group">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="row" id="home-info">
-	<div class="col-md-7">
+	<div class="col-md-7 hidden-xs">
 		<div class="text-box">
 			<h2>Bienvenue sur Prescrisur !</h2>
 			<div ng-bind-html="welcome.text"></div>
