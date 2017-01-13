@@ -14,5 +14,5 @@ class EnvConfig(object):
 	MAIL_USE_TLS = False
 	MAIL_USE_SSL = True
 	MAIL_USERNAME = 'prescrisur@gmail.com'
-	MAIL_PASSWORD = 'gabin2014'
+	MAIL_PASSWORD = 'gabin2015'
 	MAIL_DEFAULT_SENDER = 'Prescrisur <no-reply-prescrisur@gmail.com>'
