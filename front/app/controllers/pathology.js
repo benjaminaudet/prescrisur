@@ -57,6 +57,8 @@ angular.module('prescrisurApp.controllers')
 					getPathology(PathologyService);
 				});
 			}
+		} else {
+			getPathology(PathologyService);
 		}
 
 		$scope.search = function($select) {
