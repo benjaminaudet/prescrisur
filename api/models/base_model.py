@@ -48,7 +48,7 @@ class BaseModel(DB):
 
 	@classmethod
 	def search_by_name(cls, name, proj='default'):
-		regx = re.compile(name, re.IGNORECASE)
+		regx = re.compile('^' + name, re.IGNORECASE)
 		return cls._search({'$or': [{'name': regx}, {'_id': regx}]}, proj, limit=200)
 
 	@classmethod
