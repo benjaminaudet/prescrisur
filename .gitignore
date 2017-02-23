@@ -10,6 +10,7 @@ test/.cache/
 .coverage
 *.log
 *.log.*
+venv/
 
 # Angular
 front/bower_components/

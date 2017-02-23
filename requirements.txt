@@ -23,3 +23,4 @@ sentinels==0.0.6
 mock==1.0.1
 requests==2.10.0
 requests-mock==0.7.0
+py==1.4.32
