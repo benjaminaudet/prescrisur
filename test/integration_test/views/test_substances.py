@@ -59,7 +59,6 @@ def test_search_substance(mock_model, client):
 	assert res.status_code == 200
 	assert data['data'] == [
 		{"_id": "02039", "status": None, "name": "SUBSTANCE"},
-		{"_id": "02032", "status": None, "name": "SUPERSUBSTANCE"}
 	]
 
 
@@ -79,4 +78,4 @@ def test_search_substance_with_spec(mock_model, client):
 
 	# Then
 	assert res.status_code == 200
-	assert data['data'] == [objs[0], objs[1]]
+	assert data['data'] == [objs[0]]

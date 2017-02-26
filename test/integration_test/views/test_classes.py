@@ -58,7 +58,6 @@ def test_search_class(mock_model, client):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == [
-		{"_id": "02032", "name": "Superclass", "pathology": "Patho"},
 		{"_id": "02039", "name": "Class", "pathology": "Patho"}
 	]
 

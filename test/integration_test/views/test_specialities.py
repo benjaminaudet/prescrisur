@@ -21,6 +21,5 @@ def test_search_speciality(mock_model, client):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == [
-		{"_id": "02039", "status": None, "name": "SPECIALITY"},
-		{"_id": "02032", "status": None, "name": "SUPERSPECIALITY"}
+		{"_id": "02039", "status": None, "name": "SPECIALITY"}
 	]

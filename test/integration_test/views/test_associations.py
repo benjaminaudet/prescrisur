@@ -84,7 +84,6 @@ def test_search_asso(mock_model, client):
 	# Then
 	assert res.status_code == 200
 	assert data['data'] == [
-		{"_id": "02032", "name": "SuperAsso", "specialities": None},
 		{"_id": "02039", "name": "Asso", "specialities": None}
 	]
 
