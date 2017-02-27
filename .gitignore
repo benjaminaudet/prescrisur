@@ -8,6 +8,7 @@
 .cache/
 test/.cache/
 .coverage
+.coverage*
 *.log
 *.log.*
 venv/
