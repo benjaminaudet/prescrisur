@@ -130,7 +130,7 @@
 				<a ng-if="mobileView && entry.type == 'specialities'" ui-sref="specialities({id: entry.product._id})" target="_blank">
 					{{ ::entry.product.name }} <spec-status status="{{ ::entry.product.status }}"></spec-status>
 				</a>
-				<div ng-if="!mobileView || entry.type != 'specialities">
+				<div ng-if="!mobileView || entry.type != 'specialities'">
 					{{ ::entry.product.name }} <spec-status status="{{ ::entry.product.status }}"></spec-status>
 				</div>
 			</td>
