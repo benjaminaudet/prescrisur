@@ -68,7 +68,7 @@
 .btn.btn-primary.active,
 .btn.btn-primary:hover {
     background-color: #aaa;
-    color: white;
+    color: #b60027;
 }
 
 .btn.btn-primary.disabled {
@@ -405,6 +405,10 @@
     margin-bottom: 0;
 }
 
+.nav>li:not(:nth-last-child(2)) {
+    border-right: 1px solid white;    
+}
+
 /****************************/
 /*         PAGE HEADER      */
 #page-header {
@@ -526,8 +530,9 @@ image-picker .image-button {
 /****************************/
 /*         JUMBOTRON        */
 .jumbotron {
-    background: url('../img/jumbotron.jpg') no-repeat;
+    background: url('../img/gelules.jpg') no-repeat;
     background-size: 100%;
+    background-position-y: -55px;
 }
 
 .jumbotron h1 {
@@ -552,6 +557,10 @@ image-picker .image-button {
         padding-left: 5px;
         padding-right: 5px;
     }
+
+    .jumbotron {
+        background-position-y: -40px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -564,6 +573,7 @@ image-picker .image-button {
 
     .jumbotron {
         margin-bottom: 0 !important;
+        background: none;
     }
 }
 
@@ -588,6 +598,12 @@ image-picker .image-button {
     width: 38% !important;
 }
 
+@media (min-width: 992px) {
+    #search {
+        margin-top: 120px;
+    }
+}
+
 #search-bar {
     font-size: 1.2em;
 }
@@ -602,6 +618,10 @@ image-picker .image-button {
     }
 }
 
+input::-webkit-input-placeholder {
+    color:red;
+}
+
 .ui-select-choices-row.active>a {
     background-color: white !important;
     color: black !important;
@@ -610,6 +630,10 @@ image-picker .image-button {
 .ui-select-choices-row > a:hover {
     background-color: #428bca !important;
     color: white !important;
+}
+
+.jumbotron .form-group {
+    background: url(https://prescrisur.fr/front/assets/img/gelule_ok_mini.png) no-repeat scroll 7px 7px !important;
 }
 
 #home-info h2 {

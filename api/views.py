@@ -305,6 +305,20 @@ def subscribe(user_id):
 	return jsonify({'success': True})
 
 
+@api.route('/api/users/<user_id>/newsletter', methods=['PUT', 'DELETE'])
+def newsletter(user_id):
+	u = User.get(user_id)
+	if not u:
+		abort(404)
+	if request.method == 'PUT':
+		u.add_role('newsletter').save()
+		r = u.add_mail_chimp()
+	elif request.method == 'DELETE':
+		u.remove_role('newsletter').save()
+		r = u.remove_mail_chimp()
+	return jsonify({'success': True})
+
+
 @api.route('/api/mail', methods=['POST'])
 @monitored
 def send_mail():
@@ -344,6 +358,7 @@ def register():
 	data = json.loads(request.data)
 	user = User(**data)
 	user.generate_auth_token()
+	user.generate_register_date()
 	user.create()
 	send_confirm_email(user.email)
 	return jsonify(success=True)

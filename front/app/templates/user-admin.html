@@ -5,7 +5,7 @@
 <div id="content" class="row caduceus">
 	<flash-message duration="4000" show-close="true"></flash-message>
 
-	<div id="sidebar" class="col-md-4 col-md-push-8">
+	<div id="sidebar" class="col-md-4 col-md-push-9">
 		<h2>Stats</h2>
 		<ul id="users-stats">
 			<li>Nombre d'inscrits : {{ users.length }}</li>
@@ -26,6 +26,8 @@
 					<th>Email</th>
 					<th>Admin ?</th>
 					<th>Abonné ?</th>
+					<th>Newsletter ?</th>
+					<th>Date inscription</th>
 				</tr>
 				<tr class="user" ng-repeat="user in users | filter:query">
 					<td>{{ user.name }}</td>
@@ -48,6 +50,15 @@
 							<i class="fa fa-times"></i> Non Abonné
 						</div>
 					</td>
+					<td class="icon">
+						<div class="btn btn-success btn-xs" ng-if="hasRole('newsletter', user.roles)" ng-click="newsletter(user, false)">
+							<i class="fa fa-check"></i> Newsletter
+						</div>
+						<div class="btn btn-default btn-xs news" ng-if="!hasRole('newsletter', user.roles)" ng-click="newsletter(user, true)">
+							<i class="fa fa-times"></i> Non Newsletter
+						</div>
+					</td>
+					<td>{{ user.register_date }}</td>
 				</tr>
 			</table>
 		</div>

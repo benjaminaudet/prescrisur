@@ -16,3 +16,6 @@ class EnvConfig(object):
 	MAIL_USERNAME = 'prescrisur@gmail.com'
 	MAIL_PASSWORD = 'gabin2015'
 	MAIL_DEFAULT_SENDER = 'Prescrisur <no-reply-prescrisur@gmail.com>'
+	#Mail Chimp
+	MC_URL_LIST_CONTACTS = 'https://us15.api.mailchimp.com/3.0/lists/9a13c1ffc2/members'
+	MC_API_KEY = 'apikey 600933e26dec52dabf446903676e95f3-us15'

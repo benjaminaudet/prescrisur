@@ -58,8 +58,9 @@ angular.module('prescrisurApp.controllers')
 	'PageTitleService',
 	'UserService',
 	'UserSubscriptionService',
+	'UserNewsletterService',
 	
-	function($scope, $state, Flash, filterFilter, PageTitleService, UserService, UserSubscriptionService) {
+	function($scope, $state, Flash, filterFilter, PageTitleService, UserService, UserSubscriptionService, UserNewsletterService) {
 		PageTitleService.setTitle('Administration des Utilisateurs');
 
 		UserService.get(function(data) {
@@ -84,9 +85,28 @@ angular.module('prescrisurApp.controllers')
 			};
 			
 			if (subscribe) {
-				UserSubscriptionService.subscribe({ id: user._id }, {}, afterSave(user.name + ' abonné !'), afterError);
+				UserSubscriptionService.subscribe({ id: user._id }, {}, afterSave(user.name + ' abonné premium !'), afterError);
 			} else {
-				UserSubscriptionService.unsubscribe({ id: user._id }, afterSave(user.name + ' désabonné !'), afterError);
+				UserSubscriptionService.unsubscribe({ id: user._id }, afterSave(user.name + ' désabonné premium !'), afterError);
+			}
+		}
+
+		$scope.newsletter = function(user, subscribe) {
+			var afterSave = function(msg) {
+				return function() {
+					Flash.create('success', msg);
+					$state.go('users', {}, {reload: true});
+				}
+			};
+
+			var afterError = function() {
+				Flash.create('danger', 'Une erreur est survenue...', 10000);
+			};
+			
+			if (subscribe) {
+				UserNewsletterService.subscribe({ id: user._id }, {}, afterSave(user.name + ' abonné à la newsletter !'), afterError);
+			} else {
+				UserNewsletterService.unsubscribe({ id: user._id }, afterSave(user.name + ' désabonné de la newsletter !'), afterError);
 			}
 		}
 	}

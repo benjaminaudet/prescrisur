@@ -85,4 +85,13 @@ angular.module('prescrisurApp.modelServices', ['ngResource'])
 			unsubscribe: { method: 'DELETE' }
 		});
 	}
+])
+
+.factory('UserNewsletterService', ['$resource',
+	function($resource){
+		return $resource('/api/users/:id/newsletter', null, {
+			subscribe: { method: 'PUT' },
+			unsubscribe: { method: 'DELETE' }
+		});
+	}
 ]);

@@ -6,33 +6,35 @@
 	<p class="lead hidden-xs">
 		4 entrées pour accéder à l'information <small>(voir le <a ui-sref="pages.read({id: 'mode-d-emploi'})">mode d'emploi</a>)</small>
 	</p>
-	<div id="search-buttons" class="form-group">
-		<div class="btn-group btn-group-justified" data-toggle="buttons">
-			<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'pathologies'">
-				Pathologies
-			</label>
-			<label class="btn btn-primary btn-xm-text" ng-model="searchType" uib-btn-radio="'specialities'">
-				Médicaments <small>(source ANSM)</small>
-			</label>
-			<label class="btn btn-primary btn-xl-text" ng-model="searchType" uib-btn-radio="'classes'">
-				Classes Pharmaco-Thérapeutiques
-			</label>
-			<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'substances'">
-				Substances
-			</label>
+	<div id="search">
+		<div id="search-buttons" class="form-group">
+			<div class="btn-group btn-group-justified" data-toggle="buttons">
+				<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'pathologies'">
+					Pathologies
+				</label>
+				<label class="btn btn-primary btn-xm-text" ng-model="searchType" uib-btn-radio="'specialities'">
+					Médicaments <small>(source ANSM)</small>
+				</label>
+				<label class="btn btn-primary btn-xl-text" ng-model="searchType" uib-btn-radio="'classes'">
+					Classes Pharmaco-Thérapeutiques
+				</label>
+				<label class="btn btn-primary btn-xs-text" ng-model="searchType" uib-btn-radio="'substances'">
+					Substances
+				</label>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<ui-select ng-model="selected.value" on-select="goTo($select)">
-			<ui-select-match placeholder="Rechercher...">
-				<span ng-bind="$select.selected.name"></span>
-			</ui-select-match>
-			<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
-				{{ r.name }}
-				<span class="spec-status" ng-if="r.status">{{ r.status }}</span>
-				<span class="pathology" ng-if="r.pathology">({{ r.pathology.name }})</span>
-			</ui-select-choices>
-		</ui-select>
+		<div class="form-group">
+			<ui-select ng-model="selected.value" on-select="goTo($select)">
+				<ui-select-match placeholder="Rechercher...">
+					<span ng-bind="$select.selected.name"></span>
+				</ui-select-match>
+				<ui-select-choices ui-disable-choice="!r._id" refresh="search($select)" refresh-delay="100" repeat="r in results | limitTo: 200">
+					{{ r.name }}
+					<span class="spec-status" ng-if="r.status">{{ r.status }}</span>
+					<span class="pathology" ng-if="r.pathology">({{ r.pathology.name }})</span>
+				</ui-select-choices>
+			</ui-select>
+		</div>
 	</div>
 	<!--<button class="btn btn-lg btn-primary" ng-click="" role="button">Rechercher</button>-->
 </div>
