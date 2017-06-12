@@ -360,6 +360,7 @@ def register():
 	user.generate_auth_token()
 	user.generate_register_date()
 	user.create()
+	user.add_to_newsletter()
 	send_confirm_email(user.email)
 	return jsonify(success=True)
 

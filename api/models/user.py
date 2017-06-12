@@ -1,7 +1,7 @@
 import time
 import requests
 import json
-import sys
+
 from slugify import slugify
 from pymongo import ASCENDING
 from flask import current_app
@@ -138,6 +138,10 @@ class User(BaseModel):
 				}
 				r = requests.delete(url, headers=headers)
 		return r
+
+	def add_to_newsletter(self):
+		self.add_role('newsletter')
+		self.add_mail_chimp()
 
 	def __eq__(self, other):
 		if isinstance(other, User):

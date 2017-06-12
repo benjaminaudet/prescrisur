@@ -207,7 +207,7 @@ angular.module('prescrisurApp.controllers')
 			
 			if($scope.checkPassword()) {
 				// call login from service
-				AuthService.register($scope.registerForm.name, $scope.registerForm.email, $scope.registerForm.passwd)
+				AuthService.register($scope.registerForm.name, $scope.registerForm.email, $scope.registerForm.passwd, $scope.registerForm.newsletter)
 					// handle success
 					.then(function () {
 						var msg = 'Inscription effectuée ! Un mail vient de vous êtes envoyé. Confirmez votre adresse email : '+ $scope.registerForm.email +', puis <a ui-sref="login">Connectez-vous</a>';

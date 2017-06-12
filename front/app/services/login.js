@@ -9,12 +9,12 @@ function ($q, $timeout, $http) {
 		return user ? true : false;
 	}
 
-	function register(name, email, password) {
+	function register(name, email, password, newsletter) {
 		// create a new instance of deferred
 		var deferred = $q.defer();
 
 		// send a post request to the server
-		$http.post('/api/register', {name: name, email: email, password: password})
+		$http.post('/api/register', {name: name, email: email, password: password, newsletter: newsletter})
 			// handle success
 			.success(function (data, status) {
 				if(status === 200 && data.success){
